@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/linearCabecalho"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:background="@color/nav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imgBackground">
+
+        <ImageButton
+            android:id="@+id/imgbtnHome"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="20dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/logo"
+            android:onClick="abrirHomeActivity"
+            android:scaleType="fitCenter"
+
+            app:srcCompat="@drawable/light" />
+
+        <ImageButton
+            android:id="@+id/imgbtnItens"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/botao_actions"
+            android:onClick="abrirItensActivity"
+            android:scaleType="fitCenter"
+
+            app:srcCompat="@drawable/actions_light" />
+
+        <ImageButton
+            android:id="@+id/imgbtnPerfil"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="50dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/botao_perfil"
+            android:onClick="abrirPerfilActivity"
+            android:scaleType="fitCenter"
+
+            app:srcCompat="@drawable/perfil" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeBorda1"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/cabecalho"
+        app:layout_constraintEnd_toEndOf="@+id/linearCabecalho"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/linearCabecalho"
+        app:layout_constraintTop_toTopOf="@+id/linearCabecalho">
+
+    </RelativeLayout>
+</FrameLayout>

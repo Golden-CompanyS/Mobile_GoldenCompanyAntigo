@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    tools:context=".User">
+
+    <include
+        layout="@layout/layout_navbar"
+        tools:layout_editor_absoluteX="18dp"
+        tools:layout_editor_absoluteY="227dp"></include>
+
+
+        <TextView
+            android:id="@+id/txtUserArea"
+            android:layout_width="222dp"
+            android:layout_height="32dp"
+            android:text="Área do usuário"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/switch1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.211"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Switch
+            android:id="@+id/switch1"
+            android:layout_width="144dp"
+            android:layout_height="46dp"
+            android:layout_marginBottom="12dp"
+            android:text="Dark Mode"
+            app:layout_constraintBottom_toTopOf="@+id/txtAltSenha"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.149"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/txtAltSenha"
+            android:layout_width="157dp"
+            android:layout_height="26dp"
+            android:layout_marginTop="208dp"
+            android:text="Alterar Senha"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.157"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/edttxtAltSenha"
+            android:layout_width="267dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:ems="10"
+            android:hint="Senha Atual"
+            android:inputType="textPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.506"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtAltSenha" />
+
+        <EditText
+            android:id="@+id/edttxtConfAltSenha"
+            android:layout_width="268dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:ems="10"
+            android:hint="Senha Nova"
+            android:inputType="textPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.503"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edttxtAltSenha" />
+
+        <Button
+            android:id="@+id/btnAltSenha"
+            android:layout_width="169dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/botoes"
+            android:text="Alterar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edttxtConfAltSenha" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
