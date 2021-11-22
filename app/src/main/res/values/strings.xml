@@ -1,6 +1,18 @@
 <resources>
+    <!-- GERAIS -->
     <string name="app_name">Mobile v1.0</string>
     <string name="logo">Logo Golden Company</string>
     <string name="botao_perfil">Perfil do Usuário</string>
     <string name="botao_actions">Ações - Cadastrar, Alterar, Consultar e excluir</string>
+
+
+    <!-- TELA USUÁRIO -->
+    <string name="dark_mode">Dark Mode</string>
+    <string name="alterar_senha">Alterar Senha</string>
+    <string name="senha_atual">Senha Atual</string>
+    <string name="senha_nova">Senha Nova</string>
+    <string name="alterar">Alterar</string>
+
+    <!-- ... -->
+
 </resources>
