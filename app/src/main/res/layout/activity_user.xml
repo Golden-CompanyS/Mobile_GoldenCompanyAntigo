@@ -8,11 +8,26 @@
     tools:context=".User">
 
     <include
-        layout="@layout/layout_navbar"
-        tools:layout_editor_absoluteX="18dp"
-        tools:layout_editor_absoluteY="227dp"></include>
+        android:id="@+id/include"
+        layout="@layout/layout_navbar"></include>
 
+    <ScrollView
+        android:id="@+id/scrollContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="30dp"
+        android:orientation="horizontal"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include">
 
+<<<<<<< HEAD
     <TextView
         android:id="@+id/txtUserArea"
         android:layout_width="222dp"
@@ -85,6 +100,86 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edttxtConfAltSenha" />
+=======
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtUserArea"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:text="Área do usuário"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+            <Switch
+                android:id="@+id/switch1"
+                android:layout_width="130dp"
+                android:layout_height="46dp"
+                android:layout_below="@+id/txtUserArea"
+                android:layout_alignStart="@+id/txtUserArea"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/dark_mode" />
+
+            <TextView
+                android:id="@+id/txtAltSenha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/switch1"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/alterar_senha"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/switch1" />
+
+            <EditText
+                android:id="@+id/edttxtAltSenha"
+                android:layout_width="268dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtAltSenha"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="10dp"
+                android:hint="@string/senha_atual"
+                android:inputType="textPassword" />
+
+            <EditText
+                android:id="@+id/edttxtConfAltSenha"
+                android:layout_width="268dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edttxtAltSenha"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="5dp"
+                android:hint="@string/senha_nova"
+                android:inputType="textPassword" />
+
+            <Button
+                android:id="@+id/btnAltSenha"
+                android:layout_width="169dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edttxtConfAltSenha"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/botoes"
+                android:text="@string/alterar" />
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+>>>>>>> 88aa10e0a0c121406dc200e06f53cf910868e7c7
 
     <EditText
         android:id="@+id/edtNotes"
