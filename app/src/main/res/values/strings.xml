@@ -4,25 +4,22 @@
     <string name="logo">Logo Golden Company</string>
     <string name="botao_perfil">Perfil do Usuário</string>
     <string name="botao_actions">Ações - Cadastrar, Alterar, Consultar e excluir</string>
-<<<<<<< HEAD
-    <string name="senha_atual">Senha Atual</string>
-    <string name="alterar_senha">Alterar Senha</string>
-    <string name="senha_nova">Senha Nova</string>
-    <string name="alterar">Alterar</string>
-    <string name="rea_do_usu_rio">Área do usuário</string>
-    <string name="dark_mode">Dark Mode</string>
-    <string name="anota_es">Anotações</string>
-    <string name="salvar">Salvar</string>
-    <string name="alterar_foto_de_perfil">Alterar Foto de Perfil</string>
+
+
+
 =======
 
 
     <!-- TELA USUÁRIO -->
     <string name="dark_mode">Dark Mode</string>
     <string name="alterar_senha">Alterar Senha</string>
+    <string name="rea_do_usu_rio">Área do usuário</string>
     <string name="senha_atual">Senha Atual</string>
     <string name="senha_nova">Senha Nova</string>
     <string name="alterar">Alterar</string>
+    <string name="anota_es">Anotações</string>
+    <string name="salvar">Salvar</string>
+    <string name="alterar_foto_de_perfil">Alterar Foto de Perfil</string>
 
     <!-- ... -->
 

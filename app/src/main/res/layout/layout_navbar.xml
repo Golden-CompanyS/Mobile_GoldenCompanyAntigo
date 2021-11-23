@@ -30,9 +30,9 @@
         <ImageButton
             android:id="@+id/imgbtnItens"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
@@ -45,9 +45,9 @@
         <ImageButton
             android:id="@+id/imgbtnPerfil"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="50dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
