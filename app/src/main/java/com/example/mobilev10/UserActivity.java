@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,7 +19,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class User extends AppCompatActivity {
+public class UserActivity extends AppCompatActivity {
 
     EditText edtNotes;
     Button btnSave;
@@ -117,4 +116,21 @@ public class User extends AppCompatActivity {
         }
     }
 
+    // NAVEGAÇÃO
+/*
+    public void abrirHomeActivity(View view){
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+    }
+*/
+    public void abrirUserActivity(View view){
+        Intent intent = new Intent(this, UserActivity.class);
+        startActivity(intent);
+    }
+/*
+    public void abrirAcoesActivity(View view){
+        Intent intent = new Intent(this, AcoesActivity.class);
+        startActivity(intent);
+    }
+ */
 }

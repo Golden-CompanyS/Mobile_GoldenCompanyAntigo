@@ -13,15 +13,16 @@
     <!-- TELA USUÁRIO -->
     <string name="dark_mode">Dark Mode</string>
     <string name="alterar_senha">Alterar Senha</string>
-    <string name="rea_do_usu_rio">Área do usuário</string>
+    <string name="area_do_usuario">Área do usuário</string>
     <string name="senha_atual">Senha Atual</string>
     <string name="senha_nova">Senha Nova</string>
     <string name="alterar">Alterar</string>
-    <string name="anota_es">Anotações</string>
+    <string name="anotaces">Anotações</string>
     <string name="salvar">Salvar</string>
+    <string name="sair">Sair</string>
     <string name="alterar_foto_de_perfil">Alterar Foto de Perfil</string>
 
     <!-- ... -->
 
->>>>>>> 88aa10e0a0c121406dc200e06f53cf910868e7c7
+
 </resources>

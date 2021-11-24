@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg"
-    tools:context=".User">
+    tools:context=".UserActivity">
 
     <include
         android:id="@+id/include"
-        layout="@layout/layout_navbar"></include>
+        layout="@layout/layout_navbar" />
 
     <ScrollView
         android:id="@+id/scrollContainer"
@@ -27,7 +27,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include">
 
-=======
+
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -42,7 +42,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
-                android:text="Área do usuário"
+                android:text="@string/area_do_usuario"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
@@ -62,14 +62,15 @@
                 android:layout_below="@+id/imgUser"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="15dp"
+
                 android:backgroundTint="@color/botoes"
                 android:onClick="viewGallery"
+                android:text="@string/alterar_foto_de_perfil" />
 
-                android:text="Alterar Foto de Perfil" />
             <Switch
                 android:id="@+id/switch1"
                 android:layout_width="130dp"
-                android:layout_height="46dp"
+                android:layout_height="48dp"
                 android:layout_below="@+id/btnAltFoto"
                 android:layout_alignStart="@+id/txtUserArea"
                 android:layout_marginStart="10dp"
@@ -100,7 +101,8 @@
                 android:layout_centerInParent="true"
                 android:layout_marginTop="10dp"
                 android:hint="@string/senha_atual"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:minHeight="48dp" />
 
             <EditText
                 android:id="@+id/edttxtConfAltSenha"
@@ -110,7 +112,8 @@
                 android:layout_centerInParent="true"
                 android:layout_marginTop="5dp"
                 android:hint="@string/senha_nova"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:minHeight="48dp" />
 
             <Button
                 android:id="@+id/btnAltSenha"
@@ -129,10 +132,10 @@
                 android:layout_below="@id/btnAltSenha"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="15dp"
-                android:background="@color/white"
+                android:background="@drawable/input_arredondado"
                 android:ems="10"
-                android:hint="Anotações"
                 android:gravity="start|top"
+                android:hint="@string/anotaces"
                 android:inputType="textMultiLine"
                 tools:layout_editor_absoluteX="55dp"
                 tools:layout_editor_absoluteY="101dp" />
@@ -146,14 +149,14 @@
                 android:layout_marginTop="15dp"
                 android:backgroundTint="@color/botoes"
                 android:onClick="savePublicly"
-                android:text="Salvar" />
+                android:text="@string/salvar" />
 
             <Button
                 android:id="@+id/btnLogout"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/botoes"
-                android:text="Sair"
+                android:text="@string/sair"
                 android:layout_below="@+id/btnSaveNotes"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="15dp"
@@ -165,8 +168,6 @@
 
 
     </ScrollView>
->>>>>>> 88aa10e0a0c121406dc200e06f53cf910868e7c7
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

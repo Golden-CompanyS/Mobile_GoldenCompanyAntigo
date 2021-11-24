@@ -14,8 +14,23 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void abrirUser(View view){
-        Intent user = new Intent(this, User.class);
-        startActivity(user);
+    // ESSA VAI SER A ACTIVITY DE LOGIN (por ser a main)
+    // NAVEGAÇÃO
+
+/*
+    public void abrirHomeActivity(View view){
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
     }
+*/
+    public void abrirUserActivity(View view){
+        Intent intent = new Intent(this, UserActivity.class);
+        startActivity(intent);
+    }
+/*
+    public void abrirAcoesActivity(View view){
+        Intent intent = new Intent(this, AcoesActivity.class);
+        startActivity(intent);
+    }
+ */
 }
