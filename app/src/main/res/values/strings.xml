@@ -6,8 +6,7 @@
     <string name="botao_actions">Ações - Cadastrar, Alterar, Consultar e excluir</string>
 
 
-
-=======
+    =======
 
 
     <!-- TELA USUÁRIO -->
@@ -22,6 +21,11 @@
     <string name="sair">Sair</string>
     <string name="alterar_foto_de_perfil">Alterar Foto de Perfil</string>
 
+    <!-- TELA AÇÕES -->
+    <string name="socios">Sócios</string>
+    <string name="servicos">Serviços</string>
+    <string name="clientes">Clientes</string>
+    <string name="atividades">Atividades</string>
     <!-- ... -->
 
 

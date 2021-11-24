@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    tools:context=".AcoesActivity">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/layout_navbar" />
+
+    <ScrollView
+        android:id="@+id/scrollContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="30dp"
+        android:orientation="horizontal"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include"
+        android:layout_gravity="center_vertical">
+
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:isScrollContainer="true">
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp">
+
+                <FrameLayout>
+
+                    <ImageButton
+                        android:layout_weight="1"
+                        android:layout_height="116dp"
+                        android:layout_width="116dp"
+                        android:layout_marginStart="36dp"
+                        android:layout_marginEnd="36dp"
+                        android:background="@drawable/imgbtn_arredondado"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/socios"
+                        android:paddingTop="35dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="12dp"
+                        android:paddingStart="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:clickable="false"
+                        android:text="@string/socios"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+
+                        android:layout_marginBottom="40dp"/>
+
+                </FrameLayout>
+
+                <FrameLayout>
+
+                    <ImageButton
+                        android:layout_weight="1"
+                        android:layout_height="116dp"
+                        android:layout_width="116dp"
+                        android:layout_marginStart="36dp"
+                        android:layout_marginEnd="36dp"
+                        android:background="@drawable/imgbtn_arredondado"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/servicos"
+                        android:paddingTop="35dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="12dp"
+                        android:paddingStart="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:clickable="false"
+                        android:text="@string/servicos"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+
+                        android:layout_marginBottom="40dp"/>
+
+                </FrameLayout>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp">
+
+                <FrameLayout>
+
+                    <ImageButton
+                        android:layout_weight="1"
+                        android:layout_height="116dp"
+                        android:layout_width="116dp"
+                        android:layout_marginStart="36dp"
+                        android:layout_marginEnd="36dp"
+                        android:background="@drawable/imgbtn_arredondado"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/clientes"
+                        android:paddingTop="35dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="12dp"
+                        android:paddingStart="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:clickable="false"
+                        android:text="@string/clientes"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+
+                        android:layout_marginBottom="40dp"/>
+
+                </FrameLayout>
+
+                <FrameLayout>
+
+                    <ImageButton
+                        android:layout_weight="1"
+                        android:layout_height="116dp"
+                        android:layout_width="116dp"
+                        android:layout_marginStart="36dp"
+                        android:layout_marginEnd="36dp"
+                        android:background="@drawable/imgbtn_arredondado"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/atividades"
+                        android:paddingTop="35dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="12dp"
+                        android:paddingStart="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:clickable="false"
+                        android:text="@string/atividades"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+
+                        android:layout_marginBottom="40dp"/>
+
+                </FrameLayout>
+
+            </TableRow>
+
+
+        </TableLayout>
+
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

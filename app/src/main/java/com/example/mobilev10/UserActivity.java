@@ -127,10 +127,10 @@ public class UserActivity extends AppCompatActivity {
         Intent intent = new Intent(this, UserActivity.class);
         startActivity(intent);
     }
-/*
+
     public void abrirAcoesActivity(View view){
         Intent intent = new Intent(this, AcoesActivity.class);
         startActivity(intent);
     }
- */
+
 }

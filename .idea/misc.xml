@@ -4,7 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/mateu/AndroidStudioPojects/Mobile/app/src/main/res/drawable/cabecalho.xml" value="0.3828125" />
+        <entry key="..\:/Users/mateu/AndroidStudioPojects/Mobile/app/src/main/res/drawable/imgbtn_arredondado.xml" value="0.3828125" />
         <entry key="..\:/Users/mateu/AndroidStudioPojects/Mobile/app/src/main/res/drawable/input_arredondado.xml" value="0.3828125" />
+        <entry key="..\:/Users/mateu/AndroidStudioPojects/Mobile/app/src/main/res/layout/activity_acoes.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/mateu/AndroidStudioPojects/Mobile/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/mateu/AndroidStudioPojects/Mobile/app/src/main/res/layout/activity_user.xml" value="0.307518115942029" />
         <entry key="..\:/Users/mateu/AndroidStudioPojects/Mobile/app/src/main/res/layout/layout_navbar.xml" value="0.33" />
