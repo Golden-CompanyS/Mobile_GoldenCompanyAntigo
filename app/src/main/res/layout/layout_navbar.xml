@@ -52,7 +52,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:contentDescription="@string/botao_perfil"
-            android:onClick="abrirPerfilActivity"
+            android:onClick="abrirUser"
             android:scaleType="fitCenter"
 
             app:srcCompat="@drawable/perfil" />

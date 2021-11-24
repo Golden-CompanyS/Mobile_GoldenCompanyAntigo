@@ -4,11 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -20,7 +24,10 @@ public class User extends AppCompatActivity {
 
     EditText edtNotes;
     Button btnSave;
+    ImageView imgUser;
+    Button btnAltPerfil;
     private int EXTERNAL_STORAGE_PERMISSION_CODE = 23;
+    private static final int RESULT_SELECT_IMAGE = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +35,8 @@ public class User extends AppCompatActivity {
 
         edtNotes = (EditText) findViewById(R.id.edtNotes);
         btnSave= (Button) findViewById(R.id.btnSaveNotes);
+        imgUser = (ImageView) findViewById(R.id.imgUser);
+        btnAltPerfil = (Button) findViewById(R.id.btnAltFoto);
     }
 //SALVAR AS ANOTAÇÕES - ARMAZENAMENTO EXTERNO
     public void savePublicly(View view){
@@ -86,6 +95,26 @@ public class User extends AppCompatActivity {
             }
         }
         return null;
+    }
+
+    //IMAGE PICKER
+    public void viewGallery(View view){
+        //inicia uma intent com ação de Seleção de Imagens
+        Intent intent =     new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        //inicia uma activity que devolverá uma resposta
+        startActivityForResult(Intent.createChooser(intent, "Selecione uma imagem"), RESULT_SELECT_IMAGE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode==RESULT_OK){
+            Uri imagemSelecionada = data.getData();
+            //define como source da imagem
+            imgUser.setImageURI(imagemSelecionada);
+        }
     }
 
 }
