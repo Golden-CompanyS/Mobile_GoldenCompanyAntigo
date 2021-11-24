@@ -117,12 +117,12 @@ public class UserActivity extends AppCompatActivity {
     }
 
     // NAVEGAÇÃO
-/*
+
     public void abrirHomeActivity(View view){
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
-*/
+
     public void abrirUserActivity(View view){
         Intent intent = new Intent(this, UserActivity.class);
         startActivity(intent);

@@ -13,6 +13,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MobileV10">
         <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AtividadesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ClientesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ServicosActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SociosActivity"
+            android:exported="false" />
+        <activity
             android:name=".AcoesActivity"
             android:exported="false" />
         <activity android:name=".UserActivity" />

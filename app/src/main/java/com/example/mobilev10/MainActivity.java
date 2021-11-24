@@ -17,12 +17,11 @@ public class MainActivity extends AppCompatActivity {
     // ESSA VAI SER A ACTIVITY DE LOGIN (por ser a main)
     // NAVEGAÇÃO
 
-/*
     public void abrirHomeActivity(View view){
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
-*/
+
     public void abrirUserActivity(View view){
         Intent intent = new Intent(this, UserActivity.class);
         startActivity(intent);

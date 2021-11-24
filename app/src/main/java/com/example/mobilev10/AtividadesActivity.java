@@ -6,34 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class AcoesActivity extends AppCompatActivity {
+public class AtividadesActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_acoes);
+        setContentView(R.layout.activity_atividades);
     }
-
-    public void abrirSociosActivity(View view){
-        Intent intent = new Intent(this, SociosActivity.class);
-        startActivity(intent);
-    }
-
-    public void abrirServicosActivity(View view){
-        Intent intent = new Intent(this, ClientesActivity.class);
-        startActivity(intent);
-    }
-
-    public void abrirClientesActivity(View view){
-        Intent intent = new Intent(this, ClientesActivity.class);
-        startActivity(intent);
-    }
-
-    public void abrirAtividadesActivity(View view){
-        Intent intent = new Intent(this, AtividadesActivity.class);
-        startActivity(intent);
-    }
-
 
     // NAVEGAÇÃO
 
@@ -51,5 +30,4 @@ public class AcoesActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AcoesActivity.class);
         startActivity(intent);
     }
-
 }
