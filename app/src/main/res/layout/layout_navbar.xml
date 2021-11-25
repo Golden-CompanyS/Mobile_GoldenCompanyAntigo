@@ -29,7 +29,7 @@
             android:onClick="abrirHomeActivity"
             android:scaleType="fitCenter"
 
-            app:srcCompat="@drawable/light" />
+            app:srcCompat="@drawable/logolight" />
 
         <ImageButton
             android:id="@+id/imgbtnItens"

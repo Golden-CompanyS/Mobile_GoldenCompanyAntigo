@@ -17,21 +17,29 @@ public class AcoesActivity extends AppCompatActivity {
     public void abrirSociosActivity(View view){
         Intent intent = new Intent(this, SociosActivity.class);
         startActivity(intent);
+        this.overridePendingTransition(0, 0);
+        finish();
     }
 
     public void abrirServicosActivity(View view){
-        Intent intent = new Intent(this, ClientesActivity.class);
+        Intent intent = new Intent(this, ServicosActivity.class);
         startActivity(intent);
+        this.overridePendingTransition(0, 0);
+        finish();
     }
 
     public void abrirClientesActivity(View view){
         Intent intent = new Intent(this, ClientesActivity.class);
         startActivity(intent);
+        this.overridePendingTransition(0, 0);
+        finish();
     }
 
     public void abrirAtividadesActivity(View view){
         Intent intent = new Intent(this, AtividadesActivity.class);
         startActivity(intent);
+        this.overridePendingTransition(0, 0);
+        finish();
     }
 
 
@@ -40,16 +48,21 @@ public class AcoesActivity extends AppCompatActivity {
     public void abrirHomeActivity(View view){
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
+        this.overridePendingTransition(0, 0);
+        finish();
     }
 
     public void abrirUserActivity(View view){
         Intent intent = new Intent(this, UserActivity.class);
         startActivity(intent);
+        this.overridePendingTransition(0, 0);
+        finish();
     }
 
     public void abrirAcoesActivity(View view){
         Intent intent = new Intent(this, AcoesActivity.class);
         startActivity(intent);
+        this.overridePendingTransition(0, 0);
+        finish();
     }
-
 }

@@ -35,6 +35,13 @@
     <string name="o_que_fazemos_titulo">O que Fazemos</string>
     <string name="mapa">Mapa</string>
     <string name="versao_app">App v1.0</string>
+    <string name="nossa_historia_text">Em 2020, um grupo de 5 amigos que se encontraram enquanto estudavam<br /><br />programação em sua Etec, descobriram compartilhar de um mesmo sonho: construir uma empresa de desenvolvimento de software e transformar o futuro das empresas interessadas em se inserir em um mundo virtual, desenvolvendo softwares eficazes, seguros e qualificados, com facilidade de uso e com foco na melhor experiência para o usuário.<br /><br />Naquele ano, ainda que trabalhassem sempre em conjunto, cada um dos membros possuía maior afinidade em uma determinada área da programação:<br /><br />Guilherme em análise de sistemas, Larissa em programação web, Leticia em banco de dados e front-end, Mateus Taveira em programação back-end e Wesley Spiandorim como designer. Unindo as habilidades e a criatividade, começaram a desenvolver o esboço de sua empresa.<br /><br />A princípio, o projeto começou em encontros diários intercalados na casa de Leticia e na biblioteca, onde realizavam leituras sobre administração, gestão de negócios e assuntos ligados a programação. Concentraram-se em moldar sua empresa, decidindo nome, hoje, Golden Company, slogan, missões, valores e visão, entre diversos assuntos necessários para sua abertura da empresa.<br /><br />Antes de iniciarem a sua divulgação, pensaram então em ter um exemplo do que iriam oferecer em sua empresa, construindo um software do zero: pensaram em um sistema de gerenciamento de bicicleta e patinete, que desenvolveram em 6 meses. Quando finalizaram o sistema, já com seus cartões de visita, flyers e redes sociais em mãos, começaram a divulgar seu trabalho.</string>
+    <string name="o_que_fazemos_texto">Hoje, a empresa cresce exponencialmente, acompanhada de mudanças na equipe: formamos agora uma família de sete funcionários qualificados e experientes com os já conhecido Leticia,Larissa, Guilherme Lemes, Mateus Taveira e Wesley e os recém-contratados Erin e Gustavo Pereira.<br /><br />Continuamos com o foco na construção de softwares de ponta para os mais variados tipos de empresas. Possuímos clientes fiéis e satisfeitos com nossos trabalhos e parcerias essenciais para compor nosso empreendimento, como a Spring Library, a Amazon, a Etec Professor Basilides de Godoy, a Saga entre outras parcerias.</string>
+
+    <!-- TELA MAIN (login) -->
+    <string name="email">Email</string>
+    <string name="senha">Senha</string>
+    <string name="logar">Logar</string>
 
     <!-- ... -->
 

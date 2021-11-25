@@ -121,16 +121,22 @@ public class UserActivity extends AppCompatActivity {
     public void abrirHomeActivity(View view){
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
+        this.overridePendingTransition(0, 0);
+        finish();
     }
 
     public void abrirUserActivity(View view){
         Intent intent = new Intent(this, UserActivity.class);
         startActivity(intent);
+        this.overridePendingTransition(0, 0);
+        finish();
     }
 
     public void abrirAcoesActivity(View view){
         Intent intent = new Intent(this, AcoesActivity.class);
         startActivity(intent);
+        this.overridePendingTransition(0, 0);
+        finish();
     }
 
 }
