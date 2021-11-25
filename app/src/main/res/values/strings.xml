@@ -4,9 +4,11 @@
     <string name="logo">Logo Golden Company</string>
     <string name="botao_perfil">Perfil do Usuário</string>
     <string name="botao_actions">Ações - Cadastrar, Alterar, Consultar e excluir</string>
+    <string name="lorem_ipsun_sm">Lorem ipsum dolor sit amet consectetur adipisicing elit.</string>
+    <string name="lorem_ipsun_md">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin metus arcu, eleifend consequat ornare in, laoreet eget ante. Pellentesque rhoncus velit orci, porttitor blandit erat tincidunt sit amet.</string>
+    <string name="lorem_ipsun_lg">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin metus arcu, eleifend consequat ornare in, laoreet eget ante. Pellentesque rhoncus velit orci, porttitor blandit erat tincidunt sit amet. Maecenas sodales lorem ut dui viverra, consequat mollis dolor aliquet. Aliquam eu nibh tincidunt, dignissim arcu eu, porttitor libero. In augue dolor, efficitur eget ex at, egestas tristique libero. Nulla tincidunt ullamcorper sapien, vitae ullamcorper quam.</string>
 
 
-    =======
 
 
     <!-- TELA USUÁRIO -->
@@ -26,6 +28,14 @@
     <string name="servicos">Serviços</string>
     <string name="clientes">Clientes</string>
     <string name="atividades">Atividades</string>
+
+    <!-- TELA HOME -->
+    <string name="bem_vindo">BEM-VINDO(A)!</string>
+    <string name="nossa_historia_titulo">Nossa História</string>
+    <string name="o_que_fazemos_titulo">O que Fazemos</string>
+    <string name="mapa">Mapa</string>
+    <string name="versao_app">App v1.0</string>
+
     <!-- ... -->
 
 
