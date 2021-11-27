@@ -2,16 +2,47 @@ package com.example.mobilev10;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class HomeActivity extends AppCompatActivity {
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.example.mobilev10.databinding.ActivityHomeBinding;
+
+public class HomeActivity extends AppCompatActivity implements OnMapReadyCallback {
+
+    private GoogleMap mMap;
+    private ActivityHomeBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+
+        binding = ActivityHomeBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        // Mudar para o endereço do galpão!!
+        LatLng goldencompany = new LatLng(-23.5206185,-46.7306523);
+
+        mMap.addMarker(new MarkerOptions().position(goldencompany).title("Golden Company"));
+        mMap.animateCamera(
+                CameraUpdateFactory.newLatLngZoom(goldencompany, 14f)
+        );
     }
 
     // NAVEGAÇÃO
