@@ -26,12 +26,46 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include">
-
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
         <TextView
+            android:id="@+id/txtAtividades"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/atividades" />
 
+        <EditText
+            android:id="@+id/edttxtAtividade"
+            android:layout_width="268dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtAtividades"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="16dp"
+            android:hint="@string/descricaoAtv"
+            android:minHeight="48dp" />
+            <EditText
+                android:id="@+id/edttxtDtInicio"
+                android:layout_width="268dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/edttxtAtividade"
+                android:inputType="date"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="16dp"
+                android:hint="@string/dataInicioAtv"
+                android:minHeight="48dp" />
+            <EditText
+                android:id="@+id/edttxtDtFim"
+                android:layout_width="268dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/edttxtDtInicio"
+                android:inputType="date"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="16dp"
+                android:hint="@string/dataFimAtv"
+                android:minHeight="48dp" />
+
+        </RelativeLayout>
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

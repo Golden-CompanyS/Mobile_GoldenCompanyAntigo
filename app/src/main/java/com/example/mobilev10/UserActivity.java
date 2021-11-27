@@ -5,6 +5,8 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -25,6 +27,7 @@ public class UserActivity extends AppCompatActivity {
     Button btnSave;
     ImageView imgUser;
     Button btnAltPerfil;
+    ImageView imgPerfil;
     private int EXTERNAL_STORAGE_PERMISSION_CODE = 23;
     private static final int RESULT_SELECT_IMAGE = 1;
     @Override
@@ -36,6 +39,8 @@ public class UserActivity extends AppCompatActivity {
         btnSave= (Button) findViewById(R.id.btnSaveNotes);
         imgUser = (ImageView) findViewById(R.id.imgUser);
         btnAltPerfil = (Button) findViewById(R.id.btnAltFoto);
+
+
     }
 //SALVAR AS ANOTAÇÕES - ARMAZENAMENTO EXTERNO
     public void savePublicly(View view){
@@ -107,14 +112,16 @@ public class UserActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+       super.onActivityResult(requestCode, resultCode, data);
 
         if(resultCode==RESULT_OK){
-            Uri imagemSelecionada = data.getData();
+           Uri imagemSelecionada = data.getData();
             //define como source da imagem
             imgUser.setImageURI(imagemSelecionada);
         }
     }
+
+
 
     // NAVEGAÇÃO
 

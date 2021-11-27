@@ -43,6 +43,11 @@
     <string name="senha">Senha</string>
     <string name="logar">Logar</string>
 
+    <!--TELA ATIVIDADES - CADASTRO-->
+    <string name="descricaoAtv">Descrição da atividade</string>
+    <string name="dataInicioAtv">Data de início da atividade</string>
+    <string name="dataFimAtv">Data de finalização da atividade</string>
+
     <!-- ... -->
 
 
