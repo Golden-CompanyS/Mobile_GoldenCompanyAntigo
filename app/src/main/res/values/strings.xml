@@ -20,6 +20,7 @@
     <string name="salvar">Salvar</string>
     <string name="sair">Sair</string>
     <string name="alterar_foto_de_perfil">Alterar Foto de Perfil</string>
+    <string name="endereco_text">" %1$s \n"</string>
 
     <!-- TELA AÇÕES -->
     <string name="socios">Sócios</string>
@@ -46,6 +47,11 @@
     <string name="dataInicioAtv">Data de início da atividade</string>
     <string name="dataFimAtv">Data de finalização da atividade</string>
     <string name="title_activity_home">HomeActivity</string>
+    <string name="invalid_lat_long_used">Latitude invalida</string>
+    <string name="service_not_available">Serviço indisponível</string>
+    <string name="no_address_found">Nenhum Endereço encontrado</string>
+    <string name="permissao_negada">Permissão Negada</string>
+    <string name="loading">Carregando...</string>
 
     <!-- ... -->
 

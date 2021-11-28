@@ -31,7 +31,8 @@
         <TableLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:isScrollContainer="true">
+            android:isScrollContainer="true"
+            >
 
             <TableRow
                 android:layout_width="wrap_content"
@@ -178,5 +179,7 @@
 
 
     </ScrollView>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
