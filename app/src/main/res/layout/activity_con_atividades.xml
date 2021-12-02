@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/background"
+    android:background="@color/background"
+    tools:context=".ConAtividadesActivity">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/layout_navbar" />
+
+    <TextView
+        android:id="@+id/txtTitulo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="20dp"
+        android:text="@string/atividades"
+        android:textAlignment="center"
+        android:textColor="@color/titulo"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include" />
+
+    <ScrollView
+        android:id="@+id/scrollContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="25dp"
+        android:orientation="horizontal"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/btnNovoRegistro"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTitulo">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ListView
+                android:id="@+id/listConsulta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></ListView>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btnNovoRegistro"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/scrollContainer"
+        android:layout_centerInParent="true"
+        android:backgroundTint="@color/botao"
+
+        android:text="@string/novo_registro"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="25dp"
+
+        android:onClick="abrirAtividadesActivity" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

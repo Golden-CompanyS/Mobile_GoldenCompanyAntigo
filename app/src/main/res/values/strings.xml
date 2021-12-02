@@ -43,7 +43,7 @@
     <string name="senha">Senha</string>
     <string name="logar">Logar</string>
 
-    <!--TELA ATIVIDADES - CADASTRO-->
+    <!-- CADASTROS -->
     <string name="title_activity_home">HomeActivity</string>
     <string name="invalid_lat_long_used">Latitude invalida</string>
     <string name="service_not_available">Serviço indisponível</string>
@@ -53,37 +53,40 @@
     <string name="cadastrar">Cadastrar</string>
 
     <string name="cadastrar_servico">Cadastrar Serviço</string>
-        <string name="hint_desc_serv">Descrição do serviço</string>
+    <string name="hint_desc_serv">Descrição do serviço</string>
 
     <string name="cadastrar_socio">Cadastrar Sócio</string>
-        <string name="hint_nome">Nome</string>
-        <string name="hint_dtnasc">Data de nascimento</string>
-        <string name="hint_cpf">CPF</string>
-        <string name="hint_cargo">Cargo</string>
-        <string name="hint_senha">Senha</string>
-        <string name="hint_tel">Telefone</string>
-        <string name="hint_email">Email</string>
-        <string name="hint_uf">UF</string>
-        <string name="hint_cidade">Cidade</string>
-        <string name="hint_bairro">Bairro</string>
-        <string name="hint_logradouro">Logradouro</string>
-        <string name="hint_complemento">Complemento</string>
-        <string name="hint_numero">Número</string>
+    <string name="hint_nome">Nome</string>
+    <string name="hint_dtnasc">Data de nascimento</string>
+    <string name="hint_cpf">CPF</string>
+    <string name="hint_cargo">Cargo</string>
+    <string name="hint_senha">Senha</string>
+    <string name="hint_tel">Telefone</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_uf">UF</string>
+    <string name="hint_cidade">Cidade</string>
+    <string name="hint_bairro">Bairro</string>
+    <string name="hint_logradouro">Logradouro</string>
+    <string name="hint_complemento">Complemento</string>
+    <string name="hint_numero">Número</string>
 
     <string name="cadastrar_cliente">Cadastrar Cliente</string>
-        <string name="hint_cnpj">CNPJ</string>
+    <string name="hint_cnpj">CNPJ</string>
 
     <string name="cadastrar_atividade">Cadastrar Atividade</string>
-        <string name="hint_desc_atv">Descrição da Atividade</string>
-        <string name="hint_dtinicio">Data de início</string>
-        <string name="hint_dtfim">Data de fim</string>
-        <string name="hint_func_id_resp">ID do funcionário responsável</string>
-        <string name="hint_cli_cnpj">CPNJ do cliente</string>
-        <string name="hint_serv_id">ID do serviço</string>
-    
+    <string name="hint_desc_atv">Descrição da Atividade</string>
+    <string name="hint_dtinicio">Data de início</string>
+    <string name="hint_dtfim">Data de fim</string>
+    <string name="hint_func_id_resp">ID do funcionário responsável</string>
+    <string name="hint_cli_cnpj">CPNJ do cliente</string>
+    <string name="hint_serv_id">ID do serviço</string>
+
     <string name="cadastrar_contato">Contato</string>
     <string name="cadastrar_endereco">Endereço</string>
     <string name="atribuicoes">Atribuições</string>
+    
+    <!-- CONSULTAS -->
+    <string name="novo_registro">Novo registro</string>
 
     <!-- ... -->
 

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/background"
     android:background="@color/background"
-    tools:context=".ServicosActivity">
+    tools:context=".ClientesActivity">
 
     <include
         android:id="@+id/include"

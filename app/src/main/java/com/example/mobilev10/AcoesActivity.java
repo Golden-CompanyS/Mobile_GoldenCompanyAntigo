@@ -120,31 +120,27 @@ public class AcoesActivity extends AppCompatActivity implements SensorEventListe
 
 
     public void abrirSociosActivity(View view){
-        Intent intent = new Intent(this, SociosActivity.class);
+        Intent intent = new Intent(this, ConSociosActivity.class);
         startActivity(intent);
         this.overridePendingTransition(0, 0);
-        finish();
     }
 
     public void abrirServicosActivity(View view){
-        Intent intent = new Intent(this, ServicosActivity.class);
+        Intent intent = new Intent(this, ConServicosActivity.class);
         startActivity(intent);
         this.overridePendingTransition(0, 0);
-        finish();
     }
 
     public void abrirClientesActivity(View view){
-        Intent intent = new Intent(this, ClientesActivity.class);
+        Intent intent = new Intent(this, ConClientesActivity.class);
         startActivity(intent);
         this.overridePendingTransition(0, 0);
-        finish();
     }
 
     public void abrirAtividadesActivity(View view){
-        Intent intent = new Intent(this, AtividadesActivity.class);
+        Intent intent = new Intent(this, ConAtividadesActivity.class);
         startActivity(intent);
         this.overridePendingTransition(0, 0);
-        finish();
     }
 
 
