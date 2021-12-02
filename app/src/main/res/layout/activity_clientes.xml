@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/background"
     android:background="@color/background"
-    tools:context=".ClientesActivity">
+    tools:context=".ServicosActivity">
 
     <include
         android:id="@+id/include"
@@ -27,10 +28,192 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include">
 
-        <TextView
+
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/clientes" />
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imgAcao"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="100dp"
+                android:layout_marginBottom="22dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@drawable/clientes"
+                app:tint="@color/botao" />
+
+            <TextView
+                android:id="@+id/txtTitulo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imgAcao"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="26dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/cadastrar_cliente"
+                android:textColor="@color/titulo"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/edtNomeCliente"
+                android:layout_width="268dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtTitulo"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/input_arredondado"
+                android:hint="@string/hint_nome"
+                android:minHeight="32dp" />
+
+            <EditText
+                android:id="@+id/edtCnpjCliente"
+                android:layout_width="268dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtNomeCliente"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/input_arredondado"
+                android:hint="@string/hint_cnpj"
+                android:inputType="number"
+                android:minHeight="32dp" />
+
+            <TextView
+                android:id="@+id/txtContato"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtCnpjCliente"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="26dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/cadastrar_contato"
+                android:textColor="@color/titulo"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/edtTelCliente"
+                android:layout_width="268dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtContato"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/input_arredondado"
+                android:hint="@string/hint_tel"
+                android:minHeight="32dp" />
+
+            <EditText
+                android:id="@+id/edtEmailCliente"
+                android:layout_width="268dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtTelCliente"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/input_arredondado"
+                android:hint="@string/hint_email"
+                android:minHeight="32dp" />
+
+            <TextView
+                android:id="@+id/txtEndereco"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtEmailCliente"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="26dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/cadastrar_endereco"
+                android:textColor="@color/titulo"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/edtUfCliente"
+                android:layout_width="268dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtEndereco"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/input_arredondado"
+                android:hint="@string/hint_uf"
+                android:minHeight="32dp" />
+
+            <EditText
+                android:id="@+id/edtCidadeCliente"
+                android:layout_width="268dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtUfCliente"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/input_arredondado"
+                android:hint="@string/hint_cidade"
+                android:minHeight="32dp" />
+
+            <EditText
+                android:id="@+id/edtBairroCliente"
+                android:layout_width="268dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtCidadeCliente"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/input_arredondado"
+                android:hint="@string/hint_bairro"
+                android:minHeight="32dp" />
+
+            <EditText
+                android:id="@+id/edtLogradouroCliente"
+                android:layout_width="268dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtBairroCliente"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/input_arredondado"
+                android:hint="@string/hint_logradouro"
+                android:minHeight="32dp" />
+
+            <EditText
+                android:id="@+id/edtComplementoCliente"
+                android:layout_width="268dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtLogradouroCliente"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/input_arredondado"
+                android:hint="@string/hint_complemento"
+                android:minHeight="32dp" />
+
+            <EditText
+                android:id="@+id/edtNumEndCliente"
+                android:layout_width="268dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtComplementoCliente"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/input_arredondado"
+                android:hint="@string/hint_numero"
+                android:inputType="number"
+                android:minHeight="32dp" />
+
+            <Button
+                android:id="@+id/btnSalvar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtNumEndCliente"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/botao"
+
+                android:onClick="run"
+                android:text="@string/cadastrar" />
+
+        </RelativeLayout>
+
 
     </ScrollView>
 

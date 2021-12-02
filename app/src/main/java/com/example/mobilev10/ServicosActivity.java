@@ -16,7 +16,7 @@ public class ServicosActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_servicos);
-        desc = (TextView) findViewById(R.id.edttxtDescAtividade);
+        desc = (TextView) findViewById(R.id.edtDescServico);
         String descString = desc.getText().toString();
         mydb = new DatabaseHelper(this);
     }

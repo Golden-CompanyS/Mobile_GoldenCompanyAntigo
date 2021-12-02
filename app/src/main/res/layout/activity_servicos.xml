@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/background"
     android:background="@color/background"
     tools:context=".ServicosActivity">
 
@@ -26,34 +27,63 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include">
+
+
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/txtServicos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/servicos" />
 
-        <EditText
-            android:id="@+id/edttxtDescAtividade"
-            android:layout_width="268dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtServicos"
-            android:layout_centerInParent="true"
-            android:hint="Descrição do Serviço"
-            android:layout_marginTop="16dp"
+            <ImageView
+                android:id="@+id/imgAcao"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="100dp"
+                android:layout_marginBottom="32dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@drawable/servicos"
+                app:tint="@color/botao" />
 
-            android:minHeight="48dp" />
+            <TextView
+                android:id="@+id/txtTitulo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imgAcao"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="26dp"
+                android:text="@string/cadastrar_servico"
+                android:textColor="@color/titulo"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/edtDescServico"
+                android:layout_width="268dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtTitulo"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/input_arredondado"
+                android:hint="@string/hint_desc_serv"
+                android:minHeight="32dp" />
 
             <Button
+                android:id="@+id/btnSalvar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/edttxtDescAtividade"
+                android:layout_below="@+id/edtDescServico"
                 android:layout_centerInParent="true"
+                android:layout_marginTop="20dp"
                 android:backgroundTint="@color/botao"
+
                 android:onClick="run"
-                android:text="Salvar"></Button>
+                android:text="@string/cadastrar" />
+
         </RelativeLayout>
 
 

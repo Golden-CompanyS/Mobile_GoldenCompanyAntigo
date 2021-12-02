@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/background"
     android:background="@color/background"
-    tools:context=".SociosActivity">
+    tools:context=".ServicosActivity">
 
     <include
         android:id="@+id/include"
@@ -27,10 +28,226 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include">
 
-        <TextView
+
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/socios" />
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imgAcao"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="100dp"
+                android:layout_marginBottom="22dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@drawable/socios"
+                app:tint="@color/botao" />
+
+            <TextView
+                android:id="@+id/txtTitulo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imgAcao"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="26dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/cadastrar_socio"
+                android:textColor="@color/titulo"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/edtNomeSocio"
+                android:layout_width="268dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtTitulo"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/input_arredondado"
+                android:hint="@string/hint_nome"
+                android:minHeight="32dp" />
+
+            <EditText
+                android:id="@+id/edtDtNascSocio"
+                android:layout_width="268dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtNomeSocio"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/input_arredondado"
+                android:hint="@string/hint_dtnasc"
+                android:inputType="date"
+                android:minHeight="32dp" />
+
+            <EditText
+                android:id="@+id/edtCpfSocio"
+                android:layout_width="268dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtDtNascSocio"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/input_arredondado"
+                android:hint="@string/hint_cpf"
+                android:inputType="number"
+                android:minHeight="32dp" />
+
+            <EditText
+                android:id="@+id/edtCargoSocio"
+                android:layout_width="268dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtCpfSocio"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/input_arredondado"
+                android:hint="@string/hint_cargo"
+                android:minHeight="32dp" />
+
+            <EditText
+                android:id="@+id/edtSenhaSocio"
+                android:layout_width="268dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtCargoSocio"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/input_arredondado"
+                android:hint="@string/hint_senha"
+                android:minHeight="32dp" />
+
+            <TextView
+                android:id="@+id/txtContato"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtSenhaSocio"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="26dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/cadastrar_contato"
+                android:textColor="@color/titulo"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/edtTelSocio"
+                android:layout_width="268dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtContato"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/input_arredondado"
+                android:hint="@string/hint_tel"
+                android:minHeight="32dp" />
+
+            <EditText
+                android:id="@+id/edtEmailSocio"
+                android:layout_width="268dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtTelSocio"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/input_arredondado"
+                android:hint="@string/hint_email"
+                android:minHeight="32dp" />
+
+            <TextView
+                android:id="@+id/txtEndereco"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtEmailSocio"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="26dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/cadastrar_endereco"
+                android:textColor="@color/titulo"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/edtUfSocio"
+                android:layout_width="268dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtEndereco"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/input_arredondado"
+                android:hint="@string/hint_uf"
+                android:minHeight="32dp" />
+
+            <EditText
+                android:id="@+id/edtCidadeSocio"
+                android:layout_width="268dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtUfSocio"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/input_arredondado"
+                android:hint="@string/hint_cidade"
+                android:minHeight="32dp" />
+
+            <EditText
+                android:id="@+id/edtBairroSocio"
+                android:layout_width="268dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtCidadeSocio"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/input_arredondado"
+                android:hint="@string/hint_bairro"
+                android:minHeight="32dp" />
+
+            <EditText
+                android:id="@+id/edtLogradouroSocio"
+                android:layout_width="268dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtBairroSocio"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/input_arredondado"
+                android:hint="@string/hint_logradouro"
+                android:minHeight="32dp" />
+
+            <EditText
+                android:id="@+id/edtComplementoSocio"
+                android:layout_width="268dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtLogradouroSocio"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/input_arredondado"
+                android:hint="@string/hint_complemento"
+                android:minHeight="32dp" />
+
+            <EditText
+                android:id="@+id/edtNumEndSocio"
+                android:layout_width="268dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtComplementoSocio"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/input_arredondado"
+                android:hint="@string/hint_numero"
+                android:inputType="number"
+                android:minHeight="32dp" />
+
+            <Button
+                android:id="@+id/btnSalvar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtNumEndSocio"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/botao"
+
+                android:onClick="run"
+                android:text="@string/cadastrar" />
+
+        </RelativeLayout>
+
 
     </ScrollView>
 
