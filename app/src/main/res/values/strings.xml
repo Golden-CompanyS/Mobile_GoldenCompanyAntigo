@@ -11,6 +11,7 @@
 
     <!-- TELA USUÁRIO -->
     <string name="dark_mode">Dark Mode</string>
+    <string name="dark_mode_automatico">Dark Mode Automático</string>
     <string name="alterar_senha">Alterar Senha</string>
     <string name="area_do_usuario">Área do usuário</string>
     <string name="senha_atual">Senha Atual</string>

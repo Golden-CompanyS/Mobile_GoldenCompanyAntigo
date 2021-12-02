@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg"
+    android:id="@+id/background"
+    android:background="@color/background"
     tools:context=".AcoesActivity">
 
     <include
@@ -43,6 +44,7 @@
                 <FrameLayout>
 
                     <ImageButton
+                        android:id="@+id/imgbtnSocios"
                         android:layout_weight="1"
                         android:layout_height="116dp"
                         android:layout_width="116dp"
@@ -59,6 +61,7 @@
                         android:onClick="abrirSociosActivity" />
 
                     <TextView
+                        android:id="@+id/txtbtnSocios"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -74,6 +77,7 @@
                 <FrameLayout>
 
                     <ImageButton
+                        android:id="@+id/imgbtnServicos"
                         android:layout_weight="1"
                         android:layout_height="116dp"
                         android:layout_width="116dp"
@@ -90,6 +94,7 @@
                         android:onClick="abrirServicosActivity" />
 
                     <TextView
+                        android:id="@+id/txtbtnServicos"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -113,6 +118,7 @@
                 <FrameLayout>
 
                     <ImageButton
+                        android:id="@+id/imgbtnClientes"
                         android:layout_weight="1"
                         android:layout_height="116dp"
                         android:layout_width="116dp"
@@ -129,6 +135,7 @@
                         android:onClick="abrirClientesActivity" />
 
                     <TextView
+                        android:id="@+id/txtbtnClientes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -144,6 +151,7 @@
                 <FrameLayout>
 
                     <ImageButton
+                        android:id="@+id/imgbtnAtividades"
                         android:layout_weight="1"
                         android:layout_height="116dp"
                         android:layout_width="116dp"
@@ -160,6 +168,7 @@
                         android:onClick="abrirAtividadesActivity" />
 
                     <TextView
+                        android:id="@+id/txtbtnAtividades"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"

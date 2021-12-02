@@ -3,13 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/mateu/AndroidStudioPojects/Mobile/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.221875" />
         <entry key="..\:/Users/mateu/AndroidStudioPojects/Mobile/app/src/main/res/drawable/cabecalho.xml" value="0.3828125" />
         <entry key="..\:/Users/mateu/AndroidStudioPojects/Mobile/app/src/main/res/drawable/imgbtn_arredondado.xml" value="0.3828125" />
+        <entry key="..\:/Users/mateu/AndroidStudioPojects/Mobile/app/src/main/res/drawable/imgbtn_arredondado_dark.xml" value="0.221875" />
         <entry key="..\:/Users/mateu/AndroidStudioPojects/Mobile/app/src/main/res/drawable/input_arredondado.xml" value="0.3828125" />
+        <entry key="..\:/Users/mateu/AndroidStudioPojects/Mobile/app/src/main/res/drawable/input_arredondado_dark.xml" value="0.221875" />
         <entry key="..\:/Users/mateu/AndroidStudioPojects/Mobile/app/src/main/res/layout/activity_acoes.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/mateu/AndroidStudioPojects/Mobile/app/src/main/res/layout/activity_atividades.xml" value="0.35260416666666666" />
         <entry key="..\:/Users/mateu/AndroidStudioPojects/Mobile/app/src/main/res/layout/activity_clientes.xml" value="0.35260416666666666" />
-        <entry key="..\:/Users/mateu/AndroidStudioPojects/Mobile/app/src/main/res/layout/activity_home.xml" value="0.29163582531458176" />
+        <entry key="..\:/Users/mateu/AndroidStudioPojects/Mobile/app/src/main/res/layout/activity_home.xml" value="0.1" />
         <entry key="..\:/Users/mateu/AndroidStudioPojects/Mobile/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/mateu/AndroidStudioPojects/Mobile/app/src/main/res/layout/activity_servicos.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/mateu/AndroidStudioPojects/Mobile/app/src/main/res/layout/activity_socios.xml" value="0.33" />
@@ -18,7 +21,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_13" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

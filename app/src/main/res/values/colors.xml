@@ -7,8 +7,18 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="botoes">#4A4864</color>
-    <color name="bg">#E8E8E8</color>
     <color name="cabecalho_line">#FFC600</color>
     <color name="nav">#F5F5F5</color>
+
+    <color name="background">#E8E8E8</color>
+    <color name="dark_input">#A9A9A9</color>
+    <color name="dark_input_hint">#E3E3E3</color>
+    <color name="dark_background">#5A5A5A</color>
+    <color name="dark_cabecalho">#2E2E2E</color>
+    <color name="titulo">#000000</color>
+    <color name="dark_titulo">#FFFFFF</color>
+    <color name="texto">#222222</color>
+    <color name="dark_texto">#DDDDDD</color>
+    <color name="botao">#4A4864</color>
+    <color name="dark_botao">#100C47</color>
 </resources>

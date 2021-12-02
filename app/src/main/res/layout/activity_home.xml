@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg"
+    android:id="@+id/background"
+    android:background="@color/background"
     tools:context=".HomeActivity">
 
     <include
@@ -45,7 +46,7 @@
                 android:layout_marginBottom="10dp"
                 android:text="@string/bem_vindo"
                 android:textAlignment="center"
-                android:textColor="#000000"
+                android:textColor="@color/titulo"
                 android:textSize="20sp" />
 
             <TextView
@@ -60,7 +61,7 @@
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="10dp"
                 android:text="@string/nossa_historia_titulo"
-                android:textColor="#000000"
+                android:textColor="@color/titulo"
                 android:textSize="18sp" />
 
             <TextView
@@ -74,7 +75,7 @@
                 android:layout_marginEnd="15dp"
                 android:justificationMode="inter_word"
                 android:text="@string/nossa_historia_text"
-                android:textColor="#222222"
+                android:textColor="@color/texto"
                 android:textSize="16sp" />
 
             <TextView
@@ -89,7 +90,7 @@
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="10dp"
                 android:text="@string/o_que_fazemos_titulo"
-                android:textColor="#000000"
+                android:textColor="@color/titulo"
                 android:textSize="18sp" />
 
             <TextView
@@ -103,7 +104,7 @@
                 android:layout_marginEnd="15dp"
                 android:justificationMode="inter_word"
                 android:text="@string/o_que_fazemos_texto"
-                android:textColor="#222222"
+                android:textColor="@color/texto"
                 android:textSize="16sp" />
 
             <TextView
@@ -118,7 +119,7 @@
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="10dp"
                 android:text="@string/mapa"
-                android:textColor="#000000"
+                android:textColor="@color/titulo"
                 android:textSize="18sp" />
 
 

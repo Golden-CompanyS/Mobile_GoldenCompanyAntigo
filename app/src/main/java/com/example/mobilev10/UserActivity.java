@@ -2,16 +2,23 @@ package com.example.mobilev10;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.SearchManager;
+import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -20,8 +27,12 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,15 +51,19 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class UserActivity extends AppCompatActivity implements FetchAddressTask.OnTaskCompleted {
+public class UserActivity extends AppCompatActivity implements FetchAddressTask.OnTaskCompleted, SensorEventListener {
+    // Luminosidade - Dark Mode
+    private static final String ARQUIVO_PREFERENCIAS = "ArquivoPreferencias";
+    SensorManager sensorManager;
+    Sensor sensor;
+    Float luminosidade;
+
 
     EditText edtNotes;
     Button btnSave;
     ImageView imgUser;
     Button btnAltPerfil;
     ImageView imgPerfil;
-
-    public static final String PREFERENCIAS_NAME = "com.example.android.localizacao";
     private static final String TRACKING_LOCATION_KEY = "tracking_location";
     // Constantes
     private static final int REQUEST_LOCATION_PERMISSION = 1;
@@ -75,6 +90,66 @@ public class UserActivity extends AppCompatActivity implements FetchAddressTask.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+
+        // Luminosidade - Dark Mode
+        SharedPreferences preferencias = getSharedPreferences(ARQUIVO_PREFERENCIAS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferencias.edit();
+
+        Switch switchTema_Manual = (Switch) findViewById(R.id.switch1);
+        Switch switchTema_Automatico = (Switch) findViewById(R.id.switch2);
+
+        if (preferencias.getBoolean("Automatico", false)) {
+            switchTema_Automatico.setChecked(true);
+            switchTema_Manual.setClickable(false);
+            if (preferencias.getBoolean("Dark", false)){
+                ativarDarkMode();
+            }
+        } else if (preferencias.getBoolean("Dark", false)) {
+            switchTema_Manual.setChecked(true);
+            switchTema_Automatico.setChecked(false);
+            ativarDarkMode();
+        }
+
+
+        sensorManager = (SensorManager) getSystemService(Service.SENSOR_SERVICE);
+        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+
+        switchTema_Manual.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    editor.putBoolean("Dark", true);
+                } else {
+                    editor.putBoolean("Dark", false);
+                }
+                editor.commit();
+
+                Intent intent = new Intent(UserActivity.this, UserActivity.class);
+                startActivity(intent);
+                UserActivity.this.overridePendingTransition(0, 0);
+                finish();
+            }
+        });
+
+        switchTema_Automatico.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    editor.putBoolean("Automatico", true);
+                    switchTema_Manual.setClickable(false);
+                } else {
+                    editor.putBoolean("Automatico", false);
+                    switchTema_Manual.setClickable(false);
+                }
+                editor.commit();
+
+                Intent intent = new Intent(UserActivity.this, UserActivity.class);
+                startActivity(intent);
+                UserActivity.this.overridePendingTransition(0, 0);
+                finish();
+            }
+        });
+
 
         edtNotes = (EditText) findViewById(R.id.edtNotes);
         btnSave= (Button) findViewById(R.id.btnSaveNotes);
@@ -109,11 +184,92 @@ public class UserActivity extends AppCompatActivity implements FetchAddressTask.
 
 
         //inicializa as preferências do usuário
-        mPreferences = getSharedPreferences(PREFERENCIAS_NAME, MODE_PRIVATE);
+        //mPreferences = getSharedPreferences(PREFERENCIAS_NAME, MODE_PRIVATE);
         //recupera as preferencias
         //recuperar();
     }
-//SALVAR AS ANOTAÇÕES - ARMAZENAMENTO EXTERNO
+
+    // Luminosidade - Dark Mode
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        SharedPreferences preferencias = getSharedPreferences(ARQUIVO_PREFERENCIAS, 0);
+        SharedPreferences.Editor editor = preferencias.edit();
+
+        if (preferencias.getBoolean("Automatico", false)) {
+            if (event.sensor.getType() == Sensor.TYPE_LIGHT) {
+                luminosidade = event.values[0];
+
+                if (luminosidade < 20000) {
+                    editor.putBoolean("Dark", true).apply();
+                } else if (preferencias.getBoolean("Automatico", false) && luminosidade >= 20000) {
+                    editor.putBoolean("Dark", false).apply();
+                }
+
+                Intent intent = new Intent(UserActivity.this, UserActivity.class);
+                startActivity(intent);
+                this.overridePendingTransition(0, 0);
+                finish();
+            }
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        sensorManager.unregisterListener(this);
+    }
+
+    public void ativarDarkMode() {
+        ConstraintLayout ConstrBackground = (ConstraintLayout) findViewById(R.id.background);
+        LinearLayout linearCabecalho = (LinearLayout) findViewById(R.id.linearCabecalho);
+        ImageButton imgbtnHome = (ImageButton) findViewById(R.id.imgbtnHome);
+        ImageButton imgbtnAcoes = (ImageButton) findViewById(R.id.imgbtnAcoes);
+        ImageButton imgbtnPerfil = (ImageButton) findViewById(R.id.imgbtnPerfil);
+        TextView txtUserArea = (TextView) findViewById(R.id.txtUserArea);
+        TextView txtAltSenha = (TextView) findViewById(R.id.txtAltSenha);
+        TextView txtEndereco = (TextView) findViewById(R.id.txtEndereco);
+        Button btnAltFoto = (Button) findViewById(R.id.btnAltFoto);
+        Button btnAltSenha = (Button) findViewById(R.id.btnAltSenha);
+        Button btnSaveNotes = (Button) findViewById(R.id.btnSaveNotes);
+        Button btnLogout = (Button) findViewById(R.id.btnLogout);
+        Switch swtDarkmodeManual = (Switch) findViewById(R.id.switch1);
+        Switch swtDarkmodeAutomatico = (Switch) findViewById(R.id.switch2);
+        EditText edtSenhaAtual = (EditText) findViewById(R.id.edttxtAltSenha);
+        EditText edtSenhaNova = (EditText) findViewById(R.id.edttxtConfAltSenha);
+        EditText edtNotes = (EditText) findViewById(R.id.edtNotes);
+
+
+        ConstrBackground.setBackgroundResource(R.color.dark_background);
+        linearCabecalho.setBackgroundResource(R.color.dark_cabecalho);
+        /*imgbtnHome.setImageResource(R.drawable.logoDark);
+        imgbtnAcoes.setImageResource(R.drawable.acoesDark);
+        imgbtnPerfil.setImageResource(R.drawable.perfilDark);*/
+        txtUserArea.setTextColor(getResources().getColor(R.color.dark_titulo));
+        txtAltSenha.setTextColor(getResources().getColor(R.color.dark_titulo));
+        txtEndereco.setTextColor(getResources().getColor(R.color.dark_titulo));
+        btnAltFoto.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.dark_botao)));
+        btnAltSenha.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.dark_botao)));
+        btnSaveNotes.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.dark_botao)));
+        btnLogout.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.dark_botao)));
+        swtDarkmodeManual.setTextColor(getResources().getColor(R.color.dark_titulo));
+        swtDarkmodeAutomatico.setTextColor(getResources().getColor(R.color.dark_titulo));
+        edtSenhaAtual.setTextColor(getResources().getColor(R.color.dark_titulo));
+        edtSenhaAtual.setHintTextColor(getResources().getColor(R.color.dark_input_hint));
+        edtSenhaAtual.setBackgroundResource(R.drawable.input_arredondado_dark);
+        edtSenhaNova.setTextColor(getResources().getColor(R.color.dark_titulo));
+        edtSenhaNova.setHintTextColor(getResources().getColor(R.color.dark_input_hint));
+        edtSenhaNova.setBackgroundResource(R.drawable.input_arredondado_dark);
+        edtNotes.setTextColor(getResources().getColor(R.color.dark_titulo));
+        edtNotes.setHintTextColor(getResources().getColor(R.color.dark_input_hint));
+        edtNotes.setBackgroundResource(R.drawable.input_arredondado_dark);
+    }
+
+    //SALVAR AS ANOTAÇÕES - ARMAZENAMENTO EXTERNO
     public void savePublicly(View view){
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE
         }, EXTERNAL_STORAGE_PERMISSION_CODE);
@@ -266,7 +422,7 @@ public class UserActivity extends AppCompatActivity implements FetchAddressTask.
                                 List<Address> adresses = geocoder.getFromLocation(
                                         location.getLatitude(), location.getLongitude(), 1);
                                 adresses.get(0).getCountryName();
-                                SharedPreferences preferences = getSharedPreferences(PREFERENCIAS_NAME, 0);
+                                SharedPreferences preferences = getSharedPreferences(ARQUIVO_PREFERENCIAS, 0);
 
                             } catch (IOException e) {
                                 e.printStackTrace();
@@ -313,15 +469,14 @@ public class UserActivity extends AppCompatActivity implements FetchAddressTask.
         }
         recuperar();
         super.onResume();
+        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @SuppressLint("StringFormatMatches")
     private void recuperar() {
-        SharedPreferences mPreferences = getSharedPreferences(PREFERENCIAS_NAME, 0);
+        SharedPreferences mPreferences = getSharedPreferences(ARQUIVO_PREFERENCIAS, 0);
         lastAdress = mPreferences.getString(LASTADRESS_KEY, "");
         Toast.makeText(this, getString(R.string.endereco_text), Toast.LENGTH_SHORT).show();
     }
-
-
 
 }
