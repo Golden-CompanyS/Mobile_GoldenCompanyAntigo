@@ -7,6 +7,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -135,9 +136,9 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         ConstrBackground.setBackgroundResource(R.color.dark_background);
         linearCabecalho.setBackgroundResource(R.color.dark_cabecalho);
-        /*imgbtnLogo.setImageResource(R.drawable.logoDark);
-        imgbtnHome.setImageResource(R.drawable.homeDark);
-        imgbtnPerfil.setImageResource(R.drawable.perfilDark);*/
+        imgbtnHome.setImageResource(R.drawable.logodark);
+        imgbtnAcoes.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.dark_texto)));
+        imgbtnPerfil.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.dark_texto)));
         txtBemvindo.setTextColor(getResources().getColor(R.color.dark_titulo));
         txtNossahistoriaTitulo.setTextColor(getResources().getColor(R.color.dark_titulo));
         txtNossahistoriaTexto.setTextColor(getResources().getColor(R.color.dark_texto));

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/background"
     android:background="@color/background"
     tools:context=".MainActivity">
 
@@ -40,10 +41,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@drawable/logolight" />
+                android:src="@drawable/logolight" />
 
             <EditText
-                android:id="@+id/edtEmail"
+                android:id="@+id/edtEmailLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/imgLogo"
@@ -55,10 +56,10 @@
                 android:hint="@string/email" />
 
             <EditText
-                android:id="@+id/edtSenha"
+                android:id="@+id/edtSenhaLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/edtEmail"
+                android:layout_below="@id/edtEmailLogin"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="25dp"
                 android:layout_marginBottom="15dp"
@@ -71,7 +72,7 @@
                 android:id="@+id/btnLogin"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/edtSenha"
+                android:layout_below="@+id/edtSenhaLogin"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="40dp"
                 android:backgroundTint="@color/botao"

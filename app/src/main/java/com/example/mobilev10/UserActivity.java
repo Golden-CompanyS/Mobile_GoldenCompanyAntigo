@@ -246,9 +246,9 @@ public class UserActivity extends AppCompatActivity implements FetchAddressTask.
 
         ConstrBackground.setBackgroundResource(R.color.dark_background);
         linearCabecalho.setBackgroundResource(R.color.dark_cabecalho);
-        /*imgbtnHome.setImageResource(R.drawable.logoDark);
-        imgbtnAcoes.setImageResource(R.drawable.acoesDark);
-        imgbtnPerfil.setImageResource(R.drawable.perfilDark);*/
+        imgbtnHome.setImageResource(R.drawable.logodark);
+        imgbtnAcoes.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.dark_texto)));
+        imgbtnPerfil.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.dark_texto)));
         txtUserArea.setTextColor(getResources().getColor(R.color.dark_titulo));
         txtAltSenha.setTextColor(getResources().getColor(R.color.dark_titulo));
         txtEndereco.setTextColor(getResources().getColor(R.color.dark_titulo));

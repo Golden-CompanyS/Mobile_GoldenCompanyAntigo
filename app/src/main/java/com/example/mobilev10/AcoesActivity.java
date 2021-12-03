@@ -6,6 +6,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -105,9 +106,9 @@ public class AcoesActivity extends AppCompatActivity implements SensorEventListe
 
         ConstrBackground.setBackgroundResource(R.color.dark_background);
         linearCabecalho.setBackgroundResource(R.color.dark_cabecalho);
-        /*imgbtnLogo.setImageResource(R.drawable.logoDark);
-        imgbtnHome.setImageResource(R.drawable.homeDark);
-        imgbtnPerfil.setImageResource(R.drawable.perfilDark);*/
+        imgbtnHome.setImageResource(R.drawable.logodark);
+        imgbtnAcoes.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.dark_texto)));
+        imgbtnPerfil.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.dark_texto)));
         imgbtnSocios.setBackgroundResource(R.drawable.imgbtn_arredondado_dark);
         imgbtnServicos.setBackgroundResource(R.drawable.imgbtn_arredondado_dark);
         imgbtnClientes.setBackgroundResource(R.drawable.imgbtn_arredondado_dark);
