@@ -87,6 +87,13 @@
     
     <!-- CONSULTAS -->
     <string name="novo_registro">Novo registro</string>
+    <string name="excluir_registro">Você tem certeza quer quer excluir esse registro?</string>
+    <string name="editar">Editar</string>
+    <string name="excluir">Excluir</string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
+    <string name="delete_ok">Registro excluído com sucesso.</string>
+    <string name="delete_registro">Excluír registro</string>
     <string name="Visualizar">Visualizar</string>
 
     <!-- ... -->

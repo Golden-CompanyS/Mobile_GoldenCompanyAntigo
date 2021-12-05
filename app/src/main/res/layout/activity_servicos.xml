@@ -72,17 +72,54 @@
                 android:hint="@string/hint_desc_serv"
                 android:minHeight="32dp" />
 
-            <Button
-                android:id="@+id/btnSalvar"
-                android:layout_width="wrap_content"
+            <TableLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/edtDescServico"
                 android:layout_centerInParent="true"
-                android:layout_marginTop="20dp"
-                android:backgroundTint="@color/botao"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="20dp">
 
-                android:onClick="run"
-                android:text="@string/cadastrar" />
+                <TableRow>
+
+                    <Button
+                        android:id="@+id/btnSalvar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/botao"
+                        android:onClick="salvar"
+                        android:text="@string/cadastrar" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <Button
+                        android:id="@+id/btnEditar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/botao"
+                        android:onClick="editar"
+                        android:text="@string/editar" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <Button
+                        android:id="@+id/btnExcluir"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/botao"
+                        android:onClick="excluir"
+                        android:text="@string/excluir" />
+
+                </TableRow>
+
+            </TableLayout>
+
+
 
         </RelativeLayout>
 
