@@ -161,24 +161,22 @@
                 android:backgroundTint="@color/botao"
                 android:onClick="savePublicly"
                 android:text="@string/salvar" />
-
             <Button
-                android:id="@+id/btnLogout"
-                android:layout_width="120dp"
+                android:id="@+id/btnView"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/botao"
-                android:text="@string/sair"
+                android:text="@string/Visualizar"
                 android:layout_below="@+id/btnSaveNotes"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="15dp"
-
-                />
+                android:onClick="loadNotes"/>
 
             <TextView
                 android:id="@+id/txtEndereco"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/btnLogout"
+                android:layout_below="@+id/btnView"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="5dp"
@@ -190,6 +188,17 @@
                 android:textColor="#000000"
                 android:textSize="18sp"
                  />
+            <Button
+                android:id="@+id/btnLogout"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/botao"
+                android:text="@string/sair"
+                android:layout_below="@+id/txtEndereco"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="15dp"
+
+                />
 
         </RelativeLayout>
 

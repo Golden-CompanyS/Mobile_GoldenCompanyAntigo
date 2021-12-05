@@ -135,6 +135,15 @@
 				android:layout_marginEnd="15dp"
                 android:nestedScrollingEnabled="true" />
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/botao"
+                android:layout_below="@id/map"
+                android:text="Visite nosso GitHub"
+                android:layout_marginTop="15dp"
+                android:layout_centerInParent="true"
+                android:onClick="abrirGit"/>
 
         </RelativeLayout>
 

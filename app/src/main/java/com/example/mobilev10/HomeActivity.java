@@ -12,6 +12,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -169,5 +170,10 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         startActivity(intent);
         this.overridePendingTransition(0, 0);
         finish();
+    }
+
+    public void abrirGit(View v){
+        Intent it = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/Golden-CompanyS/Mobile"));
+        startActivity(Intent.createChooser(it, "Abrir browser"));
     }
 }
