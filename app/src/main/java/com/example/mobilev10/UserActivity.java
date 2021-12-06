@@ -9,6 +9,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -25,6 +26,7 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -56,11 +58,15 @@ import java.util.Locale;
 
 public class UserActivity extends AppCompatActivity implements FetchAddressTask.OnTaskCompleted, SensorEventListener {
     // Luminosidade - Dark Mode
+    public static final String PREFERENCIAS_NAME = "com.example.android.localizacao";
     private static final String ARQUIVO_PREFERENCIAS = "ArquivoPreferencias";
+    private float bestOfX = 0, bestOfY = 0, bestOfZ = 0;
+
     SensorManager sensorManager;
     Sensor sensor;
     Float luminosidade;
-
+    private Sensor acelerometro;
+    ImageButton mLocationButton;
 
     EditText edtNotes;
     Button btnSave;
@@ -71,8 +77,9 @@ public class UserActivity extends AppCompatActivity implements FetchAddressTask.
     // Constantes
     private static final int REQUEST_LOCATION_PERMISSION = 1;
     private static final String LASTADRESS_KEY = "adress";
-    private static final String LATITUDE_KEY = "latitude";
-    private static final String LONGITUDE_KEY = "longitude";
+    private static final String LASTDATE_KEY = "data";
+    //private static final String LATITUDE_KEY = "latitude";
+   // private static final String LONGITUDE_KEY = "longitude";
     private static final String FILE_NAME = "NOTES.txt";
 
 
@@ -95,6 +102,51 @@ public class UserActivity extends AppCompatActivity implements FetchAddressTask.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+        mLocationButton = (ImageButton) findViewById(R.id.btnLocal);
+        // Listener do botão de localização.
+        mLocationButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Toggle the tracking state.
+             * @param v The track location button.
+             */
+            @Override
+            public void onClick(View v) {
+                if (!mTrackingLocation) {
+                    iniciarLocal();
+                } else {
+                    stopTrackingLocation();
+                }
+            }
+        });
+        // Inicializa os callbacks da locations.
+        mLocationCallback = new LocationCallback() {
+            /**
+             * This is the callback that is triggered when the
+             * FusedLocationClient updates your location.
+             * @param locationResult The result containing the device location.
+             */
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                // If tracking is turned on, reverse geocode into an address
+                if (mTrackingLocation) {
+                    new FetchAddressTask(UserActivity.this, UserActivity.this)
+                            .execute(locationResult.getLastLocation());
+                }
+            }
+        };
+
+        //recupera o sensor default e chama o meto de listagem de sensores
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        acelerometro = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
+        sensorManager.registerListener(this, acelerometro, SensorManager.SENSOR_DELAY_NORMAL);
+
+        listSensors();
+
+        //inicializa as preferências do usuário
+        mPreferences = getSharedPreferences(PREFERENCIAS_NAME, MODE_PRIVATE);
+        //recupera as preferencias
+        recuperar();
 
         // Luminosidade - Dark Mode
         SharedPreferences preferencias = getSharedPreferences(ARQUIVO_PREFERENCIAS, MODE_PRIVATE);
@@ -186,12 +238,6 @@ public class UserActivity extends AppCompatActivity implements FetchAddressTask.
             }
         };
 
-
-
-        //inicializa as preferências do usuário
-        //mPreferences = getSharedPreferences(PREFERENCIAS_NAME, MODE_PRIVATE);
-        //recupera as preferencias
-        //recuperar();
     }
 
     // Luminosidade - Dark Mode
@@ -216,6 +262,21 @@ public class UserActivity extends AppCompatActivity implements FetchAddressTask.
                 finish();
             }
         }
+        //MONITORA EVENTOS DO ACELEROMETRO
+        // Eixos X, Y e Z do acelerometro
+        float x = event.values[0];
+        float y = event.values[1];
+        float z = event.values[2];
+
+        if (x > bestOfX) {
+            bestOfX = x;
+        }
+        if (y > bestOfY) {
+            bestOfY = y;
+        }
+        if (z > bestOfZ) {
+            bestOfZ = z;
+        }
     }
 
     @Override
@@ -225,6 +286,11 @@ public class UserActivity extends AppCompatActivity implements FetchAddressTask.
 
     @Override
     protected void onPause() {
+        if (mTrackingLocation) {
+            stopTrackingLocation();
+            mTrackingLocation = true;
+            armazenar(lastAdress);
+        }
         super.onPause();
         sensorManager.unregisterListener(this);
     }
@@ -375,6 +441,45 @@ public class UserActivity extends AppCompatActivity implements FetchAddressTask.
     }
 
     //LOCALIZAÇÃO
+
+    //Método com a resposta da Fetch Adress Task
+    @Override
+    public void onTaskCompleted(String[] result) {
+        if (mTrackingLocation) {
+            // Update the UI
+            lastLatitude = result[1];
+            lastLongitude = result[2];
+            lastAdress = result[0];
+            mLocationTextView.setText(getString(R.string.endereco_text));
+        }
+    }
+
+    //lista os sensores disponiveis
+    public void listSensors() {
+        List<Sensor> deviceSensors = sensorManager.getSensorList(Sensor.TYPE_ALL);
+        for (Sensor s : deviceSensors) {
+            Log.d("Sensors: ", s.getName());
+        }
+    }
+    private void stopTrackingLocation() {
+        if (mTrackingLocation) {
+            mTrackingLocation = false;
+            mLocationTextView.setText(R.string.Clique_Local);
+        }
+    }
+
+
+    //Armazena as preferencias do usuário
+    //na aplicação será armazenada a última localicação
+
+    private void armazenar(String lastAdress) {
+        SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+        preferencesEditor.putLong(LASTDATE_KEY, System.currentTimeMillis());
+        preferencesEditor.putString(LASTADRESS_KEY, lastAdress);
+        preferencesEditor.apply();
+    }
+
+
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions,
@@ -396,55 +501,55 @@ public class UserActivity extends AppCompatActivity implements FetchAddressTask.
         }
     }
 
-    private LocationRequest getLocationRequest() {
-        LocationRequest locationRequest = new LocationRequest();
-        locationRequest.setInterval(10000);
-        locationRequest.setFastestInterval(5000);
-        locationRequest.setPriority(LocationRequest.PRIORITY_LOW_POWER);
-        return locationRequest;
-    }
     @SuppressLint("StringFormatMatches")
     private void iniciarLocal() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_LOCATION_PERMISSION);
-        } else {
+        }else{
             mTrackingLocation = true;
             mFusedLocationClient.requestLocationUpdates
                     (getLocationRequest(),
                             mLocationCallback,
                             null /* Looper */);
             mFusedLocationClient.getLastLocation().addOnCompleteListener(
-                    task -> {
-                        Location location = task.getResult();
-                        if (location != null) {
-                            Geocoder geocoder = new Geocoder(UserActivity.this,
-                                    Locale.getDefault());
-                            try {
-                                List<Address> adresses = geocoder.getFromLocation(
-                                        location.getLatitude(), location.getLongitude(), 1);
-                                adresses.get(0).getCountryName();
-                                SharedPreferences preferences = getSharedPreferences(ARQUIVO_PREFERENCIAS, 0);
+                    new OnCompleteListener<Location>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Location> task) {
+                            Location location= task.getResult();
+                            if(location != null) {
+                                Geocoder geocoder = new Geocoder(UserActivity.this,
+                                        Locale.getDefault());
+                                try {
+                                    List<Address> adresses = geocoder.getFromLocation(
+                                            location.getLatitude(), location.getLongitude(), 1);
+                                    adresses.get(0).getCountryName();
+                                    SharedPreferences preferences = getSharedPreferences(PREFERENCIAS_NAME, 0);
 
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                                }
+                                catch(IOException e){
+                                    e.printStackTrace();
+                                }
                             }
-                        }
 
-                    });
+                        }
+                    }
+            );
+
             mLocationTextView.setText(getString(R.string.endereco_text,
                     getString(R.string.loading), null, null));
         }
     }
-    @SuppressLint("StringFormatMatches")
-    @Override
-    public void onTaskCompleted(String[] result) {
-        if (mTrackingLocation) {
-            // Update the UI
-            lastAdress = result[0];
-            lastLatitude = result[1];
-            lastLongitude = result[2];
-            mLocationTextView.setText(getString(R.string.endereco_text));
-        }
+    /**
+     * Define os location requests
+     *
+     * @return retorna os parametros.
+     */
+    private LocationRequest getLocationRequest() {
+        LocationRequest locationRequest = new LocationRequest();
+        locationRequest.setInterval(10000);
+        locationRequest.setFastestInterval(5000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        return locationRequest;
     }
 
     @Override
@@ -456,11 +561,7 @@ public class UserActivity extends AppCompatActivity implements FetchAddressTask.
     //Armazena as preferencias do usuário
     //na aplicação será armazenada a última localização
 
-    private void armazenar(String latitude, String longitude, String lastAdress) {
-        SharedPreferences.Editor preferencesEditor = mPreferences.edit();
-        preferencesEditor.putString(LASTADRESS_KEY, lastAdress);
-        preferencesEditor.apply();
-    }
+
 
 
     @Override
