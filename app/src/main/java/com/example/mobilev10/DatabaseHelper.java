@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.example.mobilev10.Servicos;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import static java.sql.Types.INTEGER;
 
@@ -24,6 +25,43 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String SERVICO_COLUMN_DESC = "descServ";
 
 
+    //TABELA CONTATO
+    public static final String CONTACTS_TABLE_NAME = "tbContato";
+    public static final String CONTACTS_ID = "IdContato";
+    public static final String CONTACTS_EMAIL = "Email";
+
+    //TELEFONE
+    public static final String TABLE_TELEFONE = "tbBairro";
+    public static final String COLUMN_ID_TEL = "IdTelefone";
+    public static final String COLUMN_NAME_TELEPHONE = "Telefone";
+
+    //ATIVIDADE
+    public static final String TABLE_ATIVIDADE = "tbAtividade";
+    public static final String COLUMN_ID_ATV = "IdAtividade";
+    public static final String PROFILE_COLUMN_DESC_ATV = "descricaoAtv";
+    public static final String COLUMN_DATE_INICIO = "dtInicio";
+    public static final String COLUMN_DATE_FIM = "dtFim";
+    public static final String COLUMN_ID_SERV = "FK_IdServico";
+
+    //ESTADO
+    public static final String TABLE_ESTADO = "tbEstado";
+    public static final String COLUMN_ID_EST = "IdUF";
+    public static final String COLUMN_UF_EST = "UF";
+
+    //CIDADE
+    public static final String TABLE_CIDADE = "tbCidade";
+    public static final String COLUMN_ID_CID = "IdCidade";
+    public static final String COLUMN_CID_NOME = "NomeCidade";
+
+    public static final String TABLE_BAIRRO = "tbBairro";
+    public static final String COLUMN_ID_BAIRR ="IdBairro";
+    public static final String COLUMN_BAIRR_NOME = "NomeBairro";
+
+    public static final String ADRESS_TABLE_NAME = "tbEndereco";
+    public static final String COLUMN_ID_END = "IdEndereco";
+    public static final String COLUMN_COMPL_EST = "Complemento";
+
+
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME , null, 1);
     }
@@ -33,6 +71,45 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // TODO Auto-generated method stub
         String CREATE_SERVICO_TABLE = "CREATE TABLE " + SERVICO_TABLE_NAME + "("
                 + SERVICO_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + SERVICO_COLUMN_DESC + " TEXT" + ")";
+        String CREATE_ACTIVITIES_TABLE = "CREATE TABLE " +TABLE_ATIVIDADE + "("
+                + COLUMN_ID_ATV + " INTEGER PRIMARY KEY," + PROFILE_COLUMN_DESC_ATV + " TEXT,"
+                + COLUMN_DATE_INICIO + " DATE" + COLUMN_DATE_FIM + "DATE" + COLUMN_ID_SERV +
+                "INTEGER" +
+                "FOREIGN KEY ('+ATV_SERV+') REFERENCES '+SERVICO_TABLE_NAME+'('+SERVICO_COLUMN_ID+')"+")";
+
+
+        String CREATE_TELEPHONE_TABLE = "CREATE TABLE" + "("
+                + COLUMN_ID_TEL + "INTEGER PRIMARY KEY"
+                + COLUMN_NAME_TELEPHONE + "TEXT" + ")";
+
+
+        String CREATE_STATES_TABLE = "CREATE TABLE" + TABLE_ESTADO + "("
+                + COLUMN_ID_EST + "INTEGER PRIMARY KEY," + COLUMN_UF_EST + " TEXT(2)" + ")";
+
+        String CREATE_CITIES_TABLE = "CREATE TABLE" + TABLE_CIDADE + "("
+                + COLUMN_ID_CID + "INTEGER PRIMARY KEY," + COLUMN_CID_NOME + " TEXT" + ")";
+
+        String CREATE_NEIGHBORH_TABLE = "CREATE TABLE" + TABLE_BAIRRO + "("
+                + COLUMN_ID_BAIRR + "INTEGER PRIMARY KEY," + COLUMN_BAIRR_NOME + " TEXT" + ")";
+
+        String CREATE_ADDRESS_TABLE = "CREATE TABLE " + ADRESS_TABLE_NAME + "("
+                + COLUMN_ID_END + " INTEGER PRIMARY KEY," + COLUMN_ID_EST + " INTEGER PRIMARY KEY,"
+                + COLUMN_ID_CID + " INTEGER PRIMARY KEY," + COLUMN_ID_BAIRR + " INTEGER PRIMARY KEY,"
+                + COLUMN_COMPL_EST + "TEXT" +
+                "FOREIGN KEY ('+COLUMN_ID_EST+') REFERENCES "+TABLE_ESTADO+"('+COLUMN_ID_EST+'),"+
+        "FOREIGN KEY ('+COLUMN_ID_CID+') REFERENCES '+TABLE_CIDADE+'('+COLUMN_ID_CID+'),"+
+        "FOREIGN KEY ('+COLUMN_ID_BAIRR+') REFERENCES '+TABLE_BAIRRO+'('+COLUMN_ID_BAIRR+')"+")";
+
+        String CREATE_CONTATO_TABLE = "CREATE TABLE" + CONTACTS_TABLE_NAME + "("
+                + CONTACTS_ID + "INTEGER PRIMARY KEY"
+                + COLUMN_ID_END + "INTEGER"
+                + "FOREIGN KEY ("+COLUMN_ID_END+") REFERENCES "+ADRESS_TABLE_NAME+" ("+COLUMN_ID_END+")"
+                + COLUMN_ID_TEL + "INTEGER"
+                + "FOREIGN KEY ("+COLUMN_ID_TEL+") REFERENCES '+TABLE_TELEFONE+' ('+COLUMN_ID_TEL+')"
+                + CONTACTS_EMAIL + "TEXT"
+                +")";
+
+
 
         db.execSQL(CREATE_SERVICO_TABLE);
     }
