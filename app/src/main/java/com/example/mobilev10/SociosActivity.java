@@ -15,6 +15,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -158,10 +159,9 @@ public class SociosActivity extends AppCompatActivity implements SensorEventList
                 edtCargoSocio.setFocusable(false);
                 edtCargoSocio.setClickable(false);
 
+                // senha não pode ser vista por qualquer um
                 edtSenhaSocio.setText(socio.get_senha());
-                edtSenhaSocio.setEnabled(false);
-                edtSenhaSocio.setFocusable(false);
-                edtSenhaSocio.setClickable(false);
+                edtSenhaSocio.setVisibility(View.GONE);
 
                 edtTelSocio.setText(socio.get_telefone());
                 edtTelSocio.setEnabled(false);
@@ -217,67 +217,54 @@ public class SociosActivity extends AppCompatActivity implements SensorEventList
         Button btnSalvar = (Button) findViewById(R.id.btnSalvar);
         btnSalvar.setVisibility(View.VISIBLE);
 
-        edtNomeSocio.setText(socio.get_nome());
         edtNomeSocio.setEnabled(true);
         edtNomeSocio.setFocusableInTouchMode(true);
         edtNomeSocio.setClickable(true);
 
-        edtDtNascSocio.setText(socio.get_dtnasc());
         edtDtNascSocio.setEnabled(true);
         edtDtNascSocio.setFocusableInTouchMode(true);
         edtDtNascSocio.setClickable(true);
 
-        edtCpfSocio.setText(socio.get_cpf());
         edtCpfSocio.setEnabled(true);
         edtCpfSocio.setFocusableInTouchMode(true);
         edtCpfSocio.setClickable(true);
 
-        edtCargoSocio.setText(socio.get_cargo());
         edtCargoSocio.setEnabled(true);
         edtCargoSocio.setFocusableInTouchMode(true);
         edtCargoSocio.setClickable(true);
 
-        edtSenhaSocio.setText(socio.get_senha());
         edtSenhaSocio.setEnabled(true);
         edtSenhaSocio.setFocusableInTouchMode(true);
         edtSenhaSocio.setClickable(true);
 
-        edtTelSocio.setText(socio.get_telefone());
         edtTelSocio.setEnabled(true);
         edtTelSocio.setFocusableInTouchMode(true);
         edtTelSocio.setClickable(true);
 
-        edtEmailSocio.setText(socio.get_email());
         edtEmailSocio.setEnabled(true);
         edtEmailSocio.setFocusableInTouchMode(true);
         edtEmailSocio.setClickable(true);
 
-        edtUfSocio.setText(socio.get_estado());
         edtUfSocio.setEnabled(true);
         edtUfSocio.setFocusableInTouchMode(true);
         edtUfSocio.setClickable(true);
 
-        edtCidadeSocio.setText(socio.get_cidade());
         edtCidadeSocio.setEnabled(true);
         edtCidadeSocio.setFocusableInTouchMode(true);
         edtCidadeSocio.setClickable(true);
 
-        edtBairroSocio.setText(socio.get_bairro());
         edtBairroSocio.setEnabled(true);
         edtBairroSocio.setFocusableInTouchMode(true);
         edtBairroSocio.setClickable(true);
 
-        edtLogradouroSocio.setText(socio.get_logradouro());
         edtLogradouroSocio.setEnabled(true);
         edtLogradouroSocio.setFocusableInTouchMode(true);
         edtLogradouroSocio.setClickable(true);
 
-        edtComplementoSocio.setText(socio.get_complemento());
         edtComplementoSocio.setEnabled(true);
         edtComplementoSocio.setFocusableInTouchMode(true);
         edtComplementoSocio.setClickable(true);
 
-        edtNumEndSocio.setText(socio.get_numend());
         edtNumEndSocio.setEnabled(true);
         edtNumEndSocio.setFocusableInTouchMode(true);
         edtNumEndSocio.setClickable(true);
@@ -313,54 +300,78 @@ public class SociosActivity extends AppCompatActivity implements SensorEventList
         if(extras != null) {
             int value = extras.getInt("id");
 
-            if (value > 0){
-                if(mydb.updateSocio(
-                        new Socios(
-                                id_to_update,
-                                edtNomeSocio.getText().toString(),
-                                edtDtNascSocio.getText().toString(),
-                                edtCpfSocio.getText().toString(),
-                                edtCargoSocio.getText().toString(),
-                                edtSenhaSocio.getText().toString(),
-                                edtNumEndSocio.getText().toString(),
-                                edtTelSocio.getText().toString(),
-                                edtEmailSocio.getText().toString(),
-                                edtUfSocio.getText().toString(),
-                                edtCidadeSocio.getText().toString(),
-                                edtBairroSocio.getText().toString(),
-                                edtLogradouroSocio.getText().toString(),
-                                edtComplementoSocio.getText().toString()
-                        ))){
-                    Toast.makeText(getApplicationContext(), "Atualizado", Toast.LENGTH_SHORT).show();
+            String nome = edtNomeSocio.getText().toString();
+            String dtnasc = edtDtNascSocio.getText().toString();
+            String cpf = edtCpfSocio.getText().toString();
+            String cargo = edtCargoSocio.getText().toString();
+            String senha = edtSenhaSocio.getText().toString();
+            String numend = edtNumEndSocio.getText().toString();
+            String tel = edtTelSocio.getText().toString();
+            String email = edtEmailSocio.getText().toString();
+            String uf = edtUfSocio.getText().toString();
+            String cidade = edtCidadeSocio.getText().toString();
+            String bairro = edtBairroSocio.getText().toString();
+            String logradouro = edtLogradouroSocio.getText().toString();
+            String complemento = edtComplementoSocio.getText().toString();
+
+            // testar se os campos estão preenchidos
+            if (TextUtils.isEmpty(nome) || TextUtils.isEmpty(dtnasc) || TextUtils.isEmpty(cpf) ||
+                    TextUtils.isEmpty(cargo) || TextUtils.isEmpty(senha) || TextUtils.isEmpty(numend) ||
+                    TextUtils.isEmpty(tel) || TextUtils.isEmpty(email) || TextUtils.isEmpty(uf) ||
+                    TextUtils.isEmpty(cidade) || TextUtils.isEmpty(bairro) || TextUtils.isEmpty(logradouro) ||
+                    TextUtils.isEmpty(complemento)){
+
+                Toast.makeText(getApplicationContext(), "Todos os campos devem ser preenchidos", Toast.LENGTH_LONG).show();
+            } else {
+                if (value > 0){
+                    if(mydb.updateSocio(
+                            new Socios(
+                                    id_to_update,
+                                    nome,
+                                    dtnasc,
+                                    cpf,
+                                    cargo,
+                                    senha,
+                                    numend,
+                                    tel,
+                                    email,
+                                    uf,
+                                    cidade,
+                                    bairro,
+                                    logradouro,
+                                    complemento
+                            ))){
+                        Toast.makeText(getApplicationContext(), "Atualizado", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), ConSociosActivity.class);
+                        startActivity(intent);
+                    } else{
+                        Toast.makeText(getApplicationContext(), "Não Atualizado", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    if(mydb.insertSocio(
+                            new Socios(
+                                    edtNomeSocio.getText().toString(),
+                                    edtDtNascSocio.getText().toString(),
+                                    edtCpfSocio.getText().toString(),
+                                    edtCargoSocio.getText().toString(),
+                                    edtSenhaSocio.getText().toString(),
+                                    edtNumEndSocio.getText().toString(),
+                                    edtTelSocio.getText().toString(),
+                                    edtEmailSocio.getText().toString(),
+                                    edtUfSocio.getText().toString(),
+                                    edtCidadeSocio.getText().toString(),
+                                    edtBairroSocio.getText().toString(),
+                                    edtLogradouroSocio.getText().toString(),
+                                    edtComplementoSocio.getText().toString()
+                            ))){
+                        Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "not done", Toast.LENGTH_SHORT).show();
+                    }
+
                     Intent intent = new Intent(getApplicationContext(), ConSociosActivity.class);
                     startActivity(intent);
-                } else{
-                    Toast.makeText(getApplicationContext(), "Não Atualizado", Toast.LENGTH_SHORT).show();
                 }
-            } else {
-                if(mydb.insertSocio(
-                        new Socios(
-                                edtNomeSocio.getText().toString(),
-                                edtDtNascSocio.getText().toString(),
-                                edtCpfSocio.getText().toString(),
-                                edtCargoSocio.getText().toString(),
-                                edtSenhaSocio.getText().toString(),
-                                edtNumEndSocio.getText().toString(),
-                                edtTelSocio.getText().toString(),
-                                edtEmailSocio.getText().toString(),
-                                edtUfSocio.getText().toString(),
-                                edtCidadeSocio.getText().toString(),
-                                edtBairroSocio.getText().toString(),
-                                edtLogradouroSocio.getText().toString(),
-                                edtComplementoSocio.getText().toString()
-                        ))){
-                    Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "not done", Toast.LENGTH_SHORT).show();
-                }
-
-                Intent intent = new Intent(getApplicationContext(), ConSociosActivity.class);
-                startActivity(intent);
             }
         }
     }

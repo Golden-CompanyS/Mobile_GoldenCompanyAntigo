@@ -13,15 +13,27 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.Image;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.security.KeyStore;
+
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
+    // Banco de Dados
+    private DatabaseHelper mydb ;
+
+    TextView edtEmailLogin;
+    TextView edtSenhaLogin;
+    String email;
+    String senha;
+    int func_id_session;
 
     // Luminosidade - Dark Mode
     private static final String ARQUIVO_PREFERENCIAS = "ArquivoPreferencias";
@@ -48,6 +60,45 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         sensorManager = (SensorManager) getSystemService(Service.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+
+        // Banco de Dados
+        func_id_session = preferencias.getInt("funcIdSession", 0);
+
+        if (func_id_session > 0){
+            Intent intent = new Intent(this, AcoesActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+        edtEmailLogin = (TextView) findViewById(R.id.edtEmailLogin);
+        edtSenhaLogin = (TextView) findViewById(R.id.edtSenhaLogin);
+
+        mydb = new DatabaseHelper(this);
+    }
+
+    // Banco de Dados
+    public void fazerLogin(View view){
+        email = edtEmailLogin.getText().toString();
+        senha = edtSenhaLogin.getText().toString();
+
+        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(senha)){
+            Toast.makeText(getApplicationContext(), "Todos os campos devem ser preenchidos", Toast.LENGTH_LONG).show();
+        } else {
+            if (mydb.validarLogin(email, senha)){
+                Toast.makeText(getApplicationContext(), "Logado com sucesso! Redirecionando...", Toast.LENGTH_LONG).show();
+
+                SharedPreferences preferencias = getSharedPreferences(ARQUIVO_PREFERENCIAS, MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferencias.edit();
+
+                editor.putInt("funcIdSession", mydb.getFuncIdSession(email, senha)).apply();
+
+                Intent intent = new Intent(this, AcoesActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(getApplicationContext(), "Email ou senha incorretos", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     // Luminosidade - Dark Mode
@@ -115,12 +166,5 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
 
 
-    }
-
-    // Redirecionamento sem verificação temporário
-    public void abrirAcoesActivity(View view){
-        Intent intent = new Intent(this, AcoesActivity.class);
-        startActivity(intent);
-        finish();
     }
 }

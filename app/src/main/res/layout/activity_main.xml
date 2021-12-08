@@ -53,7 +53,8 @@
                 android:background="@drawable/input_arredondado"
                 android:ems="12"
                 android:gravity="start|top"
-                android:hint="@string/email" />
+                android:hint="@string/email"
+                android:inputType="textEmailAddress" />
 
             <EditText
                 android:id="@+id/edtSenhaLogin"
@@ -66,7 +67,8 @@
                 android:background="@drawable/input_arredondado"
                 android:ems="12"
                 android:gravity="start|top"
-                android:hint="@string/senha" />
+                android:hint="@string/senha"
+                android:inputType="textPassword" />
 
             <Button
                 android:id="@+id/btnLogin"
@@ -78,7 +80,7 @@
                 android:backgroundTint="@color/botao"
                 android:text="@string/logar"
 
-                android:onClick="abrirAcoesActivity"/>
+                android:onClick="fazerLogin" />
 
 
         </RelativeLayout>

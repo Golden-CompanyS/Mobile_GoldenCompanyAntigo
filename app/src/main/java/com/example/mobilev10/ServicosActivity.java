@@ -59,7 +59,7 @@ public class ServicosActivity extends AppCompatActivity implements SensorEventLi
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
 
         // Banco de Dados
-        edtDescServico = (TextView) findViewById(R.id.edtDescServico);
+        edtDescServico = (EditText) findViewById(R.id.edtDescServico);
 
         mydb = new DatabaseHelper(this);
 

@@ -28,6 +28,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.LruCache;
 import android.view.View;
@@ -60,6 +61,13 @@ import java.util.List;
 import java.util.Locale;
 
 public class UserActivity extends AppCompatActivity implements FetchAddressTask.OnTaskCompleted, SensorEventListener {
+    // Banco de Dados
+    private DatabaseHelper mydb ;
+    int id_to_update = 0;
+
+    TextView edtSenhaAtual;
+    TextView edtSenhaNova;
+
     // Luminosidade - Dark Mode
     public static final String PREFERENCIAS_NAME = "com.example.android.localizacao";
     private static final String ARQUIVO_PREFERENCIAS = "ArquivoPreferencias";
@@ -220,6 +228,50 @@ public class UserActivity extends AppCompatActivity implements FetchAddressTask.
             }
         });
 
+        // Banco de Dados
+        id_to_update = preferencias.getInt("funcIdSession", 0);
+
+        if (id_to_update == 0){
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+        edtSenhaAtual = (EditText) findViewById(R.id.edtSenhaAtual);
+        edtSenhaNova = (EditText) findViewById(R.id.edtSenhaNova);
+
+        mydb = new DatabaseHelper(this);
+
+        id_to_update = preferencias.getInt("funcIdSession", 0);
+
+    }
+
+    // Banco de Dados
+    public void alterarSenha(View view){
+        String senhaAtual = edtSenhaAtual.getText().toString();
+        String senhaNova = edtSenhaNova.getText().toString();
+
+        if (TextUtils.isEmpty(senhaAtual) || TextUtils.isEmpty(senhaNova)){
+            Toast.makeText(getApplicationContext(), "Preencha os campos para alterar a senha", Toast.LENGTH_LONG).show();
+        } else {
+            if (mydb.checarSenha(id_to_update, senhaAtual)){
+                mydb.updateSenha(id_to_update, senhaNova);
+
+                Toast.makeText(getApplicationContext(), "Senha alterada com sucesso!", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "Senha atual incorreta", Toast.LENGTH_LONG).show();
+            }
+        }
+
+    }
+
+    public void deslogar(View view){
+        SharedPreferences preferencias = getSharedPreferences(ARQUIVO_PREFERENCIAS, MODE_PRIVATE);
+        preferencias.edit().remove("funcIdSession").apply();
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     // Luminosidade - Dark Mode
@@ -233,7 +285,7 @@ public class UserActivity extends AppCompatActivity implements FetchAddressTask.
                 luminosidade = event.values[0];
 
                 if (luminosidade < 20000) {
-                    editor.putBoolean("Dark", true).apply();
+                    editor.putBoolean("Dark", true);
                 } else if (preferencias.getBoolean("Automatico", false) && luminosidade >= 20000) {
                     editor.putBoolean("Dark", false).apply();
                 }
@@ -277,8 +329,8 @@ public class UserActivity extends AppCompatActivity implements FetchAddressTask.
         Button btnLogout = (Button) findViewById(R.id.btnLogout);
         Switch swtDarkmodeManual = (Switch) findViewById(R.id.switch1);
         Switch swtDarkmodeAutomatico = (Switch) findViewById(R.id.switch2);
-        EditText edtSenhaAtual = (EditText) findViewById(R.id.edttxtAltSenha);
-        EditText edtSenhaNova = (EditText) findViewById(R.id.edttxtConfAltSenha);
+        EditText edtSenhaAtual = (EditText) findViewById(R.id.edtSenhaAtual);
+        EditText edtSenhaNova = (EditText) findViewById(R.id.edtSenhaNova);
         EditText edtNotes = (EditText) findViewById(R.id.edtNotes);
 
 

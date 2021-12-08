@@ -104,7 +104,7 @@
                 app:layout_constraintTop_toBottomOf="@id/switch1" />
 
             <EditText
-                android:id="@+id/edttxtAltSenha"
+                android:id="@+id/edtSenhaAtual"
                 android:layout_width="268dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txtAltSenha"
@@ -116,10 +116,10 @@
                 android:minHeight="32dp" />
 
             <EditText
-                android:id="@+id/edttxtConfAltSenha"
+                android:id="@+id/edtSenhaNova"
                 android:layout_width="268dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/edttxtAltSenha"
+                android:layout_below="@+id/edtSenhaAtual"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/input_arredondado"
@@ -131,11 +131,13 @@
                 android:id="@+id/btnAltSenha"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/edttxtConfAltSenha"
+                android:layout_below="@+id/edtSenhaNova"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="20dp"
                 android:backgroundTint="@color/botao"
-                android:text="@string/alterar" />
+                android:text="@string/alterar"
+
+                android:onClick="alterarSenha" />
 
             <EditText
                 android:id="@+id/edtNotes"
@@ -209,7 +211,7 @@
                 android:layout_centerInParent="true"
                 android:layout_marginTop="15dp"
 
-                />
+                android:onClick="deslogar" />
 
         </RelativeLayout>
 

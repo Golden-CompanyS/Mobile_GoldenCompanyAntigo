@@ -208,6 +208,60 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    // Operações Login
+    public Boolean validarLogin(String email, String senha){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + CONTATO_TABLE_NAME + " AS c"
+                + " INNER JOIN " + FUNCIONARIO_TABLE_NAME + " AS f ON c." + COLUMN_ID_CNTT + " = f." + COLUMN_ID_CNTT
+                + " WHERE c." + COLUMN_EMAIL_CNTT + " = '" + email + "' AND f." + COLUMN_SENHA_FUNC + " = '" + senha + "'", null);
+
+        if (cursor.getCount() > 0){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public int getFuncIdSession(String email, String senha){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT f." + COLUMN_ID_FUNC + " FROM " + CONTATO_TABLE_NAME + " AS c"
+                + " INNER JOIN " + FUNCIONARIO_TABLE_NAME + " AS f ON c." + COLUMN_ID_CNTT + " = f." + COLUMN_ID_CNTT
+                + " WHERE c." + COLUMN_EMAIL_CNTT + " = '" + email + "' AND f." + COLUMN_SENHA_FUNC + " = '" + senha + "'", null);
+        cursor.moveToFirst();
+        int func_id_session = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_ID_FUNC));
+
+        if (cursor.getCount() > 0){
+            return func_id_session;
+        } else {
+            return 0;
+        }
+    }
+
+    public boolean checarSenha(int id, String senha){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery( "SELECT * FROM " + FUNCIONARIO_TABLE_NAME
+                + " WHERE " + COLUMN_ID_FUNC + " = " + id
+                + " AND " + COLUMN_SENHA_FUNC + " = '" + senha + "'", null);
+        cursor.moveToFirst();
+
+        if (cursor.getCount() > 0){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean updateSenha(int id, String senhaNova){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_SENHA_FUNC, senhaNova);
+
+        db.update(FUNCIONARIO_TABLE_NAME, contentValues,
+                COLUMN_ID_FUNC + " = ? ", new String[] { Integer.toString(id) } );
+        return true;
+    }
+
     // Operações Serviços
     public boolean insertServico(Servicos serv) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -345,7 +399,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + ") VALUES('"
                 + cliente.get_nome() + "','"
                 + cliente.get_cnpj() + "',"
-                + "(SELECT " + COLUMN_ID_CNTT + " FROM " + CONTATO_TABLE_NAME + " ORDER BY " + COLUMN_ID_CNTT + " DESC LIMIT 1),'"
+                + "(SELECT " + COLUMN_ID_CNTT + " FROM " + CONTATO_TABLE_NAME + " ORDER BY " + COLUMN_ID_CNTT + " DESC LIMIT 1),"
                 + cliente.get_numend()
                 + ")"
         );
@@ -355,8 +409,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getDataClientes(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery( "SELECT * FROM " + FUNCIONARIO_TABLE_NAME + " AS f"
-                + " INNER JOIN " + CONTATO_TABLE_NAME + " AS c ON f." + COLUMN_ID_CNTT + " = c." + COLUMN_ID_CNTT
+        Cursor cursor = db.rawQuery( "SELECT * FROM " + CLIENTE_TABLE_NAME + " AS cli"
+                + " INNER JOIN " + CONTATO_TABLE_NAME + " AS c ON cli." + COLUMN_ID_CNTT + " = c." + COLUMN_ID_CNTT
                 + " INNER JOIN " + TELEFONE_TABLE_NAME + " AS t ON c." + COLUMN_ID_TEL + " = t." + COLUMN_ID_TEL
                 + " INNER JOIN " + ENDERECO_TABLE_NAME + " AS e ON c." + COLUMN_ID_END + " = e." + COLUMN_ID_END
                 + " INNER JOIN " + ESTADO_TABLE_NAME + " AS u ON e." + COLUMN_ID_EST + " = u." + COLUMN_ID_EST
@@ -372,7 +426,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // update na tbCliente
         ContentValues contentValuesFunc = new ContentValues();
-            contentValuesFunc.put(COLUMN_NAME_FUNC, clientes.get_nome());
+            contentValuesFunc.put(COLUMN_NAME_CLI, clientes.get_nome());
             contentValuesFunc.put(COLUMN_CNPJ_CLI, clientes.get_cnpj());
             contentValuesFunc.put(COLUMN_NUMEND_CLI, clientes.get_numend());
         db.update(CLIENTE_TABLE_NAME, contentValuesFunc,
