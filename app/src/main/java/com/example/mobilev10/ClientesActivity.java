@@ -3,10 +3,13 @@ package com.example.mobilev10;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.AlertDialog;
 import android.app.Service;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
+import android.database.Cursor;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -19,6 +22,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ClientesActivity extends AppCompatActivity implements SensorEventListener {
 
@@ -27,6 +31,39 @@ public class ClientesActivity extends AppCompatActivity implements SensorEventLi
     SensorManager sensorManager;
     Sensor sensor;
     Float luminosidade;
+
+    // Banco de Dados
+    private DatabaseHelper mydb ;
+    int id_to_update = 0;
+
+    // Tabela Cliente
+    TextView edtNomeCli;
+    TextView edtCnpjCli;
+    TextView edtNumEndCli;
+
+    // Tabela Telefone
+    TextView edtTelCli;
+
+    // Tabela Contato
+    TextView edtEmailCli;
+
+    // Tabela Estado
+    TextView edtUfCli;
+
+    // Tabela Cidade
+    TextView edtCidadeCli;
+
+    // Tabela Bairro
+    TextView edtBairroCli;
+
+    // Tabela Rua
+    TextView edtLogradouroCli;
+
+    // Tabela  Endereco
+    TextView edtComplementoCli;
+
+    Clientes clientes;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +84,242 @@ public class ClientesActivity extends AppCompatActivity implements SensorEventLi
 
         sensorManager = (SensorManager) getSystemService(Service.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+
+        // Banco de Dados
+        edtNomeCli = (TextView) findViewById(R.id.edtNomeSocio);
+        edtCnpjCli = (TextView) findViewById(R.id.edtCpfSocio);
+        edtTelCli = (TextView) findViewById(R.id.edtTelSocio);
+        edtEmailCli = (TextView) findViewById(R.id.edtEmailSocio);
+        edtUfCli = (TextView) findViewById(R.id.edtUfSocio);
+        edtCidadeCli = (TextView) findViewById(R.id.edtCidadeSocio);
+        edtBairroCli = (TextView) findViewById(R.id.edtBairroSocio);
+        edtLogradouroCli = (TextView) findViewById(R.id.edtLogradouroSocio);
+        edtComplementoCli = (TextView) findViewById(R.id.edtComplementoSocio);
+        edtNumEndCli = (TextView) findViewById(R.id.edtNumEndSocio);
+
+        mydb = new DatabaseHelper(this);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null){
+            int value = extras.getInt("id");
+
+            if (value > 0){
+                // ou seja, se NÃO for para fazer um cadastro novo (visualizar)
+
+                Cursor cursor = mydb.getDataSocios(value);
+                id_to_update = value;
+                cursor.moveToFirst();
+
+                clientes = new Clientes();
+                clientes.set_nome(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NAME_CLI)));
+                clientes.set_cnpj(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_CNPJ_CLI)));
+                clientes.set_numend(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NUMEND_CLI)));
+                clientes.set_telefone(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NUM_TEL)));
+                clientes.set_email(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_EMAIL_CNTT)));
+                clientes.set_estado(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_UF_EST)));
+                clientes.set_cidade(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_CID_NOME)));
+                clientes.set_bairro(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_BAIRR_NOME)));
+                clientes.set_logradouro(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_RUA_LOGR)));
+                clientes.set_complemento(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_COMPL_END)));
+
+
+                if (!cursor.isClosed()){
+                    cursor.close();
+                }
+
+                Button btnSalvar = (Button) findViewById(R.id.btnSalvar);
+                btnSalvar.setVisibility(View.GONE);
+
+                edtNomeCli.setText(clientes.get_nome());
+                edtNomeCli.setEnabled(false);
+                edtNomeCli.setFocusable(false);
+                edtNomeCli.setClickable(false);
+
+                edtCnpjCli.setText(clientes.get_cnpj());
+                edtCnpjCli.setEnabled(false);
+                edtCnpjCli.setFocusable(false);
+                edtCnpjCli.setClickable(false);
+
+                edtTelCli.setText(clientes.get_telefone());
+                edtTelCli.setEnabled(false);
+                edtTelCli.setFocusable(false);
+                edtTelCli.setClickable(false);
+
+                edtEmailCli.setText(clientes.get_email());
+                edtEmailCli.setEnabled(false);
+                edtEmailCli.setFocusable(false);
+                edtEmailCli.setClickable(false);
+
+                edtUfCli.setText(clientes.get_estado());
+                edtUfCli.setEnabled(false);
+                edtUfCli.setFocusable(false);
+                edtUfCli.setClickable(false);
+
+                edtCidadeCli.setText(clientes.get_cidade());
+                edtCidadeCli.setEnabled(false);
+                edtCidadeCli.setFocusable(false);
+                edtCidadeCli.setClickable(false);
+
+                edtBairroCli.setText(clientes.get_bairro());
+                edtBairroCli.setEnabled(false);
+                edtBairroCli.setFocusable(false);
+                edtBairroCli.setClickable(false);
+
+                edtLogradouroCli.setText(clientes.get_logradouro());
+                edtLogradouroCli.setEnabled(false);
+                edtLogradouroCli.setFocusable(false);
+                edtLogradouroCli.setClickable(false);
+
+                edtComplementoCli.setText(clientes.get_complemento());
+                edtComplementoCli.setEnabled(false);
+                edtComplementoCli.setFocusable(false);
+                edtComplementoCli.setClickable(false);
+
+                edtNumEndCli.setText(clientes.get_numend());
+                edtNumEndCli.setEnabled(false);
+                edtNumEndCli.setFocusable(false);
+                edtNumEndCli.setClickable(false);
+
+            } else {
+                Button btnEditar = (Button) findViewById(R.id.btnEditar);
+                Button btnExcluir = (Button) findViewById(R.id.btnExcluir);
+                btnEditar.setVisibility(View.GONE);
+                btnExcluir.setVisibility(View.GONE);
+            }
+        }
     }
+    // Banco de Dados
+    public void editar(View view){
+        Button btnSalvar = (Button) findViewById(R.id.btnSalvar);
+        btnSalvar.setVisibility(View.VISIBLE);
+
+        edtNomeCli.setText(clientes.get_nome());
+        edtNomeCli.setEnabled(true);
+        edtNomeCli.setFocusableInTouchMode(true);
+        edtNomeCli.setClickable(true);
+
+        edtCnpjCli.setText(clientes.get_cnpj());
+        edtCnpjCli.setEnabled(true);
+        edtCnpjCli.setFocusableInTouchMode(true);
+        edtCnpjCli.setClickable(true);
+
+        edtTelCli.setText(clientes.get_telefone());
+        edtTelCli.setEnabled(true);
+        edtTelCli.setFocusableInTouchMode(true);
+        edtTelCli.setClickable(true);
+
+        edtEmailCli.setText(clientes.get_email());
+        edtEmailCli.setEnabled(true);
+        edtEmailCli.setFocusableInTouchMode(true);
+        edtEmailCli.setClickable(true);
+
+        edtUfCli.setText(clientes.get_estado());
+        edtUfCli.setEnabled(true);
+        edtUfCli.setFocusableInTouchMode(true);
+        edtUfCli.setClickable(true);
+
+        edtCidadeCli.setText(clientes.get_cidade());
+        edtCidadeCli.setEnabled(true);
+        edtCidadeCli.setFocusableInTouchMode(true);
+        edtCidadeCli.setClickable(true);
+
+        edtBairroCli.setText(clientes.get_bairro());
+        edtBairroCli.setEnabled(true);
+        edtBairroCli.setFocusableInTouchMode(true);
+        edtBairroCli.setClickable(true);
+
+        edtLogradouroCli.setText(clientes.get_logradouro());
+        edtLogradouroCli.setEnabled(true);
+        edtLogradouroCli.setFocusableInTouchMode(true);
+        edtLogradouroCli.setClickable(true);
+
+        edtComplementoCli.setText(clientes.get_complemento());
+        edtComplementoCli.setEnabled(true);
+        edtComplementoCli.setFocusableInTouchMode(true);
+        edtComplementoCli.setClickable(true);
+
+        edtNumEndCli.setText(clientes.get_numend());
+        edtNumEndCli.setEnabled(true);
+        edtNumEndCli.setFocusableInTouchMode(true);
+        edtNumEndCli.setClickable(true);
+    }
+
+    public void excluir(View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.excluir_registro)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mydb.deleteCliente(id_to_update);
+                        Toast.makeText(getApplicationContext(), R.string.delete_ok,
+                                Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), ConClientesActivity.class);
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setTitle(R.string.delete_registro);
+        alertDialog.show();
+    }
+
+
+    public void salvar(View view) {
+        Bundle extras = getIntent().getExtras();
+        if(extras != null) {
+            int value = extras.getInt("id");
+
+            if (value > 0){
+                if(mydb.updateCliente(
+                        new Clientes(
+                                id_to_update,
+                                edtNomeCli.getText().toString(),
+                                edtCnpjCli.getText().toString(),
+                                edtNumEndCli.getText().toString(),
+                                edtTelCli.getText().toString(),
+                                edtEmailCli.getText().toString(),
+                                edtUfCli.getText().toString(),
+                                edtCidadeCli.getText().toString(),
+                                edtBairroCli.getText().toString(),
+                                edtLogradouroCli.getText().toString(),
+                                edtComplementoCli.getText().toString()
+                        ))){
+                    Toast.makeText(getApplicationContext(), "Atualizado", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), ConClientesActivity.class);
+                    startActivity(intent);
+                } else{
+                    Toast.makeText(getApplicationContext(), "Não Atualizado", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                if(mydb.insertClientes(
+                        new Clientes(
+                                edtNomeCli.getText().toString(),
+                                edtCnpjCli.getText().toString(),
+                                edtNumEndCli.getText().toString(),
+                                edtTelCli.getText().toString(),
+                                edtEmailCli.getText().toString(),
+                                edtUfCli.getText().toString(),
+                                edtCidadeCli.getText().toString(),
+                                edtBairroCli.getText().toString(),
+                                edtLogradouroCli.getText().toString(),
+                                edtComplementoCli.getText().toString()
+                        ))){
+                    Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "not done", Toast.LENGTH_SHORT).show();
+                }
+
+                Intent intent = new Intent(getApplicationContext(), ConClientesActivity.class);
+                startActivity(intent);
+            }
+        }
+    }
+
 
     // Luminosidade - Dark Mode
     @Override

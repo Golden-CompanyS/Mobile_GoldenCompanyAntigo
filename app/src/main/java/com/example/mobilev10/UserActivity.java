@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.hardware.Sensor;
@@ -24,9 +25,11 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.util.LruCache;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -64,14 +67,17 @@ public class UserActivity extends AppCompatActivity implements FetchAddressTask.
     SensorManager lightSensorManager;
     Sensor sensor;
     Float luminosidade;
-    private Sensor acelerometro;
+
     ImageButton mLocationButton;
 
     EditText edtNotes;
     Button btnSave;
+
+    //IMAGE PICKER
     ImageView imgUser;
     Button btnAltPerfil;
-    ImageView imgPerfil;
+    //private LruCache<String, Bitmap> memoryCache;
+
     private static final String TRACKING_LOCATION_KEY = "tracking_location";
     // Constantes
     private static final int REQUEST_LOCATION_PERMISSION = 1;
@@ -101,7 +107,13 @@ public class UserActivity extends AppCompatActivity implements FetchAddressTask.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
-        mLocationButton = (ImageButton) findViewById(R.id.btnLocal);
+        edtNotes = (EditText) findViewById(R.id.edtNotes);
+        btnSave= (Button) findViewById(R.id.btnSaveNotes);
+        imgUser = (ImageView) findViewById(R.id.imgUser);
+        btnAltPerfil = (Button) findViewById(R.id.btnAltFoto);
+        mLocationTextView = (TextView) findViewById(R.id.txtEndereco);
+
+        mLocationButton =  findViewById(R.id.btnLocal);
         // Listener do botão de localização.
         mLocationButton.setOnClickListener(new View.OnClickListener() {
             /**
@@ -207,13 +219,6 @@ public class UserActivity extends AppCompatActivity implements FetchAddressTask.
                 finish();
             }
         });
-
-
-        edtNotes = (EditText) findViewById(R.id.edtNotes);
-        btnSave= (Button) findViewById(R.id.btnSaveNotes);
-        imgUser = (ImageView) findViewById(R.id.imgUser);
-        btnAltPerfil = (Button) findViewById(R.id.btnAltFoto);
-        mLocationTextView = (TextView) findViewById(R.id.txtEndereco);
 
     }
 
@@ -515,12 +520,6 @@ public class UserActivity extends AppCompatActivity implements FetchAddressTask.
         super.onSaveInstanceState(outState);
     }
 
-    //Armazena as preferencias do usuário
-    //na aplicação será armazenada a última localização
-
-
-
-
     @Override
     protected void onResume() {
         if (mTrackingLocation) {
@@ -531,14 +530,9 @@ public class UserActivity extends AppCompatActivity implements FetchAddressTask.
         lightSensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
-    @SuppressLint("StringFormatMatches")
     private void recuperar() {
         SharedPreferences mPreferences = getSharedPreferences(PREFERENCIAS_NAME, 0);
         lastAdress = mPreferences.getString(LASTADRESS_KEY, "");
-        lastLatitude = mPreferences.getString(LATITUDE_KEY, "");
-        lastLongitude = mPreferences.getString(LONGITUDE_KEY, "");
-        mLocationTextView.setText(lastAdress);
-
     }
 
 }

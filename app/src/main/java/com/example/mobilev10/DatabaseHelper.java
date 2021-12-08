@@ -260,6 +260,248 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Operações Sócios
+    public boolean insertClientes(Clientes cliente) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.execSQL("INSERT OR IGNORE INTO " + ESTADO_TABLE_NAME
+                + "("
+                + COLUMN_UF_EST
+                + ") VALUES('"
+                + cliente.get_estado()
+                + "')"
+        );
+
+        db.execSQL("INSERT OR IGNORE INTO " + CIDADE_TABLE_NAME
+                + "("
+                + COLUMN_CID_NOME
+                + ") VALUES('"
+                + cliente.get_cidade()
+                + "')"
+        );
+
+        db.execSQL("INSERT OR IGNORE INTO " + BAIRRO_TABLE_NAME
+                + "("
+                + COLUMN_BAIRR_NOME
+                + ") VALUES('"
+                + cliente.get_bairro()
+                + "')"
+        );
+
+        db.execSQL("INSERT OR IGNORE INTO " + RUA_TABLE_NAME
+                + "("
+                + COLUMN_RUA_LOGR
+                + ") VALUES('"
+                + cliente.get_logradouro()
+                + "')"
+        );
+
+        db.execSQL("INSERT OR IGNORE INTO " + ENDERECO_TABLE_NAME
+                + "("
+                + COLUMN_ID_EST + ","
+                + COLUMN_ID_CID + ","
+                + COLUMN_ID_BAIRR + ","
+                + COLUMN_ID_RUA + ","
+                + COLUMN_COMPL_END
+                + ") VALUES("
+                + "(SELECT " + COLUMN_ID_EST + " FROM " + ESTADO_TABLE_NAME
+                    + " WHERE " + COLUMN_UF_EST + " = '" + cliente.get_estado() + "'),"
+                + "(SELECT " + COLUMN_ID_CID + " FROM " + CIDADE_TABLE_NAME
+                    + " WHERE " + COLUMN_CID_NOME + " = '" + cliente.get_cidade() + "'),"
+                + "(SELECT " + COLUMN_ID_BAIRR + " FROM " + BAIRRO_TABLE_NAME
+                    + " WHERE " + COLUMN_BAIRR_NOME + " = '" + cliente.get_bairro() + "'),"
+                + "(SELECT " + COLUMN_ID_RUA + " FROM " + RUA_TABLE_NAME
+                    + " WHERE " + COLUMN_RUA_LOGR + " = '" + cliente.get_logradouro() + "'),'"
+                + cliente.get_complemento()
+                + "')"
+        );
+
+        db.execSQL("INSERT OR IGNORE INTO " + TELEFONE_TABLE_NAME
+                + "("
+                + COLUMN_NUM_TEL
+                + ") VALUES('"
+                + cliente.get_telefone()
+                + "')"
+        );
+
+        db.execSQL("INSERT INTO " + CONTATO_TABLE_NAME
+                + "("
+                + COLUMN_ID_END + ","
+                + COLUMN_ID_TEL + ","
+                + COLUMN_EMAIL_CNTT
+                + ") VALUES("
+                + "(SELECT " + COLUMN_ID_END + " FROM " + ENDERECO_TABLE_NAME + " ORDER BY " + COLUMN_ID_END + " DESC LIMIT 1),"
+                + "(SELECT " + COLUMN_ID_TEL + " FROM " + TELEFONE_TABLE_NAME
+                    + " WHERE " + COLUMN_NUM_TEL + " = '" + cliente.get_telefone() + "'),'"
+                + cliente.get_email()
+                + "')"
+        );
+
+        db.execSQL("INSERT INTO " + FUNCIONARIO_TABLE_NAME
+                + "("
+                + COLUMN_NAME_FUNC + ","
+                + COLUMN_DTNASC_FUNC + ","
+                + COLUMN_CPF_FUNC + ","
+                + COLUMN_ID_CNTT + ","
+                + COLUMN_CARGO_FUNC + ","
+                + COLUMN_SENHA_FUNC + ","
+                + COLUMN_NUMEND_FUNC
+                + ") VALUES('"
+                + cliente.get_nome() + "','"
+                + cliente.get_cnpj() + "',"
+                + "(SELECT " + COLUMN_ID_CNTT + " FROM " + CONTATO_TABLE_NAME + " ORDER BY " + COLUMN_ID_CNTT + " DESC LIMIT 1),'"
+                + cliente.get_numend()
+                + ")"
+        );
+
+        return true;
+    }
+
+    public Cursor getDataClientes(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery( "SELECT * FROM " + FUNCIONARIO_TABLE_NAME + " AS f"
+                + " INNER JOIN " + CONTATO_TABLE_NAME + " AS c ON f." + COLUMN_ID_CNTT + " = c." + COLUMN_ID_CNTT
+                + " INNER JOIN " + TELEFONE_TABLE_NAME + " AS t ON c." + COLUMN_ID_TEL + " = t." + COLUMN_ID_TEL
+                + " INNER JOIN " + ENDERECO_TABLE_NAME + " AS e ON c." + COLUMN_ID_END + " = e." + COLUMN_ID_END
+                + " INNER JOIN " + ESTADO_TABLE_NAME + " AS u ON e." + COLUMN_ID_EST + " = u." + COLUMN_ID_EST
+                + " INNER JOIN " + CIDADE_TABLE_NAME + " AS ci ON e." + COLUMN_ID_CID + " = ci." + COLUMN_ID_CID
+                + " INNER JOIN " + BAIRRO_TABLE_NAME + " AS b ON e." + COLUMN_ID_BAIRR + " = b." + COLUMN_ID_BAIRR
+                + " INNER JOIN " + RUA_TABLE_NAME + " AS r ON e." + COLUMN_ID_RUA + " = r." + COLUMN_ID_RUA
+                + " WHERE " + COLUMN_ID_FUNC + " = " + id, null);
+        return cursor;
+    }
+
+    public boolean updateCliente(Clientes clientes) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // update na tbCliente
+        ContentValues contentValuesFunc = new ContentValues();
+            contentValuesFunc.put(COLUMN_NAME_FUNC, clientes.get_nome());
+            contentValuesFunc.put(COLUMN_CNPJ_CLI, clientes.get_cnpj());
+            contentValuesFunc.put(COLUMN_NUMEND_CLI, clientes.get_numend());
+        db.update(CLIENTE_TABLE_NAME, contentValuesFunc,
+                COLUMN_ID_CLI + " = ? ", new String[] { Integer.toString(clientes.get_id()) } );
+
+        // pegar ID da tbContato
+        Cursor cursor_id_cntt = db.rawQuery("SELECT " + COLUMN_ID_CNTT + " FROM " + CLIENTE_TABLE_NAME
+                + " WHERE " + COLUMN_ID_CLI + " = " + clientes.get_id(), null);
+        cursor_id_cntt.moveToNext();
+        int id_cntt = cursor_id_cntt.getInt(cursor_id_cntt.getColumnIndex(COLUMN_ID_CNTT));
+
+        // pegar ID da tbTelefone
+        Cursor cursor_id_tel = db.rawQuery("SELECT " + COLUMN_ID_TEL + " FROM " + CONTATO_TABLE_NAME
+                + " WHERE " + COLUMN_ID_CNTT + " = " + id_cntt, null);
+        cursor_id_tel.moveToNext();
+        int id_tel = cursor_id_tel.getInt(cursor_id_tel.getColumnIndex(COLUMN_ID_TEL));
+
+        // update na tbTelefone
+        ContentValues contentValuesTel = new ContentValues();
+            contentValuesTel.put(COLUMN_NUM_TEL, clientes.get_telefone());
+        db.update(TELEFONE_TABLE_NAME, contentValuesTel,
+                COLUMN_ID_TEL + " = ? ", new String[] { Integer.toString(id_tel) } );
+
+        // insert UF caso não exista
+        db.execSQL("INSERT OR IGNORE INTO " + ESTADO_TABLE_NAME
+                + "("
+                + COLUMN_UF_EST
+                + ") VALUES('"
+                + clientes.get_estado()
+                + "')"
+        );
+
+        // insert CIDADE caso não exista
+        db.execSQL("INSERT OR IGNORE INTO " + CIDADE_TABLE_NAME
+                + "("
+                + COLUMN_CID_NOME
+                + ") VALUES('"
+                + clientes.get_cidade()
+                + "')"
+        );
+
+        // insert BAIRRO caso não exista
+        db.execSQL("INSERT OR IGNORE INTO " + BAIRRO_TABLE_NAME
+                + "("
+                + COLUMN_BAIRR_NOME
+                + ") VALUES('"
+                + clientes.get_bairro()
+                + "')"
+        );
+
+        // insert LOGRADOURO caso não exista
+        db.execSQL("INSERT OR IGNORE INTO " + RUA_TABLE_NAME
+                + "("
+                + COLUMN_RUA_LOGR
+                + ") VALUES('"
+                + clientes.get_logradouro()
+                + "')"
+        );
+
+        // insert ENDERECO caso não exista
+        db.execSQL("INSERT INTO " + ENDERECO_TABLE_NAME
+                + "("
+                + COLUMN_ID_EST + ","
+                + COLUMN_ID_CID + ","
+                + COLUMN_ID_BAIRR + ","
+                + COLUMN_ID_RUA + ","
+                + COLUMN_COMPL_END
+                + ") VALUES("
+                + "(SELECT " + COLUMN_ID_EST + " FROM " + ESTADO_TABLE_NAME
+                + " WHERE " + COLUMN_UF_EST + " = '" + clientes.get_estado() + "'),"
+                + "(SELECT " + COLUMN_ID_CID + " FROM " + CIDADE_TABLE_NAME
+                + " WHERE " + COLUMN_CID_NOME + " = '" + clientes.get_cidade() + "'),"
+                + "(SELECT " + COLUMN_ID_BAIRR + " FROM " + BAIRRO_TABLE_NAME
+                + " WHERE " + COLUMN_BAIRR_NOME + " = '" + clientes.get_bairro() + "'),"
+                + "(SELECT " + COLUMN_ID_RUA + " FROM " + RUA_TABLE_NAME
+                + " WHERE " + COLUMN_RUA_LOGR + " = '" + clientes.get_logradouro() + "'),'"
+                + clientes.get_complemento()
+                + "')"
+        );
+
+        // pegar ID do recém adicionado endereco
+        Cursor cursor_id_end = db.rawQuery("SELECT " + COLUMN_ID_END + " FROM " + ENDERECO_TABLE_NAME
+                                                    + " ORDER BY " + COLUMN_ID_END + " DESC LIMIT 1", null);
+        cursor_id_end.moveToNext();
+        int id_end = cursor_id_end.getInt(cursor_id_end.getColumnIndex(COLUMN_ID_END));
+
+        // update na tbContato
+        ContentValues contentValuesCntt = new ContentValues();
+        contentValuesCntt.put(COLUMN_ID_END, id_end);
+        contentValuesCntt.put(COLUMN_EMAIL_CNTT, clientes.get_email());
+        db.update(CONTATO_TABLE_NAME, contentValuesCntt,
+                COLUMN_ID_CNTT + " = ? ", new String[] { Integer.toString(id_cntt) } );
+
+        return true;
+    }
+
+    public boolean deleteCliente(Integer id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor_id_cntt = db.rawQuery("SELECT " + COLUMN_ID_CNTT + " FROM " + CLIENTE_TABLE_NAME
+                                            + " WHERE " + COLUMN_ID_CLI + " = " + id, null);
+        cursor_id_cntt.moveToNext();
+        int id_cntt = cursor_id_cntt.getInt(cursor_id_cntt.getColumnIndex(COLUMN_ID_CNTT));
+
+        db.execSQL("DELETE FROM " + CLIENTE_TABLE_NAME
+                        + " WHERE " + COLUMN_ID_CLI + " = " + id);
+        db.execSQL("DELETE FROM " + CONTATO_TABLE_NAME
+                        + " WHERE " + COLUMN_ID_CNTT + " = " + id_cntt);
+        return true;
+    }
+
+    public ArrayList<String> getAllClientes() {
+        ArrayList<String> array_list = new ArrayList<String>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery( "SELECT " + COLUMN_NAME_CLI + " FROM " + CLIENTE_TABLE_NAME, null );
+        cursor.moveToFirst();
+
+        while(!cursor.isAfterLast()){
+            array_list.add(cursor.getString(cursor.getColumnIndex(COLUMN_NAME_CLI)));
+            cursor.moveToNext();
+        }
+        return array_list;
+    }
+
+
+    // Operações Sócios
     public boolean insertSocio(Socios socio) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -304,13 +546,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_COMPL_END
                 + ") VALUES("
                 + "(SELECT " + COLUMN_ID_EST + " FROM " + ESTADO_TABLE_NAME
-                    + " WHERE " + COLUMN_UF_EST + " = '" + socio.get_estado() + "'),"
+                + " WHERE " + COLUMN_UF_EST + " = '" + socio.get_estado() + "'),"
                 + "(SELECT " + COLUMN_ID_CID + " FROM " + CIDADE_TABLE_NAME
-                    + " WHERE " + COLUMN_CID_NOME + " = '" + socio.get_cidade() + "'),"
+                + " WHERE " + COLUMN_CID_NOME + " = '" + socio.get_cidade() + "'),"
                 + "(SELECT " + COLUMN_ID_BAIRR + " FROM " + BAIRRO_TABLE_NAME
-                    + " WHERE " + COLUMN_BAIRR_NOME + " = '" + socio.get_bairro() + "'),"
+                + " WHERE " + COLUMN_BAIRR_NOME + " = '" + socio.get_bairro() + "'),"
                 + "(SELECT " + COLUMN_ID_RUA + " FROM " + RUA_TABLE_NAME
-                    + " WHERE " + COLUMN_RUA_LOGR + " = '" + socio.get_logradouro() + "'),'"
+                + " WHERE " + COLUMN_RUA_LOGR + " = '" + socio.get_logradouro() + "'),'"
                 + socio.get_complemento()
                 + "')"
         );
@@ -331,7 +573,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + ") VALUES("
                 + "(SELECT " + COLUMN_ID_END + " FROM " + ENDERECO_TABLE_NAME + " ORDER BY " + COLUMN_ID_END + " DESC LIMIT 1),"
                 + "(SELECT " + COLUMN_ID_TEL + " FROM " + TELEFONE_TABLE_NAME
-                    + " WHERE " + COLUMN_NUM_TEL + " = '" + socio.get_telefone() + "'),'"
+                + " WHERE " + COLUMN_NUM_TEL + " = '" + socio.get_telefone() + "'),'"
                 + socio.get_email()
                 + "')"
         );
@@ -378,12 +620,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // update na tbFuncionario
         ContentValues contentValuesFunc = new ContentValues();
-            contentValuesFunc.put(COLUMN_NAME_FUNC, socio.get_nome());
-            contentValuesFunc.put(COLUMN_DTNASC_FUNC, socio.get_dtnasc());
-            contentValuesFunc.put(COLUMN_CPF_FUNC, socio.get_cpf());
-            contentValuesFunc.put(COLUMN_CARGO_FUNC, socio.get_cargo());
-            contentValuesFunc.put(COLUMN_SENHA_FUNC, socio.get_senha());
-            contentValuesFunc.put(COLUMN_NUMEND_FUNC, socio.get_numend());
+        contentValuesFunc.put(COLUMN_NAME_FUNC, socio.get_nome());
+        contentValuesFunc.put(COLUMN_DTNASC_FUNC, socio.get_dtnasc());
+        contentValuesFunc.put(COLUMN_CPF_FUNC, socio.get_cpf());
+        contentValuesFunc.put(COLUMN_CARGO_FUNC, socio.get_cargo());
+        contentValuesFunc.put(COLUMN_SENHA_FUNC, socio.get_senha());
+        contentValuesFunc.put(COLUMN_NUMEND_FUNC, socio.get_numend());
         db.update(FUNCIONARIO_TABLE_NAME, contentValuesFunc,
                 COLUMN_ID_FUNC + " = ? ", new String[] { Integer.toString(socio.get_id()) } );
 
@@ -401,7 +643,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // update na tbTelefone
         ContentValues contentValuesTel = new ContentValues();
-            contentValuesTel.put(COLUMN_NUM_TEL, socio.get_telefone());
+        contentValuesTel.put(COLUMN_NUM_TEL, socio.get_telefone());
         db.update(TELEFONE_TABLE_NAME, contentValuesTel,
                 COLUMN_ID_TEL + " = ? ", new String[] { Integer.toString(id_tel) } );
 
@@ -464,7 +706,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // pegar ID do recém adicionado endereco
         Cursor cursor_id_end = db.rawQuery("SELECT " + COLUMN_ID_END + " FROM " + ENDERECO_TABLE_NAME
-                                                    + " ORDER BY " + COLUMN_ID_END + " DESC LIMIT 1", null);
+                + " ORDER BY " + COLUMN_ID_END + " DESC LIMIT 1", null);
         cursor_id_end.moveToNext();
         int id_end = cursor_id_end.getInt(cursor_id_end.getColumnIndex(COLUMN_ID_END));
 
@@ -481,14 +723,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean deleteSocio(Integer id){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor_id_cntt = db.rawQuery("SELECT " + COLUMN_ID_CNTT + " FROM " + FUNCIONARIO_TABLE_NAME
-                                            + " WHERE " + COLUMN_ID_FUNC + " = " + id, null);
+                + " WHERE " + COLUMN_ID_FUNC + " = " + id, null);
         cursor_id_cntt.moveToNext();
         int id_cntt = cursor_id_cntt.getInt(cursor_id_cntt.getColumnIndex(COLUMN_ID_CNTT));
 
         db.execSQL("DELETE FROM " + FUNCIONARIO_TABLE_NAME
-                        + " WHERE " + COLUMN_ID_FUNC + " = " + id);
+                + " WHERE " + COLUMN_ID_FUNC + " = " + id);
         db.execSQL("DELETE FROM " + CONTATO_TABLE_NAME
-                        + " WHERE " + COLUMN_ID_CNTT + " = " + id_cntt);
+                + " WHERE " + COLUMN_ID_CNTT + " = " + id_cntt);
         return true;
     }
 

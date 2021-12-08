@@ -21,7 +21,7 @@
     <string name="salvar">Salvar</string>
     <string name="sair">Sair</string>
     <string name="alterar_foto_de_perfil">Alterar Foto de Perfil</string>
-    <string name="endereco_text">" %1$s \n"</string>
+    <string name="endereco_text">%1$s</string>
 
     <!-- TELA AÇÕES -->
     <string name="socios">Sócios</string>

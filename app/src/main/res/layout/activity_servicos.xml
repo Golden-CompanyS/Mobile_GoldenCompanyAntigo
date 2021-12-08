@@ -73,7 +73,7 @@
                 android:minHeight="32dp" />
 
             <TableLayout
-                android:layout_width="match_parent"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/edtDescServico"
                 android:layout_centerInParent="true"
