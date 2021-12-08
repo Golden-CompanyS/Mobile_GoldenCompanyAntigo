@@ -336,15 +336,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "')"
         );
 
-        db.execSQL("INSERT INTO " + FUNCIONARIO_TABLE_NAME
+        db.execSQL("INSERT INTO " + CLIENTE_TABLE_NAME
                 + "("
-                + COLUMN_NAME_FUNC + ","
-                + COLUMN_DTNASC_FUNC + ","
-                + COLUMN_CPF_FUNC + ","
+                + COLUMN_NAME_CLI + ","
+                + COLUMN_CNPJ_CLI + ","
                 + COLUMN_ID_CNTT + ","
-                + COLUMN_CARGO_FUNC + ","
-                + COLUMN_SENHA_FUNC + ","
-                + COLUMN_NUMEND_FUNC
+                + COLUMN_NUMEND_CLI
                 + ") VALUES('"
                 + cliente.get_nome() + "','"
                 + cliente.get_cnpj() + "',"

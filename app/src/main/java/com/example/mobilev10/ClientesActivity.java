@@ -106,7 +106,7 @@ public class ClientesActivity extends AppCompatActivity implements SensorEventLi
             if (value > 0){
                 // ou seja, se NÃO for para fazer um cadastro novo (visualizar)
 
-                Cursor cursor = mydb.getDataSocios(value);
+                Cursor cursor = mydb.getDataClientes(value);
                 id_to_update = value;
                 cursor.moveToFirst();
 
