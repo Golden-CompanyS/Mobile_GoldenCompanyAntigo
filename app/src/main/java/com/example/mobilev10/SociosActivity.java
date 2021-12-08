@@ -3,10 +3,13 @@ package com.example.mobilev10;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.AlertDialog;
 import android.app.Service;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
+import android.database.Cursor;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -19,8 +22,44 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SociosActivity extends AppCompatActivity implements SensorEventListener {
+    // Banco de Dados
+    private DatabaseHelper mydb ;
+    int id_to_update = 0;
+
+    // Tabela Funcionario (sócio)
+    TextView edtNomeSocio;
+    TextView edtDtNascSocio;
+    TextView edtCpfSocio;
+    TextView edtCargoSocio;
+    TextView edtSenhaSocio;
+    TextView edtNumEndSocio;
+
+    // Tabela Telefone
+    TextView edtTelSocio;
+
+    // Tabela Contato
+    TextView edtEmailSocio;
+
+    // Tabela Estado
+    TextView edtUfSocio;
+
+    // Tabela Cidade
+    TextView edtCidadeSocio;
+
+    // Tabela Bairro
+    TextView edtBairroSocio;
+
+    // Tabela Rua
+    TextView edtLogradouroSocio;
+
+    // Tabela  Endereco
+    TextView edtComplementoSocio;
+
+    Socios socio;
+
 
     // Luminosidade - Dark Mode
     private static final String ARQUIVO_PREFERENCIAS = "ArquivoPreferencias";
@@ -47,6 +86,283 @@ public class SociosActivity extends AppCompatActivity implements SensorEventList
 
         sensorManager = (SensorManager) getSystemService(Service.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+
+        // Banco de Dados
+        edtNomeSocio = (TextView) findViewById(R.id.edtNomeSocio);
+        edtDtNascSocio = (TextView) findViewById(R.id.edtDtNascSocio);
+        edtCpfSocio = (TextView) findViewById(R.id.edtCpfSocio);
+        edtCargoSocio = (TextView) findViewById(R.id.edtCargoSocio);
+        edtSenhaSocio = (TextView) findViewById(R.id.edtSenhaSocio);
+        edtTelSocio = (TextView) findViewById(R.id.edtTelSocio);
+        edtEmailSocio = (TextView) findViewById(R.id.edtEmailSocio);
+        edtUfSocio = (TextView) findViewById(R.id.edtUfSocio);
+        edtCidadeSocio = (TextView) findViewById(R.id.edtCidadeSocio);
+        edtBairroSocio = (TextView) findViewById(R.id.edtBairroSocio);
+        edtLogradouroSocio = (TextView) findViewById(R.id.edtLogradouroSocio);
+        edtComplementoSocio = (TextView) findViewById(R.id.edtComplementoSocio);
+        edtNumEndSocio = (TextView) findViewById(R.id.edtNumEndSocio);
+
+        mydb = new DatabaseHelper(this);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null){
+            int value = extras.getInt("id");
+
+            if (value > 0){
+                // ou seja, se NÃO for para fazer um cadastro novo (visualizar)
+
+                Cursor cursor = mydb.getDataSocios(value);
+                id_to_update = value;
+                cursor.moveToFirst();
+
+                socio = new Socios();
+                socio.set_nome(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NAME_FUNC)));
+                socio.set_dtnasc(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_DTNASC_FUNC)));
+                socio.set_cpf(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_CPF_FUNC)));
+                socio.set_cargo(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_CARGO_FUNC)));
+                socio.set_senha(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_SENHA_FUNC)));
+                socio.set_numend(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NUMEND_FUNC)));
+                socio.set_telefone(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NUM_TEL)));
+                socio.set_email(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_EMAIL_CNTT)));
+                socio.set_estado(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_UF_EST)));
+                socio.set_cidade(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_CID_NOME)));
+                socio.set_bairro(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_BAIRR_NOME)));
+                socio.set_logradouro(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_RUA_LOGR)));
+                socio.set_complemento(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_COMPL_END)));
+
+
+                if (!cursor.isClosed()){
+                    cursor.close();
+                }
+
+                Button btnSalvar = (Button) findViewById(R.id.btnSalvar);
+                btnSalvar.setVisibility(View.GONE);
+
+                edtNomeSocio.setText(socio.get_nome());
+                edtNomeSocio.setEnabled(false);
+                edtNomeSocio.setFocusable(false);
+                edtNomeSocio.setClickable(false);
+
+                edtDtNascSocio.setText(socio.get_dtnasc());
+                edtDtNascSocio.setEnabled(false);
+                edtDtNascSocio.setFocusable(false);
+                edtDtNascSocio.setClickable(false);
+
+                edtCpfSocio.setText(socio.get_cpf());
+                edtCpfSocio.setEnabled(false);
+                edtCpfSocio.setFocusable(false);
+                edtCpfSocio.setClickable(false);
+
+                edtCargoSocio.setText(socio.get_cargo());
+                edtCargoSocio.setEnabled(false);
+                edtCargoSocio.setFocusable(false);
+                edtCargoSocio.setClickable(false);
+
+                edtSenhaSocio.setText(socio.get_senha());
+                edtSenhaSocio.setEnabled(false);
+                edtSenhaSocio.setFocusable(false);
+                edtSenhaSocio.setClickable(false);
+
+                edtTelSocio.setText(socio.get_telefone());
+                edtTelSocio.setEnabled(false);
+                edtTelSocio.setFocusable(false);
+                edtTelSocio.setClickable(false);
+
+                edtEmailSocio.setText(socio.get_email());
+                edtEmailSocio.setEnabled(false);
+                edtEmailSocio.setFocusable(false);
+                edtEmailSocio.setClickable(false);
+
+                edtUfSocio.setText(socio.get_estado());
+                edtUfSocio.setEnabled(false);
+                edtUfSocio.setFocusable(false);
+                edtUfSocio.setClickable(false);
+
+                edtCidadeSocio.setText(socio.get_cidade());
+                edtCidadeSocio.setEnabled(false);
+                edtCidadeSocio.setFocusable(false);
+                edtCidadeSocio.setClickable(false);
+
+                edtBairroSocio.setText(socio.get_bairro());
+                edtBairroSocio.setEnabled(false);
+                edtBairroSocio.setFocusable(false);
+                edtBairroSocio.setClickable(false);
+
+                edtLogradouroSocio.setText(socio.get_logradouro());
+                edtLogradouroSocio.setEnabled(false);
+                edtLogradouroSocio.setFocusable(false);
+                edtLogradouroSocio.setClickable(false);
+
+                edtComplementoSocio.setText(socio.get_complemento());
+                edtComplementoSocio.setEnabled(false);
+                edtComplementoSocio.setFocusable(false);
+                edtComplementoSocio.setClickable(false);
+
+                edtNumEndSocio.setText(socio.get_numend());
+                edtNumEndSocio.setEnabled(false);
+                edtNumEndSocio.setFocusable(false);
+                edtNumEndSocio.setClickable(false);
+
+            } else {
+                Button btnEditar = (Button) findViewById(R.id.btnEditar);
+                Button btnExcluir = (Button) findViewById(R.id.btnExcluir);
+                btnEditar.setVisibility(View.GONE);
+                btnExcluir.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    // Banco de Dados
+    public void editar(View view){
+        Button btnSalvar = (Button) findViewById(R.id.btnSalvar);
+        btnSalvar.setVisibility(View.VISIBLE);
+
+        edtNomeSocio.setText(socio.get_nome());
+        edtNomeSocio.setEnabled(true);
+        edtNomeSocio.setFocusableInTouchMode(true);
+        edtNomeSocio.setClickable(true);
+
+        edtDtNascSocio.setText(socio.get_dtnasc());
+        edtDtNascSocio.setEnabled(true);
+        edtDtNascSocio.setFocusableInTouchMode(true);
+        edtDtNascSocio.setClickable(true);
+
+        edtCpfSocio.setText(socio.get_cpf());
+        edtCpfSocio.setEnabled(true);
+        edtCpfSocio.setFocusableInTouchMode(true);
+        edtCpfSocio.setClickable(true);
+
+        edtCargoSocio.setText(socio.get_cargo());
+        edtCargoSocio.setEnabled(true);
+        edtCargoSocio.setFocusableInTouchMode(true);
+        edtCargoSocio.setClickable(true);
+
+        edtSenhaSocio.setText(socio.get_senha());
+        edtSenhaSocio.setEnabled(true);
+        edtSenhaSocio.setFocusableInTouchMode(true);
+        edtSenhaSocio.setClickable(true);
+
+        edtTelSocio.setText(socio.get_telefone());
+        edtTelSocio.setEnabled(true);
+        edtTelSocio.setFocusableInTouchMode(true);
+        edtTelSocio.setClickable(true);
+
+        edtEmailSocio.setText(socio.get_email());
+        edtEmailSocio.setEnabled(true);
+        edtEmailSocio.setFocusableInTouchMode(true);
+        edtEmailSocio.setClickable(true);
+
+        edtUfSocio.setText(socio.get_estado());
+        edtUfSocio.setEnabled(true);
+        edtUfSocio.setFocusableInTouchMode(true);
+        edtUfSocio.setClickable(true);
+
+        edtCidadeSocio.setText(socio.get_cidade());
+        edtCidadeSocio.setEnabled(true);
+        edtCidadeSocio.setFocusableInTouchMode(true);
+        edtCidadeSocio.setClickable(true);
+
+        edtBairroSocio.setText(socio.get_bairro());
+        edtBairroSocio.setEnabled(true);
+        edtBairroSocio.setFocusableInTouchMode(true);
+        edtBairroSocio.setClickable(true);
+
+        edtLogradouroSocio.setText(socio.get_logradouro());
+        edtLogradouroSocio.setEnabled(true);
+        edtLogradouroSocio.setFocusableInTouchMode(true);
+        edtLogradouroSocio.setClickable(true);
+
+        edtComplementoSocio.setText(socio.get_complemento());
+        edtComplementoSocio.setEnabled(true);
+        edtComplementoSocio.setFocusableInTouchMode(true);
+        edtComplementoSocio.setClickable(true);
+
+        edtNumEndSocio.setText(socio.get_numend());
+        edtNumEndSocio.setEnabled(true);
+        edtNumEndSocio.setFocusableInTouchMode(true);
+        edtNumEndSocio.setClickable(true);
+    }
+
+    public void excluir(View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.excluir_registro)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mydb.deleteSocio(id_to_update);
+                        Toast.makeText(getApplicationContext(), R.string.delete_ok,
+                                Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), ConSociosActivity.class);
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setTitle(R.string.delete_registro);
+        alertDialog.show();
+    }
+
+
+    public void salvar(View view) {
+        Bundle extras = getIntent().getExtras();
+        if(extras != null) {
+            int value = extras.getInt("id");
+
+            if (value > 0){
+                if(mydb.updateSocio(
+                        new Socios(
+                                id_to_update,
+                                edtNomeSocio.getText().toString(),
+                                edtDtNascSocio.getText().toString(),
+                                edtCpfSocio.getText().toString(),
+                                edtCargoSocio.getText().toString(),
+                                edtSenhaSocio.getText().toString(),
+                                edtNumEndSocio.getText().toString(),
+                                edtTelSocio.getText().toString(),
+                                edtEmailSocio.getText().toString(),
+                                edtUfSocio.getText().toString(),
+                                edtCidadeSocio.getText().toString(),
+                                edtBairroSocio.getText().toString(),
+                                edtLogradouroSocio.getText().toString(),
+                                edtComplementoSocio.getText().toString()
+                        ))){
+                    Toast.makeText(getApplicationContext(), "Atualizado", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), ConSociosActivity.class);
+                    startActivity(intent);
+                } else{
+                    Toast.makeText(getApplicationContext(), "Não Atualizado", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                if(mydb.insertSocio(
+                        new Socios(
+                                edtNomeSocio.getText().toString(),
+                                edtDtNascSocio.getText().toString(),
+                                edtCpfSocio.getText().toString(),
+                                edtCargoSocio.getText().toString(),
+                                edtSenhaSocio.getText().toString(),
+                                edtNumEndSocio.getText().toString(),
+                                edtTelSocio.getText().toString(),
+                                edtEmailSocio.getText().toString(),
+                                edtUfSocio.getText().toString(),
+                                edtCidadeSocio.getText().toString(),
+                                edtBairroSocio.getText().toString(),
+                                edtLogradouroSocio.getText().toString(),
+                                edtComplementoSocio.getText().toString()
+                        ))){
+                    Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "not done", Toast.LENGTH_SHORT).show();
+                }
+
+                Intent intent = new Intent(getApplicationContext(), ConSociosActivity.class);
+                startActivity(intent);
+            }
+        }
     }
 
     // Luminosidade - Dark Mode

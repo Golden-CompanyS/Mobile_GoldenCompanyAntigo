@@ -26,16 +26,4 @@ public class Servicos implements Serializable {
 
     public String get_desc() { return _desc; }
     public void set_desc(String _desc) { this._desc = _desc; }
-
-    public JSONObject getJSONObject() {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("id", this._id);
-            jsonObject.put("desc", this._desc);
-
-        } catch (JSONException e) {
-
-        }
-        return jsonObject;
-    }
 }

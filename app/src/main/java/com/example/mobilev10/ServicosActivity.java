@@ -75,7 +75,7 @@ public class ServicosActivity extends AppCompatActivity implements SensorEventLi
                 cursor.moveToFirst();
 
                 servico = new Servicos();
-                servico.set_desc(cursor.getString(cursor.getColumnIndex(DatabaseHelper.SERVICO_COLUMN_DESC)));
+                servico.set_desc(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_DESC_SERV)));
 
                 if (!cursor.isClosed()){
                     cursor.close();

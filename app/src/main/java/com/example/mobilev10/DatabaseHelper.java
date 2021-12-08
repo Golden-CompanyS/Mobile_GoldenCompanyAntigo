@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.example.mobilev10.Servicos;
 
@@ -19,47 +21,71 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "dbMobile.db";
 
-    //SERVIÇO
+    //TABELA SERVICO
     public static final String SERVICO_TABLE_NAME = "tbServico";
-    public static final String SERVICO_COLUMN_ID = "IdServico";
-    public static final String SERVICO_COLUMN_DESC = "descServ";
+    public static final String COLUMN_ID_SERV = "IdServico";
+    public static final String COLUMN_DESC_SERV = "descServ";
 
-
-    //TABELA CONTATO
-    public static final String CONTACTS_TABLE_NAME = "tbContato";
-    public static final String CONTACTS_ID = "IdContato";
-    public static final String CONTACTS_EMAIL = "Email";
-
-    //TELEFONE
-    public static final String TABLE_TELEFONE = "tbBairro";
-    public static final String COLUMN_ID_TEL = "IdTelefone";
-    public static final String COLUMN_NAME_TELEPHONE = "Telefone";
-
-    //ATIVIDADE
-    public static final String TABLE_ATIVIDADE = "tbAtividade";
-    public static final String COLUMN_ID_ATV = "IdAtividade";
-    public static final String PROFILE_COLUMN_DESC_ATV = "descricaoAtv";
-    public static final String COLUMN_DATE_INICIO = "dtInicio";
-    public static final String COLUMN_DATE_FIM = "dtFim";
-    public static final String COLUMN_ID_SERV = "FK_IdServico";
-
-    //ESTADO
-    public static final String TABLE_ESTADO = "tbEstado";
+    //TABELA ESTADO
+    public static final String ESTADO_TABLE_NAME = "tbEstado";
     public static final String COLUMN_ID_EST = "IdUF";
     public static final String COLUMN_UF_EST = "UF";
 
-    //CIDADE
-    public static final String TABLE_CIDADE = "tbCidade";
+    //TABELA CIDADE
+    public static final String CIDADE_TABLE_NAME = "tbCidade";
     public static final String COLUMN_ID_CID = "IdCidade";
     public static final String COLUMN_CID_NOME = "NomeCidade";
 
-    public static final String TABLE_BAIRRO = "tbBairro";
+    //TABELA BAIRRO
+    public static final String BAIRRO_TABLE_NAME = "tbBairro";
     public static final String COLUMN_ID_BAIRR ="IdBairro";
     public static final String COLUMN_BAIRR_NOME = "NomeBairro";
 
-    public static final String ADRESS_TABLE_NAME = "tbEndereco";
+    //TABELA RUA
+    public static final String RUA_TABLE_NAME = "tbRua";
+    public static final String COLUMN_ID_RUA ="IdRua";
+    public static final String COLUMN_RUA_LOGR = "Logradouro";
+
+    //TABELA ENDERECO
+    public static final String ENDERECO_TABLE_NAME = "tbEndereco";
     public static final String COLUMN_ID_END = "IdEndereco";
-    public static final String COLUMN_COMPL_EST = "Complemento";
+    public static final String COLUMN_COMPL_END = "Complemento";
+
+    //TABELA TELEFONE
+    public static final String TELEFONE_TABLE_NAME = "tbTelefone";
+    public static final String COLUMN_ID_TEL = "IdTelefone";
+    public static final String COLUMN_NUM_TEL = "Telefone";
+
+    //TABELA CONTATO
+    public static final String CONTATO_TABLE_NAME = "tbContato";
+    public static final String COLUMN_ID_CNTT = "IdContato";
+    public static final String COLUMN_EMAIL_CNTT = "Email";
+
+    // TABELA FUNCIONARIO
+    public static final String FUNCIONARIO_TABLE_NAME = "tbFuncionario";
+    public static final String COLUMN_ID_FUNC= "IdFunc";
+    public static final String COLUMN_NAME_FUNC = "NomeFunc";
+    public static final String COLUMN_DTNASC_FUNC = "DtNasc";
+    public static final String COLUMN_CPF_FUNC = "CPF";
+    public static final String COLUMN_CARGO_FUNC = "Cargo";
+    public static final String COLUMN_SENHA_FUNC = "Senha";
+    public static final String COLUMN_NUMEND_FUNC = "NumEnd";
+
+    // TABELA CLIENTE
+    public static final String CLIENTE_TABLE_NAME = "tbCliente";
+    public static final String COLUMN_ID_CLI = "IdCliente";
+    public static final String COLUMN_NAME_CLI = "NomeCliente";
+    public static final String COLUMN_CNPJ_CLI = "CNPJ";
+    public static final String COLUMN_NUMEND_CLI = "Senha";
+
+    //TABELA ATIVIDADE
+    public static final String ATIVIDADE_TABLE_NAME = "tbAtividade";
+    public static final String COLUMN_ID_ATV = "IdAtividade";
+    public static final String COLUMN_DESC_ATV = "descricaoAtv";
+    public static final String COLUMN_DTINICIO_ATV = "dtInicio";
+    public static final String COLUMN_DTFIM_ATV = "dtFim";
+
+
 
 
     public DatabaseHelper(Context context) {
@@ -70,48 +96,98 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         // TODO Auto-generated method stub
         String CREATE_SERVICO_TABLE = "CREATE TABLE " + SERVICO_TABLE_NAME + "("
-                + SERVICO_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + SERVICO_COLUMN_DESC + " TEXT" + ")";
-        String CREATE_ACTIVITIES_TABLE = "CREATE TABLE " +TABLE_ATIVIDADE + "("
-                + COLUMN_ID_ATV + " INTEGER PRIMARY KEY," + PROFILE_COLUMN_DESC_ATV + " TEXT,"
-                + COLUMN_DATE_INICIO + " DATE" + COLUMN_DATE_FIM + "DATE" + COLUMN_ID_SERV +
-                "INTEGER" +
-                "FOREIGN KEY ('+ATV_SERV+') REFERENCES '+SERVICO_TABLE_NAME+'('+SERVICO_COLUMN_ID+')"+")";
+                + COLUMN_ID_SERV + " INTEGER PRIMARY KEY,"
+                + COLUMN_DESC_SERV + " TEXT UNIQUE"
+                + ")";
 
+        String CREATE_ESTADO_TABLE = "CREATE TABLE " + ESTADO_TABLE_NAME + "("
+                + COLUMN_ID_EST + " INTEGER PRIMARY KEY,"
+                + COLUMN_UF_EST + " TEXT(2) UNIQUE"
+                + ")";
 
-        String CREATE_TELEPHONE_TABLE = "CREATE TABLE" + "("
-                + COLUMN_ID_TEL + "INTEGER PRIMARY KEY"
-                + COLUMN_NAME_TELEPHONE + "TEXT" + ")";
+        String CREATE_CIDADE_TABLE = "CREATE TABLE " + CIDADE_TABLE_NAME + "("
+                + COLUMN_ID_CID + " INTEGER PRIMARY KEY,"
+                + COLUMN_CID_NOME + " TEXT UNIQUE"
+                + ")";
 
+        String CREATE_BAIRRO_TABLE = "CREATE TABLE " + BAIRRO_TABLE_NAME + "("
+                + COLUMN_ID_BAIRR + " INTEGER PRIMARY KEY,"
+                + COLUMN_BAIRR_NOME + " TEXT UNIQUE"
+                + ")";
 
-        String CREATE_STATES_TABLE = "CREATE TABLE" + TABLE_ESTADO + "("
-                + COLUMN_ID_EST + "INTEGER PRIMARY KEY," + COLUMN_UF_EST + " TEXT(2)" + ")";
+        String CREATE_RUA_TABLE = "CREATE TABLE " + RUA_TABLE_NAME + "("
+                + COLUMN_ID_RUA + " INTEGER PRIMARY KEY,"
+                + COLUMN_RUA_LOGR + " TEXT UNIQUE"
+                + ")";
 
-        String CREATE_CITIES_TABLE = "CREATE TABLE" + TABLE_CIDADE + "("
-                + COLUMN_ID_CID + "INTEGER PRIMARY KEY," + COLUMN_CID_NOME + " TEXT" + ")";
+        String CREATE_ENDERECO_TABLE = "CREATE TABLE " + ENDERECO_TABLE_NAME + "("
+                + COLUMN_ID_END + " INTEGER PRIMARY KEY,"
+                + COLUMN_ID_EST + " INTEGER,"
+                + COLUMN_ID_CID + " INTEGER,"
+                + COLUMN_ID_BAIRR + " INTEGER,"
+                + COLUMN_ID_RUA + " INTEGER,"
+                + COLUMN_COMPL_END + " TEXT,"
+                + "FOREIGN KEY (" + COLUMN_ID_EST + ") REFERENCES " + ESTADO_TABLE_NAME + "(" + COLUMN_ID_EST + "),"
+                + "FOREIGN KEY (" + COLUMN_ID_CID + ") REFERENCES " + CIDADE_TABLE_NAME + "(" + COLUMN_ID_CID + "),"
+                + "FOREIGN KEY (" + COLUMN_ID_BAIRR + ") REFERENCES " + BAIRRO_TABLE_NAME + "(" + COLUMN_ID_BAIRR + "),"
+                + "FOREIGN KEY (" + COLUMN_ID_RUA + ") REFERENCES " + RUA_TABLE_NAME + "(" + COLUMN_ID_RUA + ")"
+                + ")";
 
-        String CREATE_NEIGHBORH_TABLE = "CREATE TABLE" + TABLE_BAIRRO + "("
-                + COLUMN_ID_BAIRR + "INTEGER PRIMARY KEY," + COLUMN_BAIRR_NOME + " TEXT" + ")";
+        String CREATE_TELEFONE_TABLE = "CREATE TABLE " + TELEFONE_TABLE_NAME + "("
+                + COLUMN_ID_TEL + " INTEGER PRIMARY KEY,"
+                + COLUMN_NUM_TEL + " TEXT UNIQUE"
+                + ")";
 
-        String CREATE_ADDRESS_TABLE = "CREATE TABLE " + ADRESS_TABLE_NAME + "("
-                + COLUMN_ID_END + " INTEGER PRIMARY KEY," + COLUMN_ID_EST + " INTEGER PRIMARY KEY,"
-                + COLUMN_ID_CID + " INTEGER PRIMARY KEY," + COLUMN_ID_BAIRR + " INTEGER PRIMARY KEY,"
-                + COLUMN_COMPL_EST + "TEXT" +
-                "FOREIGN KEY ('+COLUMN_ID_EST+') REFERENCES "+TABLE_ESTADO+"('+COLUMN_ID_EST+'),"+
-        "FOREIGN KEY ('+COLUMN_ID_CID+') REFERENCES '+TABLE_CIDADE+'('+COLUMN_ID_CID+'),"+
-        "FOREIGN KEY ('+COLUMN_ID_BAIRR+') REFERENCES '+TABLE_BAIRRO+'('+COLUMN_ID_BAIRR+')"+")";
+        String CREATE_CONTATO_TABLE = "CREATE TABLE " + CONTATO_TABLE_NAME + "("
+                + COLUMN_ID_CNTT + " INTEGER PRIMARY KEY,"
+                + COLUMN_ID_END + " INTEGER,"
+                + COLUMN_ID_TEL + " INTEGER,"
+                + COLUMN_EMAIL_CNTT + " TEXT UNIQUE,"
+                + "FOREIGN KEY (" + COLUMN_ID_END + ") REFERENCES " + ENDERECO_TABLE_NAME + "(" + COLUMN_ID_END + "),"
+                + "FOREIGN KEY (" + COLUMN_ID_TEL + ") REFERENCES " + TELEFONE_TABLE_NAME + "(" + COLUMN_ID_TEL + ")"
+                + ")";
 
-        String CREATE_CONTATO_TABLE = "CREATE TABLE" + CONTACTS_TABLE_NAME + "("
-                + CONTACTS_ID + "INTEGER PRIMARY KEY"
-                + COLUMN_ID_END + "INTEGER"
-                + "FOREIGN KEY ("+COLUMN_ID_END+") REFERENCES "+ADRESS_TABLE_NAME+" ("+COLUMN_ID_END+")"
-                + COLUMN_ID_TEL + "INTEGER"
-                + "FOREIGN KEY ("+COLUMN_ID_TEL+") REFERENCES '+TABLE_TELEFONE+' ('+COLUMN_ID_TEL+')"
-                + CONTACTS_EMAIL + "TEXT"
-                +")";
+        String CREATE_FUNCIONARIO_TABLE = "CREATE TABLE " + FUNCIONARIO_TABLE_NAME + "("
+                + COLUMN_ID_FUNC + " INTEGER PRIMARY KEY,"
+                + COLUMN_NAME_FUNC + " TEXT,"
+                + COLUMN_DTNASC_FUNC + " DATE,"
+                + COLUMN_CPF_FUNC + " TEXT UNIQUE,"
+                + COLUMN_ID_CNTT + " INTEGER,"
+                + COLUMN_CARGO_FUNC + " TEXT,"
+                + COLUMN_SENHA_FUNC + " TEXT,"
+                + COLUMN_NUMEND_FUNC + " INTEGER,"
+                + "FOREIGN KEY (" + COLUMN_ID_CNTT + ") REFERENCES " + CONTATO_TABLE_NAME + " (" + COLUMN_ID_CNTT + ")"
+                + ")";
 
+        String CREATE_CLIENTE_TABLE = "CREATE TABLE " + CLIENTE_TABLE_NAME + "("
+                + COLUMN_ID_CLI + " INTEGER PRIMARY KEY,"
+                + COLUMN_NAME_CLI + " TEXT,"
+                + COLUMN_CNPJ_CLI + " TEXT UNIQUE,"
+                + COLUMN_ID_CNTT + " INTEGER,"
+                + COLUMN_NUMEND_CLI + " INTEGER,"
+                + "FOREIGN KEY (" + COLUMN_ID_CNTT + ") REFERENCES "+ CONTATO_TABLE_NAME +" (" + COLUMN_ID_CNTT + ")"
+                + ")";
 
+        String CREATE_ATIVIDADE_TABLE = "CREATE TABLE " + ATIVIDADE_TABLE_NAME + "("
+                + COLUMN_ID_ATV + " INTEGER PRIMARY KEY,"
+                + COLUMN_DESC_ATV + " TEXT UNIQUE,"
+                + COLUMN_DTINICIO_ATV + " DATE,"
+                + COLUMN_DTFIM_ATV + " DATE,"
+                + COLUMN_ID_SERV + " INTEGER,"
+                + "FOREIGN KEY (" + COLUMN_ID_SERV + ") REFERENCES " + SERVICO_TABLE_NAME + "(" + COLUMN_ID_SERV + ")"
+                + ")";
 
         db.execSQL(CREATE_SERVICO_TABLE);
+        db.execSQL(CREATE_ESTADO_TABLE);
+        db.execSQL(CREATE_CIDADE_TABLE);
+        db.execSQL(CREATE_BAIRRO_TABLE);
+        db.execSQL(CREATE_RUA_TABLE);
+        db.execSQL(CREATE_ENDERECO_TABLE);
+        db.execSQL(CREATE_TELEFONE_TABLE);
+        db.execSQL(CREATE_CONTATO_TABLE);
+        db.execSQL(CREATE_FUNCIONARIO_TABLE);
+        db.execSQL(CREATE_CLIENTE_TABLE);
+        db.execSQL(CREATE_ATIVIDADE_TABLE);
     }
 
 
@@ -119,43 +195,54 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // TODO Auto-generated method stub
         db.execSQL("DROP TABLE IF EXISTS " + SERVICO_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + ESTADO_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + CIDADE_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + BAIRRO_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + RUA_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + ENDERECO_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TELEFONE_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + CONTATO_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + FUNCIONARIO_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + CLIENTE_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + ATIVIDADE_TABLE_NAME);
         onCreate(db);
     }
 
-    public boolean insertServico (Servicos serv) {
+    // Operações Serviços
+    public boolean insertServico(Servicos serv) {
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(SERVICO_COLUMN_DESC, serv.get_desc());
-        db.insert(SERVICO_TABLE_NAME, null, contentValues);
+
+        db.execSQL("INSERT OR IGNORE INTO " + SERVICO_TABLE_NAME
+                + "("
+                + COLUMN_DESC_SERV
+                + ") VALUES('"
+                + serv.get_desc()
+                + "')"
+        );
+
         return true;
     }
 
     public Cursor getDataServicos(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery( "SELECT * FROM "+ SERVICO_TABLE_NAME + " WHERE " + SERVICO_COLUMN_ID + " = " + id + "", null);
+        Cursor cursor = db.rawQuery( "SELECT * FROM "+ SERVICO_TABLE_NAME + " WHERE " + COLUMN_ID_SERV + " = " + id, null);
         return cursor;
     }
 
-    public int numberOfRowsServicos(){
-        SQLiteDatabase db = this.getReadableDatabase();
-        int numRows = (int) DatabaseUtils.queryNumEntries(db, SERVICO_TABLE_NAME);
-        return numRows;
-    }
-
-    public boolean updateServico (Servicos serv) {
+    public boolean updateServico(Servicos serv) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(SERVICO_COLUMN_DESC, serv.get_desc());
+        contentValues.put(COLUMN_DESC_SERV, serv.get_desc());
 
         db.update(SERVICO_TABLE_NAME, contentValues,
-                SERVICO_COLUMN_ID + " = ? ", new String[] { Integer.toString(serv.get_id()) } );
+                COLUMN_ID_SERV + " = ? ", new String[] { Integer.toString(serv.get_id()) } );
         return true;
     }
 
     public Integer deleteServico(Integer id){
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(SERVICO_TABLE_NAME,
-                SERVICO_COLUMN_ID + " = ? ", new String[] { Integer.toString(id) } );
+                COLUMN_ID_SERV + " = ? ", new String[] { Integer.toString(id) } );
     }
 
     public ArrayList<String> getAllServicos() {
@@ -166,28 +253,256 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.moveToFirst();
 
         while(!cursor.isAfterLast()){
-            array_list.add(cursor.getString(cursor.getColumnIndex(SERVICO_COLUMN_DESC)));
+            array_list.add(cursor.getString(cursor.getColumnIndex(COLUMN_DESC_SERV)));
             cursor.moveToNext();
         }
         return array_list;
     }
 
-    public ArrayList<Servicos> getServicosList() {
-        ArrayList<Servicos> list = new ArrayList<Servicos>() ;
+    // Operações Sócios
+    public boolean insertSocio(Socios socio) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.execSQL("INSERT OR IGNORE INTO " + ESTADO_TABLE_NAME
+                + "("
+                + COLUMN_UF_EST
+                + ") VALUES('"
+                + socio.get_estado()
+                + "')"
+        );
+
+        db.execSQL("INSERT OR IGNORE INTO " + CIDADE_TABLE_NAME
+                + "("
+                + COLUMN_CID_NOME
+                + ") VALUES('"
+                + socio.get_cidade()
+                + "')"
+        );
+
+        db.execSQL("INSERT OR IGNORE INTO " + BAIRRO_TABLE_NAME
+                + "("
+                + COLUMN_BAIRR_NOME
+                + ") VALUES('"
+                + socio.get_bairro()
+                + "')"
+        );
+
+        db.execSQL("INSERT OR IGNORE INTO " + RUA_TABLE_NAME
+                + "("
+                + COLUMN_RUA_LOGR
+                + ") VALUES('"
+                + socio.get_logradouro()
+                + "')"
+        );
+
+        db.execSQL("INSERT OR IGNORE INTO " + ENDERECO_TABLE_NAME
+                + "("
+                + COLUMN_ID_EST + ","
+                + COLUMN_ID_CID + ","
+                + COLUMN_ID_BAIRR + ","
+                + COLUMN_ID_RUA + ","
+                + COLUMN_COMPL_END
+                + ") VALUES("
+                + "(SELECT " + COLUMN_ID_EST + " FROM " + ESTADO_TABLE_NAME
+                    + " WHERE " + COLUMN_UF_EST + " = '" + socio.get_estado() + "'),"
+                + "(SELECT " + COLUMN_ID_CID + " FROM " + CIDADE_TABLE_NAME
+                    + " WHERE " + COLUMN_CID_NOME + " = '" + socio.get_cidade() + "'),"
+                + "(SELECT " + COLUMN_ID_BAIRR + " FROM " + BAIRRO_TABLE_NAME
+                    + " WHERE " + COLUMN_BAIRR_NOME + " = '" + socio.get_bairro() + "'),"
+                + "(SELECT " + COLUMN_ID_RUA + " FROM " + RUA_TABLE_NAME
+                    + " WHERE " + COLUMN_RUA_LOGR + " = '" + socio.get_logradouro() + "'),'"
+                + socio.get_complemento()
+                + "')"
+        );
+
+        db.execSQL("INSERT OR IGNORE INTO " + TELEFONE_TABLE_NAME
+                + "("
+                + COLUMN_NUM_TEL
+                + ") VALUES('"
+                + socio.get_telefone()
+                + "')"
+        );
+
+        db.execSQL("INSERT INTO " + CONTATO_TABLE_NAME
+                + "("
+                + COLUMN_ID_END + ","
+                + COLUMN_ID_TEL + ","
+                + COLUMN_EMAIL_CNTT
+                + ") VALUES("
+                + "(SELECT " + COLUMN_ID_END + " FROM " + ENDERECO_TABLE_NAME + " ORDER BY " + COLUMN_ID_END + " DESC LIMIT 1),"
+                + "(SELECT " + COLUMN_ID_TEL + " FROM " + TELEFONE_TABLE_NAME
+                    + " WHERE " + COLUMN_NUM_TEL + " = '" + socio.get_telefone() + "'),'"
+                + socio.get_email()
+                + "')"
+        );
+
+        db.execSQL("INSERT INTO " + FUNCIONARIO_TABLE_NAME
+                + "("
+                + COLUMN_NAME_FUNC + ","
+                + COLUMN_DTNASC_FUNC + ","
+                + COLUMN_CPF_FUNC + ","
+                + COLUMN_ID_CNTT + ","
+                + COLUMN_CARGO_FUNC + ","
+                + COLUMN_SENHA_FUNC + ","
+                + COLUMN_NUMEND_FUNC
+                + ") VALUES('"
+                + socio.get_nome() + "','"
+                + socio.get_dtnasc() + "','"
+                + socio.get_cpf() + "',"
+                + "(SELECT " + COLUMN_ID_CNTT + " FROM " + CONTATO_TABLE_NAME + " ORDER BY " + COLUMN_ID_CNTT + " DESC LIMIT 1),'"
+                + socio.get_cargo() + "','"
+                + socio.get_senha() + "',"
+                + socio.get_numend()
+                + ")"
+        );
+
+        return true;
+    }
+
+    public Cursor getDataSocios(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery( "SELECT * FROM " + FUNCIONARIO_TABLE_NAME + " AS f"
+                + " INNER JOIN " + CONTATO_TABLE_NAME + " AS c ON f." + COLUMN_ID_CNTT + " = c." + COLUMN_ID_CNTT
+                + " INNER JOIN " + TELEFONE_TABLE_NAME + " AS t ON c." + COLUMN_ID_TEL + " = t." + COLUMN_ID_TEL
+                + " INNER JOIN " + ENDERECO_TABLE_NAME + " AS e ON c." + COLUMN_ID_END + " = e." + COLUMN_ID_END
+                + " INNER JOIN " + ESTADO_TABLE_NAME + " AS u ON e." + COLUMN_ID_EST + " = u." + COLUMN_ID_EST
+                + " INNER JOIN " + CIDADE_TABLE_NAME + " AS ci ON e." + COLUMN_ID_CID + " = ci." + COLUMN_ID_CID
+                + " INNER JOIN " + BAIRRO_TABLE_NAME + " AS b ON e." + COLUMN_ID_BAIRR + " = b." + COLUMN_ID_BAIRR
+                + " INNER JOIN " + RUA_TABLE_NAME + " AS r ON e." + COLUMN_ID_RUA + " = r." + COLUMN_ID_RUA
+                + " WHERE " + COLUMN_ID_FUNC + " = " + id, null);
+        return cursor;
+    }
+
+    public boolean updateSocio(Socios socio) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // update na tbFuncionario
+        ContentValues contentValuesFunc = new ContentValues();
+            contentValuesFunc.put(COLUMN_NAME_FUNC, socio.get_nome());
+            contentValuesFunc.put(COLUMN_DTNASC_FUNC, socio.get_dtnasc());
+            contentValuesFunc.put(COLUMN_CPF_FUNC, socio.get_cpf());
+            contentValuesFunc.put(COLUMN_CARGO_FUNC, socio.get_cargo());
+            contentValuesFunc.put(COLUMN_SENHA_FUNC, socio.get_senha());
+            contentValuesFunc.put(COLUMN_NUMEND_FUNC, socio.get_numend());
+        db.update(FUNCIONARIO_TABLE_NAME, contentValuesFunc,
+                COLUMN_ID_FUNC + " = ? ", new String[] { Integer.toString(socio.get_id()) } );
+
+        // pegar ID da tbContato
+        Cursor cursor_id_cntt = db.rawQuery("SELECT " + COLUMN_ID_CNTT + " FROM " + FUNCIONARIO_TABLE_NAME
+                + " WHERE " + COLUMN_ID_FUNC + " = " + socio.get_id(), null);
+        cursor_id_cntt.moveToNext();
+        int id_cntt = cursor_id_cntt.getInt(cursor_id_cntt.getColumnIndex(COLUMN_ID_CNTT));
+
+        // pegar ID da tbTelefone
+        Cursor cursor_id_tel = db.rawQuery("SELECT " + COLUMN_ID_TEL + " FROM " + CONTATO_TABLE_NAME
+                + " WHERE " + COLUMN_ID_CNTT + " = " + id_cntt, null);
+        cursor_id_tel.moveToNext();
+        int id_tel = cursor_id_tel.getInt(cursor_id_tel.getColumnIndex(COLUMN_ID_TEL));
+
+        // update na tbTelefone
+        ContentValues contentValuesTel = new ContentValues();
+            contentValuesTel.put(COLUMN_NUM_TEL, socio.get_telefone());
+        db.update(TELEFONE_TABLE_NAME, contentValuesTel,
+                COLUMN_ID_TEL + " = ? ", new String[] { Integer.toString(id_tel) } );
+
+        // insert UF caso não exista
+        db.execSQL("INSERT OR IGNORE INTO " + ESTADO_TABLE_NAME
+                + "("
+                + COLUMN_UF_EST
+                + ") VALUES('"
+                + socio.get_estado()
+                + "')"
+        );
+
+        // insert CIDADE caso não exista
+        db.execSQL("INSERT OR IGNORE INTO " + CIDADE_TABLE_NAME
+                + "("
+                + COLUMN_CID_NOME
+                + ") VALUES('"
+                + socio.get_cidade()
+                + "')"
+        );
+
+        // insert BAIRRO caso não exista
+        db.execSQL("INSERT OR IGNORE INTO " + BAIRRO_TABLE_NAME
+                + "("
+                + COLUMN_BAIRR_NOME
+                + ") VALUES('"
+                + socio.get_bairro()
+                + "')"
+        );
+
+        // insert LOGRADOURO caso não exista
+        db.execSQL("INSERT OR IGNORE INTO " + RUA_TABLE_NAME
+                + "("
+                + COLUMN_RUA_LOGR
+                + ") VALUES('"
+                + socio.get_logradouro()
+                + "')"
+        );
+
+        // insert ENDERECO caso não exista
+        db.execSQL("INSERT INTO " + ENDERECO_TABLE_NAME
+                + "("
+                + COLUMN_ID_EST + ","
+                + COLUMN_ID_CID + ","
+                + COLUMN_ID_BAIRR + ","
+                + COLUMN_ID_RUA + ","
+                + COLUMN_COMPL_END
+                + ") VALUES("
+                + "(SELECT " + COLUMN_ID_EST + " FROM " + ESTADO_TABLE_NAME
+                + " WHERE " + COLUMN_UF_EST + " = '" + socio.get_estado() + "'),"
+                + "(SELECT " + COLUMN_ID_CID + " FROM " + CIDADE_TABLE_NAME
+                + " WHERE " + COLUMN_CID_NOME + " = '" + socio.get_cidade() + "'),"
+                + "(SELECT " + COLUMN_ID_BAIRR + " FROM " + BAIRRO_TABLE_NAME
+                + " WHERE " + COLUMN_BAIRR_NOME + " = '" + socio.get_bairro() + "'),"
+                + "(SELECT " + COLUMN_ID_RUA + " FROM " + RUA_TABLE_NAME
+                + " WHERE " + COLUMN_RUA_LOGR + " = '" + socio.get_logradouro() + "'),'"
+                + socio.get_complemento()
+                + "')"
+        );
+
+        // pegar ID do recém adicionado endereco
+        Cursor cursor_id_end = db.rawQuery("SELECT " + COLUMN_ID_END + " FROM " + ENDERECO_TABLE_NAME
+                                                    + " ORDER BY " + COLUMN_ID_END + " DESC LIMIT 1", null);
+        cursor_id_end.moveToNext();
+        int id_end = cursor_id_end.getInt(cursor_id_end.getColumnIndex(COLUMN_ID_END));
+
+        // update na tbContato
+        ContentValues contentValuesCntt = new ContentValues();
+        contentValuesCntt.put(COLUMN_ID_END, id_end);
+        contentValuesCntt.put(COLUMN_EMAIL_CNTT, socio.get_email());
+        db.update(CONTATO_TABLE_NAME, contentValuesCntt,
+                COLUMN_ID_CNTT + " = ? ", new String[] { Integer.toString(id_cntt) } );
+
+        return true;
+    }
+
+    public boolean deleteSocio(Integer id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor_id_cntt = db.rawQuery("SELECT " + COLUMN_ID_CNTT + " FROM " + FUNCIONARIO_TABLE_NAME
+                                            + " WHERE " + COLUMN_ID_FUNC + " = " + id, null);
+        cursor_id_cntt.moveToNext();
+        int id_cntt = cursor_id_cntt.getInt(cursor_id_cntt.getColumnIndex(COLUMN_ID_CNTT));
+
+        db.execSQL("DELETE FROM " + FUNCIONARIO_TABLE_NAME
+                        + " WHERE " + COLUMN_ID_FUNC + " = " + id);
+        db.execSQL("DELETE FROM " + CONTATO_TABLE_NAME
+                        + " WHERE " + COLUMN_ID_CNTT + " = " + id_cntt);
+        return true;
+    }
+
+    public ArrayList<String> getAllSocios() {
+        ArrayList<String> array_list = new ArrayList<String>();
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor =  db.rawQuery( "SELECT * FROM " + SERVICO_TABLE_NAME, null );
+        Cursor cursor = db.rawQuery( "SELECT " + COLUMN_NAME_FUNC + " FROM " + FUNCIONARIO_TABLE_NAME, null );
         cursor.moveToFirst();
 
         while(!cursor.isAfterLast()){
-            Servicos serv = new Servicos();
-            serv.set_id(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SERVICO_COLUMN_ID))));
-            serv.set_desc(cursor.getString(cursor.getColumnIndex(SERVICO_COLUMN_DESC)));
-
-            list.add(serv);
+            array_list.add(cursor.getString(cursor.getColumnIndex(COLUMN_NAME_FUNC)));
             cursor.moveToNext();
         }
-
-        return list;
+        return array_list;
     }
 }
