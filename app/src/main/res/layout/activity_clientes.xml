@@ -224,7 +224,7 @@
                 <TableRow>
 
                     <Button
-                        android:id="@+id/btnEditar"
+                        android:id="@+id/btnEditarCli"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/botao"
@@ -236,7 +236,7 @@
                 <TableRow>
 
                     <Button
-                        android:id="@+id/btnExcluir"
+                        android:id="@+id/btnExcluirCli"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/botao"

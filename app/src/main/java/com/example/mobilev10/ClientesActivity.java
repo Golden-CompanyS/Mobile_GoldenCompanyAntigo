@@ -86,16 +86,16 @@ public class ClientesActivity extends AppCompatActivity implements SensorEventLi
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
 
         // Banco de Dados
-        edtNomeCli = (TextView) findViewById(R.id.edtNomeSocio);
-        edtCnpjCli = (TextView) findViewById(R.id.edtCpfSocio);
-        edtTelCli = (TextView) findViewById(R.id.edtTelSocio);
-        edtEmailCli = (TextView) findViewById(R.id.edtEmailSocio);
-        edtUfCli = (TextView) findViewById(R.id.edtUfSocio);
-        edtCidadeCli = (TextView) findViewById(R.id.edtCidadeSocio);
-        edtBairroCli = (TextView) findViewById(R.id.edtBairroSocio);
-        edtLogradouroCli = (TextView) findViewById(R.id.edtLogradouroSocio);
-        edtComplementoCli = (TextView) findViewById(R.id.edtComplementoSocio);
-        edtNumEndCli = (TextView) findViewById(R.id.edtNumEndSocio);
+        edtNomeCli = (TextView) findViewById(R.id.edtNomeCliente);
+        edtCnpjCli = (TextView) findViewById(R.id.edtCnpjCliente);
+        edtTelCli = (TextView) findViewById(R.id.edtTelCliente);
+        edtEmailCli = (TextView) findViewById(R.id.edtEmailCliente);
+        edtUfCli = (TextView) findViewById(R.id.edtUfCliente);
+        edtCidadeCli = (TextView) findViewById(R.id.edtCidadeCliente);
+        edtBairroCli = (TextView) findViewById(R.id.edtBairroCliente);
+        edtLogradouroCli = (TextView) findViewById(R.id.edtLogradouroCliente);
+        edtComplementoCli = (TextView) findViewById(R.id.edtComplementoCliente);
+        edtNumEndCli = (TextView) findViewById(R.id.edtNumEndCliente);
 
         mydb = new DatabaseHelper(this);
 
@@ -181,8 +181,8 @@ public class ClientesActivity extends AppCompatActivity implements SensorEventLi
                 edtNumEndCli.setClickable(false);
 
             } else {
-                Button btnEditar = (Button) findViewById(R.id.btnEditar);
-                Button btnExcluir = (Button) findViewById(R.id.btnExcluir);
+                Button btnEditar = (Button) findViewById(R.id.btnEditarCli);
+                Button btnExcluir = (Button) findViewById(R.id.btnExcluirCli);
                 btnEditar.setVisibility(View.GONE);
                 btnExcluir.setVisibility(View.GONE);
             }

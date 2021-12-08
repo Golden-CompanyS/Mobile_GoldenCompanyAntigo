@@ -259,7 +259,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return array_list;
     }
 
-    // Operações Sócios
+    // Operações Clientes
     public boolean insertClientes(Clientes cliente) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -363,7 +363,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + " INNER JOIN " + CIDADE_TABLE_NAME + " AS ci ON e." + COLUMN_ID_CID + " = ci." + COLUMN_ID_CID
                 + " INNER JOIN " + BAIRRO_TABLE_NAME + " AS b ON e." + COLUMN_ID_BAIRR + " = b." + COLUMN_ID_BAIRR
                 + " INNER JOIN " + RUA_TABLE_NAME + " AS r ON e." + COLUMN_ID_RUA + " = r." + COLUMN_ID_RUA
-                + " WHERE " + COLUMN_ID_FUNC + " = " + id, null);
+                + " WHERE " + COLUMN_ID_CLI + " = " + id, null);
         return cursor;
     }
 
