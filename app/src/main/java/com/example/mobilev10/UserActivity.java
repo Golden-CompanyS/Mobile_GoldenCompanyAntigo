@@ -16,6 +16,7 @@ import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -28,7 +29,9 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.util.LruCache;
 import android.view.View;
@@ -51,11 +54,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Locale;
@@ -244,6 +250,15 @@ public class UserActivity extends AppCompatActivity implements FetchAddressTask.
 
         id_to_update = preferencias.getInt("funcIdSession", 0);
 
+        // pegar imagem automaticamente
+        String imagemBase64 = preferencias.getString("imgSource", null);
+        if (imagemBase64 != null){
+
+            byte[] bytes = Base64.decode(imagemBase64, Base64.DEFAULT);
+            InputStream inputStream = new ByteArrayInputStream(bytes);
+            Bitmap imagemBitmap = BitmapFactory.decodeStream(inputStream);
+            imgUser.setImageBitmap(imagemBitmap);
+        }
     }
 
     // Banco de Dados
@@ -423,14 +438,30 @@ public class UserActivity extends AppCompatActivity implements FetchAddressTask.
         startActivityForResult(Intent.createChooser(intent, "Selecione uma imagem"), RESULT_SELECT_IMAGE);
     }
 
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(resultCode==RESULT_OK){
-            Uri imagemSelecionada = data.getData();
-            //define como source da imagem
-            imgUser.setImageURI(imagemSelecionada);
+            Uri imagemUri = data.getData();
+            try {
+                Bitmap imagemBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imagemUri);
+
+                //define como source da imagem
+                imgUser.setImageBitmap(imagemBitmap);
+
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                imagemBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                byte[] b = byteArrayOutputStream.toByteArray();
+                String imagemBase64 = Base64.encodeToString(b, Base64.DEFAULT);
+
+                SharedPreferences preferencias = getSharedPreferences(ARQUIVO_PREFERENCIAS, 0);
+                SharedPreferences.Editor editor = preferencias.edit();
+
+                editor.putString("imgSource", imagemBase64).apply();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
