@@ -13,10 +13,15 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class ConAtividadesActivity extends AppCompatActivity implements SensorEventListener {
 
@@ -25,6 +30,10 @@ public class ConAtividadesActivity extends AppCompatActivity implements SensorEv
     SensorManager sensorManager;
     Sensor sensor;
     Float luminosidade;
+
+    // Banco de Dados
+    DatabaseHelper mydb;
+    private ListView listConsulta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +54,44 @@ public class ConAtividadesActivity extends AppCompatActivity implements SensorEv
 
         sensorManager = (SensorManager) getSystemService(Service.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+
+        // Banco de Dados
+        listConsulta = (ListView) findViewById(R.id.listConsulta);
+        mydb = new DatabaseHelper(this);
+        atualizarLista();
+    }
+
+    // Banco de Dados
+    public void atualizarLista(){
+        ArrayList arrayList = mydb.getAllAtividades();
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1 , arrayList);
+        listConsulta.setAdapter(arrayAdapter);
+
+        listConsulta.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int id_To_Search = position + 1;
+
+                Bundle bundle = new Bundle();
+                bundle.putInt("id", id_To_Search);
+
+                Intent intent = new Intent(getApplicationContext(), AtividadesActivity.class);
+                intent.putExtras(bundle);
+
+                startActivity(intent);
+            }
+        });
+    }
+
+    public void registrarAtividade(View view){
+        Bundle bundle = new Bundle();
+        bundle.putInt("id", 0);
+
+        Intent intent = new Intent(this, AtividadesActivity.class);
+        intent.putExtras(bundle);
+
+        startActivity(intent);
+        this.overridePendingTransition(0, 0);
     }
 
     // Luminosidade - Dark Mode

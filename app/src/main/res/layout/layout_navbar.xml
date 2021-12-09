@@ -54,13 +54,13 @@
             android:layout_height="62dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="14dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
             android:layout_marginEnd="25dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:contentDescription="@string/botao_perfil"
             android:onClick="abrirUserActivity"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:scaleType="fitCenter"
 
             app:srcCompat="@drawable/perfil" />

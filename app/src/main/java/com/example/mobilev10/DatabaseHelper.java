@@ -170,12 +170,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         String CREATE_ATIVIDADE_TABLE = "CREATE TABLE " + ATIVIDADE_TABLE_NAME + "("
                 + COLUMN_ID_ATV + " INTEGER PRIMARY KEY,"
-                + COLUMN_DESC_ATV + " TEXT UNIQUE,"
+                + COLUMN_DESC_ATV + " TEXT,"
                 + COLUMN_DTINICIO_ATV + " DATE,"
                 + COLUMN_DTFIM_ATV + " DATE,"
                 + COLUMN_ID_SERV + " INTEGER,"
-                + "FOREIGN KEY (" + COLUMN_ID_SERV + ") REFERENCES " + SERVICO_TABLE_NAME + "(" + COLUMN_ID_SERV + ")"
-                + ")";
+                + COLUMN_CNPJ_CLI + " TEXT,"
+                + "FOREIGN KEY (" + COLUMN_ID_FUNC + ") REFERENCES " + FUNCIONARIO_TABLE_NAME + " (" + COLUMN_ID_FUNC + "),"
+                + "FOREIGN KEY (" + COLUMN_CNPJ_CLI + ") REFERENCES " + CLIENTE_TABLE_NAME + " (" + COLUMN_CNPJ_CLI + "),"
+                + "FOREIGN KEY (" + COLUMN_ID_SERV + ") REFERENCES " + SERVICO_TABLE_NAME + " (" + COLUMN_ID_SERV + ")"
+                +")";
 
         db.execSQL(CREATE_SERVICO_TABLE);
         db.execSQL(CREATE_ESTADO_TABLE);
@@ -551,6 +554,89 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return array_list;
     }
 
+
+    // Operações Atividades
+    public boolean insertAtividade(Atividades atividades) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+
+        db.execSQL("INSERT INTO " + ATIVIDADE_TABLE_NAME
+                + "("
+                + COLUMN_DESC_ATV + ","
+                + COLUMN_DTINICIO_ATV + ","
+                + COLUMN_DTFIM_ATV + ","
+                + COLUMN_ID_FUNC + ","
+                + COLUMN_CNPJ_CLI + ","
+                + COLUMN_ID_SERV
+                + ") VALUES('"
+                + atividades.get_desc() + "','"
+                + atividades.get_dtInicio() + "','"
+                + atividades.get_dtFim() + "',"
+                +"(SELECT " + COLUMN_ID_FUNC + " FROM " + FUNCIONARIO_TABLE_NAME
+                + " WHERE " + COLUMN_ID_FUNC + " = '" + atividades.get_func() + "'),"
+                + "(SELECT " + COLUMN_CNPJ_CLI + " FROM " + CLIENTE_TABLE_NAME
+                + " WHERE " + COLUMN_CNPJ_CLI + " = '" + atividades.get_cnpj() + "'),"
+                + "(SELECT " + COLUMN_ID_SERV + " FROM " + SERVICO_TABLE_NAME
+                + " WHERE " + COLUMN_ID_SERV + " = '" + atividades.get_serv() + "')"
+                + ")"
+        );
+
+        return true;
+    }
+
+    public Cursor getDataAtividades(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery( "SELECT * FROM " + ATIVIDADE_TABLE_NAME + " AS f"
+                + " INNER JOIN " + FUNCIONARIO_TABLE_NAME + " AS e ON f." + COLUMN_ID_FUNC + " = e." + COLUMN_ID_FUNC
+                + " INNER JOIN " + CLIENTE_TABLE_NAME + " AS c ON f." + COLUMN_CNPJ_CLI + " = c." + COLUMN_CNPJ_CLI
+                + " INNER JOIN " + SERVICO_TABLE_NAME + " AS t ON f." + COLUMN_ID_SERV + " = t." + COLUMN_ID_SERV
+                + " WHERE " + COLUMN_ID_ATV + " = " + id, null);
+        return cursor;
+    }
+
+    public boolean updateAtividade(Atividades atividades) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // update na tbFuncionario
+        ContentValues contentValuesAtv = new ContentValues();
+        contentValuesAtv.put(COLUMN_DESC_ATV, atividades.get_desc());
+        contentValuesAtv.put(COLUMN_DTINICIO_ATV, atividades.get_dtInicio());
+        contentValuesAtv.put(COLUMN_DTFIM_ATV, atividades.get_dtFim());
+        contentValuesAtv.put(COLUMN_ID_FUNC, atividades.get_func());
+        contentValuesAtv.put(COLUMN_CNPJ_CLI, atividades.get_cnpj());
+        contentValuesAtv.put(COLUMN_ID_SERV, atividades.get_serv());
+
+        db.update(ATIVIDADE_TABLE_NAME, contentValuesAtv,
+                COLUMN_ID_ATV + " = ? ", new String[] { Integer.toString(atividades.get_id()) } );
+        return true;
+    }
+
+    public boolean deleteAtividade(Integer id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor_id_cntt = db.rawQuery("SELECT " + COLUMN_ID_ATV + " FROM " + ATIVIDADE_TABLE_NAME
+                + " WHERE " + COLUMN_ID_ATV + " = " + id, null);
+        cursor_id_cntt.moveToNext();
+        int id_cntt = cursor_id_cntt.getInt(cursor_id_cntt.getColumnIndex(COLUMN_ID_ATV));
+
+        db.execSQL("DELETE FROM " + ATIVIDADE_TABLE_NAME
+                + " WHERE " + COLUMN_ID_ATV + " = " + id);
+
+        return true;
+    }
+
+    public ArrayList<String> getAllAtividades() {
+        ArrayList<String> array_list = new ArrayList<String>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery( "SELECT " + COLUMN_DESC_ATV + " FROM " + ATIVIDADE_TABLE_NAME, null );
+        cursor.moveToFirst();
+
+        while(!cursor.isAfterLast()){
+            array_list.add(cursor.getString(cursor.getColumnIndex(COLUMN_DESC_ATV)));
+            cursor.moveToNext();
+        }
+        return array_list;
+    }
 
     // Operações Sócios
     public boolean insertSocio(Socios socio) {

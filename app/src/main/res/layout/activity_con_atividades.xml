@@ -62,14 +62,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/scrollContainer"
         android:layout_centerInParent="true"
-        android:backgroundTint="@color/botao"
+        android:layout_marginBottom="25dp"
 
+        android:backgroundTint="@color/botao"
+        android:onClick="registrarAtividade"
         android:text="@string/novo_registro"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="25dp"
 
-        android:onClick="abrirAtividadesActivity" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
