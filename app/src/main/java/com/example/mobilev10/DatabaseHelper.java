@@ -192,6 +192,66 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_FUNCIONARIO_TABLE);
         db.execSQL(CREATE_CLIENTE_TABLE);
         db.execSQL(CREATE_ATIVIDADE_TABLE);
+
+        db.execSQL("INSERT INTO " + ESTADO_TABLE_NAME
+                + "("
+                + COLUMN_UF_EST
+                + ") VALUES('SP')"
+        );
+
+        db.execSQL("INSERT INTO " + CIDADE_TABLE_NAME
+                + "("
+                + COLUMN_CID_NOME
+                + ") VALUES('São Paulo')"
+        );
+
+        db.execSQL("INSERT INTO " + BAIRRO_TABLE_NAME
+                + "("
+                + COLUMN_BAIRR_NOME
+                + ") VALUES('Vila Leopoldina')"
+        );
+
+        db.execSQL("INSERT INTO " + RUA_TABLE_NAME
+                + "("
+                + COLUMN_RUA_LOGR
+                + ") VALUES('R. Guaipá')"
+        );
+
+        db.execSQL("INSERT INTO " + ENDERECO_TABLE_NAME
+                + "("
+                + COLUMN_ID_EST + ","
+                + COLUMN_ID_CID + ","
+                + COLUMN_ID_BAIRR + ","
+                + COLUMN_ID_RUA + ","
+                + COLUMN_COMPL_END
+                + ") VALUES(1, 1, 1, 1, 'sede')"
+        );
+
+        db.execSQL("INSERT INTO " + TELEFONE_TABLE_NAME
+                + "("
+                + COLUMN_NUM_TEL
+                + ") VALUES('(11) 91111-4444')"
+        );
+
+        db.execSQL("INSERT INTO " + CONTATO_TABLE_NAME
+                + "("
+                + COLUMN_ID_END + ","
+                + COLUMN_ID_TEL + ","
+                + COLUMN_EMAIL_CNTT
+                + ") VALUES(1, 1, 'admin@gcompany.com')"
+        );
+
+        db.execSQL("INSERT INTO " + FUNCIONARIO_TABLE_NAME
+                + "("
+                + COLUMN_NAME_FUNC + ","
+                + COLUMN_DTNASC_FUNC + ","
+                + COLUMN_CPF_FUNC + ","
+                + COLUMN_ID_CNTT + ","
+                + COLUMN_CARGO_FUNC + ","
+                + COLUMN_SENHA_FUNC + ","
+                + COLUMN_NUMEND_FUNC
+                + ") VALUES('Vi Sonoda', '01/02/2003', '34898812423', 1, 'Designer', '123456', 678)"
+        );
     }
 
 
