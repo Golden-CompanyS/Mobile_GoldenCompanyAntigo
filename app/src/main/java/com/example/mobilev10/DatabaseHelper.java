@@ -173,6 +173,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_DESC_ATV + " TEXT,"
                 + COLUMN_DTINICIO_ATV + " DATE,"
                 + COLUMN_DTFIM_ATV + " DATE,"
+                + COLUMN_ID_FUNC + " INTEGER,"
                 + COLUMN_ID_SERV + " INTEGER,"
                 + COLUMN_CNPJ_CLI + " TEXT,"
                 + "FOREIGN KEY (" + COLUMN_ID_FUNC + ") REFERENCES " + FUNCIONARIO_TABLE_NAME + " (" + COLUMN_ID_FUNC + "),"
@@ -361,13 +362,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_COMPL_END
                 + ") VALUES("
                 + "(SELECT " + COLUMN_ID_EST + " FROM " + ESTADO_TABLE_NAME
-                    + " WHERE " + COLUMN_UF_EST + " = '" + cliente.get_estado() + "'),"
+                + " WHERE " + COLUMN_UF_EST + " = '" + cliente.get_estado() + "'),"
                 + "(SELECT " + COLUMN_ID_CID + " FROM " + CIDADE_TABLE_NAME
-                    + " WHERE " + COLUMN_CID_NOME + " = '" + cliente.get_cidade() + "'),"
+                + " WHERE " + COLUMN_CID_NOME + " = '" + cliente.get_cidade() + "'),"
                 + "(SELECT " + COLUMN_ID_BAIRR + " FROM " + BAIRRO_TABLE_NAME
-                    + " WHERE " + COLUMN_BAIRR_NOME + " = '" + cliente.get_bairro() + "'),"
+                + " WHERE " + COLUMN_BAIRR_NOME + " = '" + cliente.get_bairro() + "'),"
                 + "(SELECT " + COLUMN_ID_RUA + " FROM " + RUA_TABLE_NAME
-                    + " WHERE " + COLUMN_RUA_LOGR + " = '" + cliente.get_logradouro() + "'),'"
+                + " WHERE " + COLUMN_RUA_LOGR + " = '" + cliente.get_logradouro() + "'),'"
                 + cliente.get_complemento()
                 + "')"
         );
@@ -388,7 +389,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + ") VALUES("
                 + "(SELECT " + COLUMN_ID_END + " FROM " + ENDERECO_TABLE_NAME + " ORDER BY " + COLUMN_ID_END + " DESC LIMIT 1),"
                 + "(SELECT " + COLUMN_ID_TEL + " FROM " + TELEFONE_TABLE_NAME
-                    + " WHERE " + COLUMN_NUM_TEL + " = '" + cliente.get_telefone() + "'),'"
+                + " WHERE " + COLUMN_NUM_TEL + " = '" + cliente.get_telefone() + "'),'"
                 + cliente.get_email()
                 + "')"
         );
@@ -429,9 +430,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // update na tbCliente
         ContentValues contentValuesFunc = new ContentValues();
-            contentValuesFunc.put(COLUMN_NAME_CLI, clientes.get_nome());
-            contentValuesFunc.put(COLUMN_CNPJ_CLI, clientes.get_cnpj());
-            contentValuesFunc.put(COLUMN_NUMEND_CLI, clientes.get_numend());
+        contentValuesFunc.put(COLUMN_NAME_CLI, clientes.get_nome());
+        contentValuesFunc.put(COLUMN_CNPJ_CLI, clientes.get_cnpj());
+        contentValuesFunc.put(COLUMN_NUMEND_CLI, clientes.get_numend());
         db.update(CLIENTE_TABLE_NAME, contentValuesFunc,
                 COLUMN_ID_CLI + " = ? ", new String[] { Integer.toString(clientes.get_id()) } );
 
@@ -449,7 +450,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // update na tbTelefone
         ContentValues contentValuesTel = new ContentValues();
-            contentValuesTel.put(COLUMN_NUM_TEL, clientes.get_telefone());
+        contentValuesTel.put(COLUMN_NUM_TEL, clientes.get_telefone());
         db.update(TELEFONE_TABLE_NAME, contentValuesTel,
                 COLUMN_ID_TEL + " = ? ", new String[] { Integer.toString(id_tel) } );
 
@@ -512,7 +513,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // pegar ID do recém adicionado endereco
         Cursor cursor_id_end = db.rawQuery("SELECT " + COLUMN_ID_END + " FROM " + ENDERECO_TABLE_NAME
-                                                    + " ORDER BY " + COLUMN_ID_END + " DESC LIMIT 1", null);
+                + " ORDER BY " + COLUMN_ID_END + " DESC LIMIT 1", null);
         cursor_id_end.moveToNext();
         int id_end = cursor_id_end.getInt(cursor_id_end.getColumnIndex(COLUMN_ID_END));
 
@@ -529,14 +530,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean deleteCliente(Integer id){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor_id_cntt = db.rawQuery("SELECT " + COLUMN_ID_CNTT + " FROM " + CLIENTE_TABLE_NAME
-                                            + " WHERE " + COLUMN_ID_CLI + " = " + id, null);
+                + " WHERE " + COLUMN_ID_CLI + " = " + id, null);
         cursor_id_cntt.moveToNext();
         int id_cntt = cursor_id_cntt.getInt(cursor_id_cntt.getColumnIndex(COLUMN_ID_CNTT));
 
         db.execSQL("DELETE FROM " + CLIENTE_TABLE_NAME
-                        + " WHERE " + COLUMN_ID_CLI + " = " + id);
+                + " WHERE " + COLUMN_ID_CLI + " = " + id);
         db.execSQL("DELETE FROM " + CONTATO_TABLE_NAME
-                        + " WHERE " + COLUMN_ID_CNTT + " = " + id_cntt);
+                + " WHERE " + COLUMN_ID_CNTT + " = " + id_cntt);
         return true;
     }
 
@@ -586,10 +587,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getDataAtividades(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery( "SELECT * FROM " + ATIVIDADE_TABLE_NAME + " AS f"
-                + " INNER JOIN " + FUNCIONARIO_TABLE_NAME + " AS e ON f." + COLUMN_ID_FUNC + " = e." + COLUMN_ID_FUNC
-                + " INNER JOIN " + CLIENTE_TABLE_NAME + " AS c ON f." + COLUMN_CNPJ_CLI + " = c." + COLUMN_CNPJ_CLI
-                + " INNER JOIN " + SERVICO_TABLE_NAME + " AS t ON f." + COLUMN_ID_SERV + " = t." + COLUMN_ID_SERV
+        Cursor cursor = db.rawQuery( "SELECT * FROM " + ATIVIDADE_TABLE_NAME
                 + " WHERE " + COLUMN_ID_ATV + " = " + id, null);
         return cursor;
     }

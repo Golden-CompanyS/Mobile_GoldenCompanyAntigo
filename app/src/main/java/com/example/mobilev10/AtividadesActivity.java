@@ -241,6 +241,7 @@ public class AtividadesActivity extends AppCompatActivity implements SensorEvent
                                 edtFunc.getText().toString(),
                                 edtCnpj.getText().toString(),
                                 edtServico.getText().toString()
+
                         ))){
                     Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_SHORT).show();
                 } else {
