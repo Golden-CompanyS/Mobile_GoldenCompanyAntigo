@@ -1,10 +1,10 @@
-Integrantes: Gustavo Pereira Castro
-            Guilherme Lemes
-            Larissa Miranda Sonoda
-            Letícia Cristina Gandarez Resina
-            Mateus da Silva Taveira
-            Maria Eduarda Rodrigues
-            Wesley Spiandorim 
+Integrantes: Gustavo Pereira Castro,
+            Guilherme Lemes Porto,
+            Larissa Miranda Sonoda,
+            Letícia Cristina Gandarez Resina,
+            Mateus da Silva Taveira,
+            Maria Eduarda Rodrigues,
+            Wesley Spiandorim De Jesus
            
  O App da Golden Company tem o objetivo de ser utilizado pelos funcionários da própria empresa, que poderão cadastrar cliente, serviços, atividades e funcionários. Além de salvar anotações e mudar sua imagem de perfil no aplicativo
  
